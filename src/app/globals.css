@@ -34,7 +34,7 @@
   body {
     @apply bg-background text-foreground antialiased;
     background-image: 
-      radial-gradient(circle at 50% -20%, hsla(280, 100%, 60%, 0.15), transparent 80%),
+      radial-gradient(circle at 50% -20%, hsla(280, 100%, 60%, 0.2), transparent 80%),
       radial-gradient(circle at 0% 100%, hsla(190, 100% , 50%, 0.1), transparent 50%);
     background-attachment: fixed;
   }
@@ -66,7 +66,7 @@
 
 .glass-morphism {
   background: rgba(13, 8, 24, 0.6);
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -75,10 +75,10 @@
   height: 100px;
   z-index: 100;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(0, 0, 0, 0) 100%);
-  opacity: 0.1;
+  opacity: 0.15;
   position: fixed;
   bottom: 100%;
-  animation: scanline 10s linear infinite;
+  animation: scanline 8s linear infinite;
   pointer-events: none;
 }
 
@@ -89,7 +89,7 @@
 
 @keyframes pulse-fast {
   0%, 100% { opacity: 1; filter: brightness(1); }
-  50% { opacity: 0.8; filter: brightness(1.2); }
+  50% { opacity: 0.8; filter: brightness(1.3); }
 }
 
 .animate-pulse-fast {
@@ -111,4 +111,8 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--primary));
+}
+
+.hero-gradient {
+  background: linear-gradient(180deg, rgba(168, 85, 247, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
 }
