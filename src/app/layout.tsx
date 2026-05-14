@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
-import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'Stylish Game Name - Free Fire & PUBG Name Maker',
@@ -85,11 +84,6 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        {/* Adsterra Popunder */}
-        <Script 
-          src="https://archaicmsflip.com/bd/5b/07/bd5b073bde1e9651b131f6f233587448.js" 
-          strategy="lazyOnload"
         />
       </head>
       <body className="font-body bg-white text-foreground antialiased selection:bg-[#25D366]/20 selection:text-[#25D366]">
