@@ -436,10 +436,10 @@ export default function Home() {
 
       <header className="pt-12 pb-6 px-4 text-center max-w-4xl mx-auto space-y-6">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#25D366]/10 text-[#25D366] text-[10px] font-black uppercase tracking-widest mb-1 shadow-sm border border-[#25D366]/20">
-          <Zap className="w-3 h-3 fill-current" /> Ultimate Name Maker 2026 Edition
+          <Zap className="w-3 h-3 fill-current" /> Ultimate Name Maker
         </div>
         <h1 className="text-2xl md:text-5xl font-black text-foreground tracking-tighter leading-none uppercase">
-          Ultimate <span className="text-[#25D366]">Stylish Game Name</span> Generator 2026
+          Ultimate <span className="text-[#25D366]">Stylish Game Name</span> Generator
         </h1>
         <p className="text-muted-foreground text-xs md:text-sm max-w-2xl mx-auto font-medium">
           Create premium identity loadouts for Free Fire, PUBG, BGMI, and more. 100% stable Unicode symbols for competitive gaming domination.
@@ -463,7 +463,7 @@ export default function Home() {
         <section id="trending" className="mt-12 pt-4 overflow-hidden">
           <div className="flex items-center justify-center gap-2 mb-8 px-4">
             <Flame className="w-5 h-5 text-[#25D366] fill-[#25D366]/20" />
-            <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-muted-foreground text-center">Hot Trending Loadouts 2026</h2>
+            <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-muted-foreground text-center">Hot Trending Loadouts</h2>
           </div>
           
           <Carousel opts={{ align: "start", loop: true }} className="w-full relative group">
@@ -863,13 +863,15 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center px-2">
               <div className="space-y-6 md:space-y-8">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-foreground/5 text-foreground text-[10px] font-black uppercase tracking-widest">
-                  <Info className="w-4 h-4" /> About the Forge
+                  <span className="flex items-center gap-2">
+                    <Info className="w-4 h-4" /> About the Forge
+                  </span>
                 </div>
                 <h2 className="text-2xl md:text-5xl font-black text-foreground leading-tight uppercase tracking-tighter">
                   Crafting <span className="text-[#25D366]">Elite Digital Identities</span> for Global Gamers
                 </h2>
                 <p className="text-muted-foreground text-xs md:text-base leading-relaxed font-medium">
-                  In the 2026 competitive landscape, your username isn't just a label—it's your brand. <span className="font-bold text-foreground">Stylish Game Name</span> is the world's most stable utility for generating high-performance fancy text and symbols specifically optimized for PUBG, Free Fire, BGMI, and CODM.
+                  In the competitive landscape, your username isn't just a label—it's your brand. <span className="font-bold text-foreground">Stylish Game Name</span> is the world's most stable utility for generating high-performance fancy text and symbols specifically optimized for PUBG, Free Fire, BGMI, and CODM.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 pt-4">
                   <div className="space-y-2">
@@ -893,7 +895,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="text-sm md:text-base font-black text-foreground uppercase tracking-tight">Clan Support</h3>
-                    <p className="text-[9px] md:text-xs font-bold text-muted-foreground uppercase tracking-widest">Forging Teams Since 2021</p>
+                    <p className="text-[9px] md:text-xs font-bold text-muted-foreground uppercase tracking-widest">Forging Teams Together</p>
                   </div>
                 </div>
                 <p className="text-xs md:text-sm text-muted-foreground italic leading-relaxed">
@@ -915,18 +917,18 @@ export default function Home() {
 
           <section id="faq" className="mt-20 md:mt-40 max-w-4xl mx-auto space-y-10 md:space-y-20 px-2">
             <div className="text-center space-y-3">
-              <h2 className="text-xl md:text-4xl font-black text-foreground uppercase tracking-tighter">Gamer <span className="text-[#25D366]">Intel</span> Arsenal (FAQ 2026)</h2>
-              <p className="text-[9px] md:text-xs font-black text-muted-foreground uppercase tracking-[0.4em]">Mastering the 2026 BGMI and Free Fire Name Maker</p>
+              <h2 className="text-xl md:text-4xl font-black text-foreground uppercase tracking-tighter">Gamer <span className="text-[#25D366]">Intel</span> Arsenal (FAQ)</h2>
+              <p className="text-[9px] md:text-xs font-black text-muted-foreground uppercase tracking-[0.4em]">Mastering the BGMI and Free Fire Name Maker</p>
             </div>
             <Accordion type="single" collapsible className="w-full space-y-4 md:space-y-6">
               {[
-                { q: "How do I use the Free Fire Name Maker 2026?", a: "To use the 2026 Free Fire Name Maker, simply type your name at the top, select your symbols (like wings or crowns), and copy the generated stylish text. All symbols are updated for the 2026 character filters." },
-                { q: "Does this PUBG Name Maker work for BGMI 3.5?", a: "Yes, our PUBG Name Maker is fully optimized for BGMI 3.5 and above. All symbols (ツ, 亗, 々) are manually mapped to ensure they appear correctly on all mobile devices without question marks." },
+                { q: "How do I use the Free Fire Name Maker?", a: "To use the Free Fire Name Maker, simply type your name at the top, select your symbols (like wings or crowns), and copy the generated stylish text. All symbols are updated for the latest character filters." },
+                { q: "Does this PUBG Name Maker work for BGMI?", a: "Yes, our PUBG Name Maker is fully optimized for BGMI. All symbols (ツ, 亗, 々) are manually mapped to ensure they appear correctly on all mobile devices without question marks." },
                 { q: "What is the 'Spacing (Elite)' position?", a: "Middle position injects your selected symbol between every letter of your name, creating a premium 'spaced' effect popular in high-tier esports and competitive gaming clans." },
                 { q: "Can I download my stylish name as an image for social media?", a: "Yes, use the 'Download PNG' button in the live preview dock to save a high-quality 1200x630 tactical card of your gaming handle, ready for Instagram or WhatsApp status." },
                 { q: "How to fix question marks in Free Fire names?", a: "Most question marks occur due to unsupported Unicode gaps. Our generator uses an 'Elite Safe' mapping system that automatically bridges these gaps so your name always renders correctly." },
-                { q: "Is registration required for the 2026 version?", a: "No, this is a 100% free utility for the global gaming community. No registration or tactical data login is required." },
-                { q: "Which symbols are best for BGMI names in 2026?", a: "Popular symbols include the 'V' badge (亗), Japanese Katakana (々), and Tactical Wings (꧁꧂). Use our 'Hot Trending' section to see what pro players are currently using." },
+                { q: "Is registration required?", a: "No, this is a 100% free utility for the global gaming community. No registration or tactical data login is required." },
+                { q: "Which symbols are best for BGMI names?", a: "Popular symbols include the 'V' badge (亗), Japanese Katakana (々), and Tactical Wings (꧁꧂). Use our 'Hot Trending' section to see what pro players are currently using." },
                 { q: "How do I share my identity on WhatsApp groups?", a: "Simply click the WhatsApp icon in the Live Preview dock at the bottom of the screen to share your name and link directly with your squad." }
               ].map((faq, i) => (
                 <AccordionItem key={i} value={`item-${i}`} className="border-2 border-border rounded-[1.5rem] md:rounded-[2rem] px-5 md:px-10 bg-card shadow-sm hover:border-[#25D366]/30 transition-all group overflow-hidden">
@@ -1000,7 +1002,7 @@ export default function Home() {
           <a href={SMART_LINK} target="_blank" className="text-[#25D366] hover:underline font-black">Elite Vault</a>
         </div>
         <p className="text-[8px] md:text-[10px] font-black text-muted-foreground uppercase tracking-[0.4em] opacity-60">
-          &copy; {new Date().getFullYear()} MISSION CRITICAL IDENTITY FORGE. GLOBAL GAMING COMPLIANT.
+          &copy; MISSION CRITICAL IDENTITY FORGE. GLOBAL GAMING COMPLIANT.
         </p>
       </footer>
     </div>
