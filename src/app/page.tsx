@@ -32,7 +32,8 @@ import {
   Info,
   Target,
   Trophy,
-  Users
+  Users,
+  ExternalLink
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -66,6 +67,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Script from "next/script";
 
 type ActiveTab = 'left' | 'right' | 'fonts';
 type SymbolPosition = 'both' | 'left' | 'right' | 'middle';
@@ -115,6 +117,8 @@ const CATEGORY_NAMES: Record<StyleCategory, string[]> = {
   roblox: ["Blox", "Build", "Adopt", "Pet", "Noob", "Tycoon", "Craft", "Pixel", "Brick"],
   minecraft: ["Steve", "Creeper", "Block", "Mine", "Craft", "Enderman", "Wither", "Nether", "Diamond"],
 };
+
+const SMART_LINK = "https://archaicmsflip.com/gvgrre55?key=8acd26bbd2508317c2c6bd0d3ddb001c";
 
 export default function Home() {
   const [inputText, setInputText] = useState("ProGamer");
@@ -383,6 +387,14 @@ export default function Home() {
         
         <div className="flex items-center gap-2">
           <Button 
+            onClick={() => window.open(SMART_LINK, '_blank')}
+            variant="outline"
+            size="sm"
+            className="hidden sm:flex items-center gap-2 bg-[#25D366]/10 text-[#25D366] border-[#25D366]/20 font-black text-[10px] uppercase tracking-widest rounded-xl hover:bg-[#25D366] hover:text-white transition-all"
+          >
+            <Sparkles className="w-3.5 h-3.5" /> Premium Loot
+          </Button>
+          <Button 
             onClick={toggleTheme} 
             variant="ghost" 
             size="icon" 
@@ -408,6 +420,13 @@ export default function Home() {
                 </SheetHeader>
                 <div className="flex flex-col gap-1 p-4">
                   <NavLinks mobile />
+                  <a 
+                    href={SMART_LINK}
+                    target="_blank"
+                    className="flex items-center justify-between px-4 py-3 rounded-xl bg-[#25D366]/10 text-[#25D366] text-[11px] font-black uppercase tracking-widest mt-4"
+                  >
+                    Premium Loot <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
                 </div>
               </SheetContent>
             </Sheet>
@@ -780,6 +799,16 @@ export default function Home() {
             </div>
           )}
 
+          {/* Adsterra Native Banner Container */}
+          <div className="flex justify-center py-8">
+            <div id="container-351fb15fdfc3f6ded0d59260b84edef1"></div>
+            <Script 
+              async 
+              src="https://archaicmsflip.com/351fb15fdfc3f6ded0d59260b84edef1/invoke.js" 
+              strategy="afterInteractive"
+            />
+          </div>
+
           <section id="my-collection" className="mt-16 md:mt-32 space-y-8">
             <div className="flex items-center gap-4 px-2">
               <div className="bg-[#25D366] p-2.5 rounded-2xl shadow-lg">
@@ -874,29 +903,13 @@ export default function Home() {
                   <Badge className="bg-white text-black font-black uppercase tracking-widest border border-border text-[8px] md:text-[10px]">BGMI Ready</Badge>
                   <Badge className="bg-white text-black font-black uppercase tracking-widest border border-border text-[8px] md:text-[10px]">FF MAX Ready</Badge>
                 </div>
+                <Button 
+                  onClick={() => window.open(SMART_LINK, '_blank')}
+                  className="w-full h-12 bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-black text-[10px] uppercase tracking-widest rounded-xl shadow-lg border-none hover:scale-[1.02] transition-all"
+                >
+                  Access Premium Vault
+                </Button>
               </div>
-            </div>
-          </section>
-
-          <section id="how-to-use" className="mt-20 md:mt-40 max-w-5xl mx-auto space-y-10 md:space-y-20 px-2">
-            <div className="text-center space-y-4">
-              <h2 className="text-xl md:text-4xl font-black text-foreground uppercase tracking-tighter">Forge Strategy <span className="text-[#25D366]">(How To Use)</span></h2>
-              <p className="text-muted-foreground text-[10px] md:text-base max-w-xl mx-auto font-medium">Master the 2026 Free Fire Name Maker and PUBG Name Maker in three tactical steps.</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
-              {[
-                { title: "Strategic Input", text: "Start by entering your handle. Our 2026 Gaming Name Generator supports characters from all global Unicode blocks.", icon: <Type className="w-6 h-6" /> },
-                { title: "Identity Layering", text: "Inject Left and Right Tactical Symbols. Use Spacing (Middle) mode for premium pro-league aesthetics.", icon: <Layers className="w-6 h-6" /> },
-                { title: "Deploy & Dominate", text: "Review in the Live Preview dock. Copy instantly, share to WhatsApp, or download a PNG identity card.", icon: <CheckCircle2 className="w-6 h-6" /> }
-              ].map((step, i) => (
-                <div key={i} className="p-8 md:p-12 bg-card rounded-[2rem] md:rounded-[2.5rem] border-2 border-border space-y-5 hover:shadow-2xl hover:border-[#25D366]/40 transition-all group">
-                  <div className="h-12 w-12 md:h-14 md:w-14 bg-muted/20 rounded-2xl flex items-center justify-center text-[#25D366] border border-border group-hover:bg-[#25D366] group-hover:text-white transition-colors shadow-sm">
-                    {step.icon}
-                  </div>
-                  <h3 className="font-black text-foreground text-sm md:text-lg uppercase tracking-tight">{step.title}</h3>
-                  <p className="text-[11px] md:text-sm text-muted-foreground leading-relaxed font-medium">{step.text}</p>
-                </div>
-              ))}
             </div>
           </section>
 
@@ -984,6 +997,7 @@ export default function Home() {
           <a href="#" className="hover:text-[#25D366] transition-colors">Privacy Protocol</a>
           <a href="#" className="hover:text-[#25D366] transition-colors">Service Terms</a>
           <a href="#about" className="hover:text-[#25D366] transition-colors">Tactical Intel</a>
+          <a href={SMART_LINK} target="_blank" className="text-[#25D366] hover:underline font-black">Elite Vault</a>
         </div>
         <p className="text-[8px] md:text-[10px] font-black text-muted-foreground uppercase tracking-[0.4em] opacity-60">
           &copy; {new Date().getFullYear()} MISSION CRITICAL IDENTITY FORGE. GLOBAL GAMING COMPLIANT.
