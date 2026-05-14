@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
@@ -128,7 +127,7 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white pb-32 md:pb-40">
       {/* Top Navigation Bar */}
       <nav className="sticky top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 h-16 px-4 md:px-8 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-2">
@@ -260,21 +259,24 @@ export default function Home() {
       </header>
 
       {/* Main Content Area */}
-      <main className="max-w-5xl mx-auto px-4 pb-48">
+      <main className="max-w-5xl mx-auto px-4">
         <div className="space-y-6">
           
           {/* Section 1: Left Symbol */}
           {activeFilter === 'left' && (
             <div className="bg-white border border-gray-100 p-4 md:p-6 rounded-3xl shadow-sm space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
-              <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
-                <Shield className="w-3.5 h-3.5 text-[#25D366]" /> 01. Left Symbol Injection
-              </h3>
-              <ScrollArea className="h-[250px] md:h-[200px]">
+              <div className="flex justify-between items-center">
+                <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
+                  <Shield className="w-3.5 h-3.5 text-[#25D366]" /> 01. Left Symbol Injection
+                </h3>
+                <Badge variant="secondary" className="bg-[#25D366]/10 text-[#25D366] font-bold text-[9px] uppercase">{LEFT_SYMBOLS.length} Glyphs</Badge>
+              </div>
+              <ScrollArea className="h-[400px] md:h-[500px]">
                 <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 pr-2">
                   <Button 
                     variant="ghost" 
                     onClick={() => setSelectedLeft("")}
-                    className={`h-11 rounded-xl border text-[9px] md:text-[10px] uppercase font-bold ${selectedLeft === "" ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 hover:bg-white'}`}
+                    className={`h-12 rounded-xl border text-[9px] md:text-[10px] uppercase font-bold ${selectedLeft === "" ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 hover:bg-white'}`}
                   >
                     None
                   </Button>
@@ -283,7 +285,7 @@ export default function Home() {
                       key={i} 
                       variant="ghost" 
                       onClick={() => setSelectedLeft(sym)}
-                      className={`h-11 text-lg md:text-xl rounded-xl transition-all border ${selectedLeft === sym ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 hover:border-[#25D366]/20 hover:bg-white'}`}
+                      className={`h-12 text-lg md:text-xl rounded-xl transition-all border ${selectedLeft === sym ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 hover:border-[#25D366]/20 hover:bg-white'}`}
                     >
                       {sym}
                     </Button>
@@ -296,15 +298,18 @@ export default function Home() {
           {/* Section 2: Right Symbol */}
           {activeFilter === 'right' && (
             <div className="bg-white border border-gray-100 p-4 md:p-6 rounded-3xl shadow-sm space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
-              <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
-                <Sword className="w-3.5 h-3.5 text-[#25D366]" /> 02. Right Symbol Injection
-              </h3>
-              <ScrollArea className="h-[250px] md:h-[200px]">
+              <div className="flex justify-between items-center">
+                <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
+                  <Sword className="w-3.5 h-3.5 text-[#25D366]" /> 02. Right Symbol Injection
+                </h3>
+                <Badge variant="secondary" className="bg-[#25D366]/10 text-[#25D366] font-bold text-[9px] uppercase">{RIGHT_SYMBOLS.length} Glyphs</Badge>
+              </div>
+              <ScrollArea className="h-[400px] md:h-[500px]">
                 <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 pr-2">
                   <Button 
                     variant="ghost" 
                     onClick={() => setSelectedRight("")}
-                    className={`h-11 rounded-xl border text-[9px] md:text-[10px] uppercase font-bold ${selectedRight === "" ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 hover:bg-white'}`}
+                    className={`h-12 rounded-xl border text-[9px] md:text-[10px] uppercase font-bold ${selectedRight === "" ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 hover:bg-white'}`}
                   >
                     None
                   </Button>
@@ -313,7 +318,7 @@ export default function Home() {
                       key={i} 
                       variant="ghost" 
                       onClick={() => setSelectedRight(sym)}
-                      className={`h-11 text-lg md:text-xl rounded-xl transition-all border ${selectedRight === sym ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 hover:border-[#25D366]/20 hover:bg-white'}`}
+                      className={`h-12 text-lg md:text-xl rounded-xl transition-all border ${selectedRight === sym ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 hover:border-[#25D366]/20 hover:bg-white'}`}
                     >
                       {sym}
                     </Button>
@@ -333,7 +338,7 @@ export default function Home() {
                 <Badge variant="secondary" className="bg-[#25D366]/10 text-[#25D366] font-bold text-[9px] uppercase px-3">{filteredStyles.length} Styles Loaded</Badge>
               </div>
               
-              <ScrollArea className="h-[400px] md:h-[450px] pr-2 md:pr-4">
+              <ScrollArea className="h-[400px] md:h-[500px] pr-2 md:pr-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                   {filteredStyles.map((style) => {
                     const transformed = style.transform(inputText || "Name");
