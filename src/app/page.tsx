@@ -13,8 +13,6 @@ import {
   Menu,
   Zap,
   Sparkles,
-  Info,
-  HelpCircle,
   CheckCircle2,
   Layers,
   Search,
@@ -55,6 +53,7 @@ export default function Home() {
   const [styleCategory, setStyleCategory] = useState<StyleCategory>("all");
   const [activeFilter, setActiveFilter] = useState<ActiveTab>('fonts');
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -102,13 +101,29 @@ export default function Home() {
     setInputText(`${randomWord}${randomNum}`);
   };
 
-  const NavLinks = () => (
+  const NavLinks = ({ mobile = false }: { mobile?: boolean }) => (
     <>
-      <a href="#" className="text-[11px] font-bold uppercase tracking-widest text-[#25D366] hover:opacity-80 transition-opacity">Home</a>
-      <a href="#how-to-use" className="text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-colors">How to Use</a>
-      <a href="#about-us" className="text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-colors">About Us</a>
-      <a href="#faq" className="text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-colors">FAQ</a>
-      <a href="#seo-info" className="text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-colors">SEO</a>
+      {[
+        { label: "Home", href: "#" },
+        { label: "How to Use", href: "#how-to-use" },
+        { label: "About Us", href: "#about-us" },
+        { label: "FAQ", href: "#faq" },
+        { label: "SEO Optimization", href: "#seo-info" }
+      ].map((link) => (
+        <a 
+          key={link.label}
+          href={link.href}
+          onClick={() => mobile && setIsSheetOpen(false)}
+          className={
+            mobile 
+              ? "flex items-center justify-between px-4 py-3 rounded-xl hover:bg-gray-50 text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-all"
+              : "text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-colors"
+          }
+        >
+          {link.label}
+          {mobile && <ChevronRight className="w-3.5 h-3.5" />}
+        </a>
+      ))}
     </>
   );
 
@@ -130,7 +145,7 @@ export default function Home() {
         </div>
         
         <div className="md:hidden">
-          <Sheet>
+          <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
                 <Menu className="w-6 h-6 text-gray-600" />
@@ -146,22 +161,7 @@ export default function Home() {
                 </SheetTitle>
               </SheetHeader>
               <div className="flex flex-col gap-1 p-4">
-                {[
-                  { label: "Home", href: "#" },
-                  { label: "How to Use", href: "#how-to-use" },
-                  { label: "About Us", href: "#about-us" },
-                  { label: "FAQ", href: "#faq" },
-                  { label: "SEO Optimization", href: "#seo-info" }
-                ].map((link) => (
-                  <a 
-                    key={link.label}
-                    href={link.href}
-                    className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-gray-50 text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-all"
-                  >
-                    {link.label}
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </a>
-                ))}
+                <NavLinks mobile />
               </div>
               <div className="absolute bottom-8 left-0 w-full px-8">
                 <p className="text-[10px] text-gray-300 font-bold uppercase tracking-widest text-center leading-relaxed">
@@ -221,7 +221,7 @@ export default function Home() {
           </ScrollArea>
         </div>
 
-        {/* Visibility Filter Buttons (Mobile Grid) */}
+        {/* Visibility Filter Buttons (Responsive Grid) */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3 mt-6 pb-4 max-w-2xl mx-auto border-b border-gray-50">
           <Button
             onClick={() => setActiveFilter('left')}
