@@ -26,6 +26,26 @@
     --ring: 142 70% 49%;
     --radius: 1.25rem;
   }
+
+  .dark {
+    --background: 222 47% 4%;
+    --foreground: 210 40% 98%;
+    --card: 222 47% 6%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222 47% 6%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 142 70% 49%;
+    --primary-foreground: 222 47% 11%;
+    --secondary: 222 47% 12%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 222 47% 12%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 142 70% 49%;
+    --accent-foreground: 210 40% 98%;
+    --border: 222 47% 15%;
+    --input: 222 47% 15%;
+    --ring: 142 70% 49%;
+  }
 }
 
 @layer base {
@@ -33,12 +53,12 @@
     @apply border-border;
   }
   body {
-    @apply bg-white text-foreground antialiased;
+    @apply bg-background text-foreground antialiased transition-colors duration-300;
   }
 }
 
 .premium-card {
-  @apply bg-white border border-gray-100 shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary/20;
+  @apply bg-card border border-border shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary/20;
 }
 
 ::-webkit-scrollbar {
@@ -50,19 +70,18 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #e2e8f0;
+  @apply bg-muted;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #25D366;
+  @apply bg-primary;
 }
 
-/* Custom shadow for white cards */
 .soft-shadow {
   box-shadow: 0 10px 40px -10px rgba(0,0,0,0.03);
 }
 
 .nav-link {
-  @apply text-gray-500 hover:text-[#25D366] transition-colors font-bold;
+  @apply text-muted-foreground hover:text-primary transition-colors font-bold;
 }

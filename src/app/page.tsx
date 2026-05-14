@@ -23,7 +23,11 @@ import {
   AlignLeft,
   AlignRight,
   AlignCenter,
-  MoreHorizontal
+  Share2,
+  Sun,
+  Moon,
+  MessageCircle,
+  Wand2
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -63,6 +67,15 @@ const TRENDING_NAMES = [
   { label: "Deadly Viper", text: "Viper", left: "🐍", right: "🐍", styleId: "fraktur" },
 ];
 
+const CATEGORY_NAMES: Record<StyleCategory, string[]> = {
+  all: ["Elite", "ProGamer", "Ghost", "Nitro", "Bane", "Viper", "Omega", "Raven", "Zod", "Pulse", "Shadow", "Neon", "Void"],
+  pubg: ["Sniper", "Eagle", "Squad", "Victor", "Chicken", "Winner", "Alpha", "Delta", "Echo"],
+  freefire: ["Toxic", "Ninja", "King", "Legend", "Fire", "Vortex", "Cobra", "Venom", "Wraith"],
+  cod: ["Captain", "Bravo", "Alpha", "Major", "Soldier", "Price", "Ghost", "Soap", "Ravage"],
+  roblox: ["Blox", "Build", "Adopt", "Pet", "Noob", "Tycoon", "Craft", "Pixel", "Brick"],
+  minecraft: ["Steve", "Creeper", "Block", "Mine", "Craft", "Enderman", "Wither", "Nether", "Diamond"],
+};
+
 export default function Home() {
   const [inputText, setInputText] = useState("ProGamer");
   const [selectedLeft, setSelectedLeft] = useState("");
@@ -74,12 +87,27 @@ export default function Home() {
   const [activeFilter, setActiveFilter] = useState<ActiveTab>('fonts');
   const [favorites, setFavorites] = useState<string[]>([]);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
     const savedFavs = localStorage.getItem("stylish-glyph-favorites");
     if (savedFavs) setFavorites(JSON.parse(savedFavs));
+    
+    // Check system preference
+    const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    setIsDarkMode(isDark);
+    if (isDark) document.documentElement.classList.add('dark');
   }, []);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    if (!isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
 
   const currentStyle = useMemo(() => 
     STYLE_OPTIONS.find(s => s.id === selectedStyleId) || STYLE_OPTIONS[0]
@@ -171,6 +199,11 @@ export default function Home() {
     });
   };
 
+  const shareToWhatsApp = () => {
+    const text = encodeURIComponent(`Check out my cool new gaming name generated on StylishGameName.com: ${livePreviewText}`);
+    window.open(`https://wa.me/?text=${text}`, '_blank');
+  };
+
   const downloadAsImage = () => {
     const canvas = document.createElement("canvas");
     canvas.width = 1200;
@@ -178,10 +211,15 @@ export default function Home() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
-    gradient.addColorStop(0, '#25D366');
-    gradient.addColorStop(1, '#128C7E');
-    ctx.fillStyle = gradient;
+    const bgGradient = ctx.createLinearGradient(0, 0, 1200, 630);
+    if (isDarkMode) {
+      bgGradient.addColorStop(0, '#0a0d14');
+      bgGradient.addColorStop(1, '#1e293b');
+    } else {
+      bgGradient.addColorStop(0, '#25D366');
+      bgGradient.addColorStop(1, '#128C7E');
+    }
+    ctx.fillStyle = bgGradient;
     ctx.fillRect(0, 0, 1200, 630);
 
     ctx.strokeStyle = "rgba(255,255,255,0.1)";
@@ -218,10 +256,22 @@ export default function Home() {
   };
 
   const generateRandomText = () => {
-    const randomWords = ["Titan", "Ghost", "Nitro", "Bane", "Viper", "Omega", "Raven", "Zod", "Pulse", "Shadow", "Neon", "Void"];
-    const randomWord = randomWords[Math.floor(Math.random() * randomWords.length)];
-    const randomNum = Math.floor(Math.random() * 99);
-    setInputText(`${randomWord}${randomNum}`);
+    const words = CATEGORY_NAMES.all;
+    const word = words[Math.floor(Math.random() * words.length)];
+    const num = Math.floor(Math.random() * 99);
+    setInputText(`${word}${num}`);
+  };
+
+  const generateRandomFromCategory = (cat: StyleCategory) => {
+    const names = CATEGORY_NAMES[cat] || CATEGORY_NAMES.all;
+    const randomName = names[Math.floor(Math.random() * names.length)];
+    setInputText(randomName);
+    setStyleCategory(cat);
+    
+    toast({
+      title: "Category Surprise Applied",
+      description: `Loaded a popular name for ${cat.toUpperCase()}.`
+    });
   };
 
   const autoForgeIdentity = () => {
@@ -251,8 +301,8 @@ export default function Home() {
           onClick={() => mobile && setIsSheetOpen(false)}
           className={
             mobile 
-              ? "flex items-center justify-between px-4 py-3 rounded-xl hover:bg-[#25D366] hover:text-white text-[11px] font-bold uppercase tracking-widest text-gray-500 transition-all"
-              : "text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-colors"
+              ? "flex items-center justify-between px-4 py-3 rounded-xl hover:bg-[#25D366] hover:text-white text-[11px] font-bold uppercase tracking-widest text-muted-foreground transition-all"
+              : "text-[11px] font-bold uppercase tracking-widest text-muted-foreground hover:text-[#25D366] transition-colors"
           }
         >
           {link.label}
@@ -263,13 +313,13 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-white pb-32 md:pb-40">
-      <nav className="sticky top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 h-16 px-4 md:px-8 flex items-center justify-between shadow-sm">
+    <div className="min-h-screen bg-background pb-40 md:pb-48 transition-colors duration-300">
+      <nav className="sticky top-0 left-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border h-16 px-4 md:px-8 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-2">
           <div className="bg-[#25D366] p-1.5 rounded-lg shrink-0">
             <Gamepad2 className="w-5 h-5 text-white" />
           </div>
-          <span className="text-sm md:text-base font-black tracking-tight text-gray-900 uppercase truncate">
+          <span className="text-sm md:text-base font-black tracking-tight text-foreground uppercase truncate">
             STYLISH <span className="text-[#25D366]">GAME NAME</span>
           </span>
         </div>
@@ -278,27 +328,37 @@ export default function Home() {
           <NavLinks />
         </div>
         
-        <div className="md:hidden">
-          <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="w-6 h-6 text-gray-600" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[280px] bg-white border-l border-gray-100 p-0">
-              <SheetHeader className="p-6 border-b border-gray-50 bg-gray-50/50">
-                <SheetTitle className="flex items-center gap-2">
-                  <div className="bg-[#25D366] p-1.5 rounded-lg">
-                    <Gamepad2 className="w-5 h-5 text-white" />
-                  </div>
-                  <span className="text-sm font-black text-gray-900 uppercase">STYLISH MENU</span>
-                </SheetTitle>
-              </SheetHeader>
-              <div className="flex flex-col gap-1 p-4">
-                <NavLinks mobile />
-              </div>
-            </SheetContent>
-          </Sheet>
+        <div className="flex items-center gap-2">
+          <Button 
+            onClick={toggleTheme} 
+            variant="ghost" 
+            size="icon" 
+            className="h-10 w-10 rounded-xl text-muted-foreground hover:text-primary transition-all"
+          >
+            {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </Button>
+          <div className="md:hidden">
+            <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Menu className="w-6 h-6 text-muted-foreground" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[280px] bg-background border-l border-border p-0">
+                <SheetHeader className="p-6 border-b border-border bg-muted/30">
+                  <SheetTitle className="flex items-center gap-2">
+                    <div className="bg-[#25D366] p-1.5 rounded-lg">
+                      <Gamepad2 className="w-5 h-5 text-white" />
+                    </div>
+                    <span className="text-sm font-black text-foreground uppercase">STYLISH MENU</span>
+                  </SheetTitle>
+                </SheetHeader>
+                <div className="flex flex-col gap-1 p-4">
+                  <NavLinks mobile />
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </nav>
 
@@ -306,19 +366,19 @@ export default function Home() {
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#25D366]/10 text-[#25D366] text-[10px] font-bold uppercase tracking-widest mb-1">
           <Zap className="w-3 h-3" /> Elite Free Fire Name Maker 2024
         </div>
-        <h1 className="text-xl md:text-3xl font-black text-gray-900 tracking-tight leading-tight uppercase">
+        <h1 className="text-xl md:text-3xl font-black text-foreground tracking-tight leading-tight uppercase">
           Tactical <span className="text-[#25D366]">Stylish Game Name</span> Generator
         </h1>
         
         <div className="relative max-w-md mx-auto mt-4 md:mt-6">
-          <div className="flex gap-2 p-1.5 bg-white rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100">
+          <div className="flex gap-2 p-1.5 bg-card rounded-2xl shadow-xl border border-border">
             <Input 
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder="Type your nickname here..."
-              className="h-10 md:h-12 text-sm md:text-base border-none focus-visible:ring-0 px-3 md:px-4 font-bold text-gray-800"
+              className="h-10 md:h-12 text-sm md:text-base border-none focus-visible:ring-0 px-3 md:px-4 font-bold text-foreground bg-transparent"
             />
-            <Button onClick={generateRandomText} variant="outline" size="icon" className="h-10 w-10 md:h-12 md:w-12 rounded-xl border-gray-100 text-gray-400 hover:bg-[#25D366] hover:text-white hover:border-transparent shrink-0 transition-all">
+            <Button onClick={generateRandomText} variant="outline" size="icon" className="h-10 w-10 md:h-12 md:w-12 rounded-xl border-border text-muted-foreground hover:bg-[#25D366] hover:text-white hover:border-transparent shrink-0 transition-all">
               <RotateCcw className="w-5 h-5" />
             </Button>
           </div>
@@ -327,7 +387,7 @@ export default function Home() {
         <section id="trending" className="mt-8 pt-4">
           <div className="flex items-center justify-center gap-2 mb-4">
             <TrendingUp className="w-4 h-4 text-[#25D366]" />
-            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Elite Trending Loadouts</h3>
+            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Elite Trending Loadouts</h3>
           </div>
           <ScrollArea className="w-full whitespace-nowrap pb-4">
             <div className="flex gap-3 px-4">
@@ -335,10 +395,10 @@ export default function Home() {
                 <button
                   key={idx}
                   onClick={() => applyTrending(item)}
-                  className="flex flex-col items-center gap-1 p-3 bg-gray-50 border border-gray-100 rounded-2xl hover:border-[#25D366] hover:bg-[#25D366]/5 transition-all group shrink-0"
+                  className="flex flex-col items-center gap-1 p-3 bg-muted/20 border border-border rounded-2xl hover:border-[#25D366] hover:bg-[#25D366]/5 transition-all group shrink-0"
                 >
-                  <span className="text-[9px] font-bold uppercase text-gray-400 group-hover:text-[#25D366]">{item.label}</span>
-                  <span className="text-xs font-black text-gray-800">
+                  <span className="text-[9px] font-bold uppercase text-muted-foreground group-hover:text-[#25D366]">{item.label}</span>
+                  <span className="text-xs font-black text-foreground">
                     {item.left} {STYLE_OPTIONS.find(s => s.id === item.styleId)?.transform(item.text)} {item.right}
                   </span>
                 </button>
@@ -354,7 +414,7 @@ export default function Home() {
             className={`h-11 px-4 text-[10px] md:text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all w-full ${
               activeFilter === 'left' 
                 ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20 hover:bg-[#25D366]/90' 
-                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent'
+                : 'bg-card border-border text-muted-foreground hover:bg-[#25D366] hover:text-white hover:border-transparent'
             }`}
           >
             <Shield className="w-4 h-4 mr-2" /> Left Symbol
@@ -365,7 +425,7 @@ export default function Home() {
             className={`h-11 px-4 text-[10px] md:text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all w-full ${
               activeFilter === 'right' 
                 ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20 hover:bg-[#25D366]/90' 
-                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent'
+                : 'bg-card border-border text-muted-foreground hover:bg-[#25D366] hover:text-white hover:border-transparent'
             }`}
           >
             <Sword className="w-4 h-4 mr-2" /> Right Symbol
@@ -376,7 +436,7 @@ export default function Home() {
             className={`h-11 px-4 text-[10px] md:text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all w-full ${
               activeFilter === 'fonts' 
                 ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20 hover:bg-[#25D366]/90' 
-                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent'
+                : 'bg-card border-border text-muted-foreground hover:bg-[#25D366] hover:text-white hover:border-transparent'
             }`}
           >
             <Type className="w-4 h-4 mr-2" /> Font Styles
@@ -393,9 +453,8 @@ export default function Home() {
             <Sparkles className="w-4 h-4 text-white/60" />
           </Button>
 
-          {/* SYMBOL POSITIONING OPTIONS */}
-          <div className="flex flex-col items-center gap-3">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Deployment Strategy</span>
+          <div className="flex flex-col items-center gap-3 w-full">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Deployment Strategy</span>
             <div className="flex flex-wrap justify-center gap-2">
               {[
                 { id: 'both', label: 'Both Sides', icon: <Layers className="w-3.5 h-3.5" /> },
@@ -408,8 +467,8 @@ export default function Home() {
                   onClick={() => setSymbolPosition(pos.id as SymbolPosition)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-full border text-[9px] font-bold uppercase tracking-widest transition-all ${
                     symbolPosition === pos.id 
-                      ? 'bg-gray-900 border-gray-900 text-white shadow-md' 
-                      : 'bg-white border-gray-100 text-gray-400 hover:border-[#25D366] hover:text-[#25D366]'
+                      ? 'bg-foreground border-foreground text-background shadow-md' 
+                      : 'bg-card border-border text-muted-foreground hover:border-[#25D366] hover:text-[#25D366]'
                   }`}
                 >
                   {pos.icon} {pos.label}
@@ -424,9 +483,9 @@ export default function Home() {
         <div className="space-y-6">
           
           {activeFilter === 'left' && (
-            <div className="bg-white border border-gray-100 p-4 md:p-6 rounded-3xl shadow-sm space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <div className="bg-card border border-border p-4 md:p-6 rounded-3xl shadow-sm space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
               <div className="flex justify-between items-center">
-                <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
+                <h3 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                   <Shield className="w-3.5 h-3.5 text-[#25D366]" /> Tactical Prefixes
                 </h3>
               </div>
@@ -438,7 +497,7 @@ export default function Home() {
                     className={`h-12 rounded-xl border text-[9px] md:text-[10px] uppercase font-bold transition-all ${
                       selectedLeft === "" 
                         ? 'bg-[#25D366] border-none text-white shadow-md' 
-                        : 'border-gray-50 bg-gray-50 text-gray-400 hover:bg-[#25D366] hover:text-white'
+                        : 'border-border bg-muted/20 text-muted-foreground hover:bg-[#25D366] hover:text-white'
                     }`}
                   >
                     None
@@ -451,7 +510,7 @@ export default function Home() {
                       className={`h-12 text-lg md:text-xl rounded-xl transition-all border ${
                         selectedLeft === sym 
                           ? 'bg-[#25D366] border-none text-white shadow-md' 
-                          : 'border-gray-50 bg-gray-50 text-gray-600 hover:bg-[#25D366] hover:text-white'
+                          : 'border-border bg-muted/20 text-foreground hover:bg-[#25D366] hover:text-white'
                       }`}
                     >
                       {sym}
@@ -463,9 +522,9 @@ export default function Home() {
           )}
 
           {activeFilter === 'right' && (
-            <div className="bg-white border border-gray-100 p-4 md:p-6 rounded-3xl shadow-sm space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <div className="bg-card border border-border p-4 md:p-6 rounded-3xl shadow-sm space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
               <div className="flex justify-between items-center">
-                <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
+                <h3 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                   <Sword className="w-3.5 h-3.5 text-[#25D366]" /> Tactical Suffixes
                 </h3>
               </div>
@@ -477,7 +536,7 @@ export default function Home() {
                     className={`h-12 rounded-xl border text-[9px] md:text-[10px] uppercase font-bold transition-all ${
                       selectedRight === "" 
                         ? 'bg-[#25D366] border-none text-white shadow-md' 
-                        : 'border-gray-50 bg-gray-50 text-gray-400 hover:bg-[#25D366] hover:text-white'
+                        : 'border-border bg-muted/20 text-muted-foreground hover:bg-[#25D366] hover:text-white'
                     }`}
                   >
                     None
@@ -490,7 +549,7 @@ export default function Home() {
                       className={`h-12 text-lg md:text-xl rounded-xl transition-all border ${
                         selectedRight === sym 
                           ? 'bg-[#25D366] border-none text-white shadow-md' 
-                          : 'border-gray-50 bg-gray-50 text-gray-600 hover:bg-[#25D366] hover:text-white'
+                          : 'border-border bg-muted/20 text-foreground hover:bg-[#25D366] hover:text-white'
                       }`}
                     >
                       {sym}
@@ -502,38 +561,45 @@ export default function Home() {
           )}
 
           {activeFilter === 'fonts' && (
-            <div className="bg-white border border-gray-100 p-4 md:p-6 rounded-3xl shadow-sm space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <div className="bg-card border border-border p-4 md:p-6 rounded-3xl shadow-sm space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
               <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div className="flex items-center gap-4">
-                  <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
+                <div className="flex items-center gap-4 flex-wrap justify-center">
+                  <h3 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                     <Type className="w-3.5 h-3.5 text-[#25D366]" /> Tactical Font Forge
                   </h3>
                   <Button
                     onClick={handleCopyAll}
                     variant="outline"
-                    className="h-7 px-3 text-[8px] font-bold uppercase tracking-widest rounded-full border-gray-100 hover:bg-[#25D366] hover:text-white transition-all flex items-center gap-2"
+                    className="h-7 px-3 text-[8px] font-bold uppercase tracking-widest rounded-full border-border hover:bg-[#25D366] hover:text-white transition-all flex items-center gap-2"
                   >
                     <Copy className="w-3 h-3" /> Copy All Visible
+                  </Button>
+                  <Button
+                    onClick={() => generateRandomFromCategory(styleCategory)}
+                    variant="outline"
+                    className="h-7 px-3 text-[8px] font-bold uppercase tracking-widest rounded-full border-primary/40 text-primary hover:bg-primary hover:text-white transition-all flex items-center gap-2"
+                  >
+                    <Wand2 className="w-3 h-3" /> Surprise Me
                   </Button>
                 </div>
                 
                 <div className="flex flex-wrap justify-center gap-2">
-                  <div className="flex items-center bg-gray-50 rounded-full p-1 border border-gray-100">
+                  <div className="flex items-center bg-muted/30 rounded-full p-1 border border-border">
                     {(['all', 'short', 'medium', 'long'] as LengthCategory[]).map((len) => (
                       <button
                         key={len}
                         onClick={() => setLengthFilter(len)}
                         className={`h-6 px-3 text-[7px] font-bold uppercase tracking-widest rounded-full transition-all ${
                           lengthFilter === len 
-                            ? 'bg-gray-900 text-white' 
-                            : 'text-gray-400 hover:text-gray-900'
+                            ? 'bg-foreground text-background' 
+                            : 'text-muted-foreground hover:text-foreground'
                         }`}
                       >
                         {len}
                       </button>
                     ))}
                   </div>
-                  <div className="flex items-center bg-gray-50 rounded-full p-1 border border-gray-100">
+                  <div className="flex items-center bg-muted/30 rounded-full p-1 border border-border">
                     {(['all', 'pubg', 'freefire', 'cod', 'roblox', 'minecraft'] as StyleCategory[]).map((cat) => (
                       <button
                         key={cat}
@@ -541,7 +607,7 @@ export default function Home() {
                         className={`h-6 px-3 text-[7px] font-bold uppercase tracking-widest rounded-full transition-all ${
                           styleCategory === cat 
                             ? 'bg-[#25D366] text-white' 
-                            : 'text-gray-400 hover:text-[#25D366]'
+                            : 'text-muted-foreground hover:text-[#25D366]'
                         }`}
                       >
                         {cat}
@@ -558,11 +624,11 @@ export default function Home() {
                     className={`group cursor-pointer p-4 md:p-5 rounded-2xl border transition-all flex flex-col gap-2 ${
                       selectedStyleId === "none" 
                         ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
-                        : 'border-gray-50 bg-white hover:border-[#25D366] hover:bg-[#25D366] hover:text-white'
+                        : 'border-border bg-card hover:border-[#25D366] hover:bg-[#25D366] hover:text-white'
                     }`}
                   >
                     <div className="flex justify-between items-center">
-                      <span className={`text-[8px] font-black uppercase tracking-wider transition-colors ${selectedStyleId === "none" ? 'text-white/80' : 'text-gray-400 group-hover:text-white/80'}`}>Normal Text (NONE)</span>
+                      <span className={`text-[8px] font-black uppercase tracking-wider transition-colors ${selectedStyleId === "none" ? 'text-white/80' : 'text-muted-foreground group-hover:text-white/80'}`}>Normal Text (NONE)</span>
                       <div className="flex gap-1">
                         <Button 
                           variant="ghost" 
@@ -602,11 +668,11 @@ export default function Home() {
                         className={`group cursor-pointer p-4 md:p-5 rounded-2xl border transition-all flex flex-col gap-2 ${
                           isActive 
                             ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
-                            : 'border-gray-50 bg-white hover:border-[#25D366] hover:bg-[#25D366] hover:text-white'
+                            : 'border-border bg-card hover:border-[#25D366] hover:bg-[#25D366] hover:text-white'
                         }`}
                       >
                         <div className="flex justify-between items-center">
-                          <span className={`text-[8px] font-black uppercase tracking-wider transition-colors ${isActive ? 'text-white/80' : 'text-gray-400 group-hover:text-white/80'}`}>{style.name}</span>
+                          <span className={`text-[8px] font-black uppercase tracking-wider transition-colors ${isActive ? 'text-white/80' : 'text-muted-foreground group-hover:text-white/80'}`}>{style.name}</span>
                           <div className="flex gap-1">
                             <Button 
                               variant="ghost" 
@@ -649,20 +715,20 @@ export default function Home() {
                 <Bookmark className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-xl font-black text-gray-900 uppercase">My Tactical Collection</h2>
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Saved Identity Loadouts</p>
+                <h2 className="text-xl font-black text-foreground uppercase">My Tactical Collection</h2>
+                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Saved Identity Loadouts</p>
               </div>
             </div>
 
             {favorites.length === 0 ? (
-              <div className="bg-gray-50 border-2 border-dashed border-gray-100 rounded-[2rem] p-12 text-center space-y-4">
-                <Heart className="w-10 h-10 text-gray-200 mx-auto" />
-                <p className="text-gray-400 text-xs font-medium">Your collection is empty. Forge and save names to see them here.</p>
+              <div className="bg-muted/10 border-2 border-dashed border-border rounded-[2rem] p-12 text-center space-y-4">
+                <Heart className="w-10 h-10 text-muted/30 mx-auto" />
+                <p className="text-muted-foreground text-xs font-medium">Your collection is empty. Forge and save names to see them here.</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {favorites.map((fav, idx) => (
-                  <div key={idx} className="bg-white border border-gray-100 p-5 rounded-2xl shadow-sm flex flex-col gap-3 group hover:border-[#25D366] transition-all">
+                  <div key={idx} className="bg-card border border-border p-5 rounded-2xl shadow-sm flex flex-col gap-3 group hover:border-[#25D366] transition-all">
                     <div className="flex justify-between items-center">
                       <Badge className="bg-[#25D366]/10 text-[#25D366] text-[8px] uppercase tracking-widest">SAVED LOADOUT</Badge>
                       <div className="flex gap-1">
@@ -670,7 +736,7 @@ export default function Home() {
                           variant="ghost" 
                           size="icon" 
                           onClick={() => handleCopy(fav)}
-                          className="h-8 w-8 text-gray-400 hover:text-[#25D366] hover:bg-[#25D366]/10"
+                          className="h-8 w-8 text-muted-foreground hover:text-[#25D366] hover:bg-[#25D366]/10"
                         >
                           <Copy className="w-4 h-4" />
                         </Button>
@@ -678,13 +744,13 @@ export default function Home() {
                           variant="ghost" 
                           size="icon" 
                           onClick={() => removeFavorite(fav)}
-                          className="h-8 w-8 text-gray-400 hover:text-red-500 hover:bg-red-50"
+                          className="h-8 w-8 text-muted-foreground hover:text-red-500 hover:bg-red-50"
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
                       </div>
                     </div>
-                    <span className="text-sm font-black text-gray-800 break-all">{fav}</span>
+                    <span className="text-sm font-black text-foreground break-all">{fav}</span>
                   </div>
                 ))}
               </div>
@@ -692,24 +758,24 @@ export default function Home() {
           </section>
         </div>
 
-        <div className="mt-16 md:mt-24 space-y-16 md:space-y-24 border-t border-gray-50 pt-12 md:pt-16">
+        <div className="mt-16 md:mt-24 space-y-16 md:space-y-24 border-t border-border pt-12 md:pt-16">
           <section id="how-to-use" className="max-w-4xl mx-auto space-y-8 md:space-y-12">
             <div className="text-center space-y-3 md:space-y-4">
-              <h2 className="text-xl md:text-3xl font-black text-gray-900 uppercase tracking-tight">How to Forge Your <span className="text-[#25D366]">Stylish Game Name</span></h2>
-              <p className="text-gray-500 text-xs md:text-sm max-w-xl mx-auto">Master our Free Fire Name Maker and PUBG Name Maker in three tactical steps.</p>
+              <h2 className="text-xl md:text-3xl font-black text-foreground uppercase tracking-tight">How to Forge Your <span className="text-[#25D366]">Stylish Game Name</span></h2>
+              <p className="text-muted-foreground text-xs md:text-sm max-w-xl mx-auto">Master our Free Fire Name Maker and PUBG Name Maker in three tactical steps.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
               {[
                 { title: "Input Nickname", text: "Start by typing your handle. Our Gaming Name Generator supports characters from all languages.", icon: <Type className="w-5 h-5" /> },
                 { title: "Customization", text: "Inject Left and Right Symbols. Use Middle Mode for a premium spaced look.", icon: <Layers className="w-5 h-5" /> },
-                { title: "Deploy & Dominate", text: "Review in the Live Preview dock. Copy and paste or download as PNG directly.", icon: <CheckCircle2 className="w-5 h-5" /> }
+                { title: "Deploy & Dominate", text: "Review in the Live Preview dock. Copy and paste, share to WhatsApp, or download as PNG.", icon: <CheckCircle2 className="w-5 h-5" /> }
               ].map((step, i) => (
-                <div key={i} className="p-6 md:p-8 bg-gray-50 rounded-[1.5rem] border border-gray-100 space-y-3 hover:shadow-xl hover:shadow-gray-200/40 transition-all">
-                  <div className="h-10 w-10 bg-white rounded-xl shadow-sm flex items-center justify-center text-[#25D366]">
+                <div key={i} className="p-6 md:p-8 bg-muted/20 rounded-[1.5rem] border border-border space-y-3 hover:shadow-xl hover:border-primary/20 transition-all">
+                  <div className="h-10 w-10 bg-card rounded-xl shadow-sm flex items-center justify-center text-[#25D366] border border-border">
                     {step.icon}
                   </div>
-                  <h3 className="font-bold text-gray-900 text-sm md:text-base">{step.title}</h3>
-                  <p className="text-[11px] md:text-xs text-gray-500 leading-relaxed">{step.text}</p>
+                  <h3 className="font-bold text-foreground text-sm md:text-base">{step.title}</h3>
+                  <p className="text-[11px] md:text-xs text-muted-foreground leading-relaxed">{step.text}</p>
                 </div>
               ))}
             </div>
@@ -717,8 +783,8 @@ export default function Home() {
 
           <section id="faq" className="max-w-3xl mx-auto space-y-8 md:space-y-12">
             <div className="text-center space-y-2">
-              <h2 className="text-xl md:text-3xl font-black text-gray-900 uppercase tracking-tight">Gamer <span className="text-[#25D366]">Intel</span> (FAQ)</h2>
-              <p className="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest">Mastering the BGMI and Free Fire Name Maker</p>
+              <h2 className="text-xl md:text-3xl font-black text-foreground uppercase tracking-tight">Gamer <span className="text-[#25D366]">Intel</span> (FAQ)</h2>
+              <p className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-widest">Mastering the BGMI and Free Fire Name Maker</p>
             </div>
             <Accordion type="single" collapsible className="w-full space-y-3 md:space-y-4">
               {[
@@ -726,11 +792,12 @@ export default function Home() {
                 { q: "Does this PUBG Name Maker work for BGMI?", a: "Yes, our PUBG Name Maker is fully optimized for Battlegrounds Mobile India (BGMI). All symbols (ツ, 亗, 々) are tested for the Indian version." },
                 { q: "What is the 'Middle (Spacing)' position?", a: "Middle position injects your selected symbol between every letter of your name, creating a premium spaced effect popular in competitive gaming." },
                 { q: "Can I download my stylish name as an image?", a: "Yes, use the 'Download PNG' button in the live preview dock to save a high-quality card of your gaming handle." },
-                { q: "Is registration required?", a: "No, this is a 100% free tool for the gaming community. No registration needed." }
+                { q: "Is registration required?", a: "No, this is a 100% free tool for the gaming community. No registration needed." },
+                { q: "How do I share my name on WhatsApp?", a: "Simply click the 'WhatsApp' icon in the live preview dock at the bottom of the screen to share your name instantly." }
               ].map((faq, i) => (
-                <AccordionItem key={i} value={`item-${i}`} className="border border-gray-100 rounded-xl px-4 md:px-6 bg-white shadow-sm hover:border-[#25D366]/30 transition-all">
-                  <AccordionTrigger className="text-xs md:text-sm font-bold hover:no-underline py-4 text-left text-gray-800">{faq.q}</AccordionTrigger>
-                  <AccordionContent className="text-[11px] md:text-xs text-gray-500 leading-relaxed pb-4">
+                <AccordionItem key={i} value={`item-${i}`} className="border border-border rounded-xl px-4 md:px-6 bg-card shadow-sm hover:border-[#25D366]/30 transition-all">
+                  <AccordionTrigger className="text-xs md:text-sm font-bold hover:no-underline py-4 text-left text-foreground">{faq.q}</AccordionTrigger>
+                  <AccordionContent className="text-[11px] md:text-xs text-muted-foreground leading-relaxed pb-4">
                     {faq.a}
                   </AccordionContent>
                 </AccordionItem>
@@ -740,30 +807,40 @@ export default function Home() {
         </div>
       </main>
 
-      <div className="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-gray-100 px-4 py-3 md:p-4 z-50 shadow-2xl">
+      <div className="fixed bottom-0 left-0 w-full bg-background/95 backdrop-blur-md border-t border-border px-4 py-3 md:p-4 z-50 shadow-2xl">
         <div className="max-w-3xl mx-auto flex flex-col md:flex-row items-center gap-3">
           <div className="w-full flex-1 min-w-0">
-            <div className="bg-gray-50 border border-gray-100 px-3 py-2 md:py-2.5 rounded-xl flex items-center justify-center min-h-[42px] shadow-inner overflow-hidden">
-              <span className="text-xs md:text-sm font-black text-gray-900 tracking-normal text-center break-all">
+            <div className="bg-muted/30 border border-border px-3 py-2 md:py-2.5 rounded-xl flex items-center justify-center min-h-[42px] shadow-inner overflow-hidden">
+              <span className="text-xs md:text-sm font-black text-foreground tracking-normal text-center break-all">
                 {livePreviewText}
               </span>
             </div>
           </div>
           
-          <div className="flex gap-2 w-full md:w-auto justify-center">
+          <div className="flex gap-2 w-full md:w-auto justify-center flex-wrap">
             <Button 
               variant="outline"
               size="icon"
               onClick={() => toggleFavorite(livePreviewText)}
-              className={`h-10 w-10 rounded-xl transition-all ${favorites.includes(livePreviewText) ? 'text-[#25D366] fill-[#25D366]/10 border-[#25D366]/40' : 'text-gray-400 hover:bg-[#25D366] hover:text-white'}`}
+              className={`h-10 w-10 rounded-xl transition-all ${favorites.includes(livePreviewText) ? 'text-[#25D366] fill-[#25D366]/10 border-[#25D366]/40' : 'text-muted-foreground hover:bg-[#25D366] hover:text-white'}`}
             >
               <Heart className={`w-4 h-4 md:w-5 md:h-5 ${favorites.includes(livePreviewText) ? 'fill-current' : ''}`} />
             </Button>
             <Button 
               variant="outline"
               size="icon"
+              onClick={shareToWhatsApp}
+              className="h-10 w-10 rounded-xl text-muted-foreground hover:bg-[#25D366] hover:text-white border-border"
+              title="Share to WhatsApp"
+            >
+              <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
+            </Button>
+            <Button 
+              variant="outline"
+              size="icon"
               onClick={downloadAsImage}
-              className="h-10 w-10 rounded-xl text-gray-400 hover:bg-[#25D366] hover:text-white"
+              className="h-10 w-10 rounded-xl text-muted-foreground hover:bg-[#25D366] hover:text-white border-border"
+              title="Download PNG"
             >
               <Download className="w-4 h-4 md:w-5 md:h-5" />
             </Button>
@@ -777,12 +854,12 @@ export default function Home() {
         </div>
       </div>
 
-      <footer className="py-12 md:py-20 bg-gray-50 border-t border-gray-100 text-center space-y-4 px-4">
+      <footer className="py-12 md:py-20 bg-muted/20 border-t border-border text-center space-y-4 px-4">
         <div className="flex items-center gap-2 justify-center opacity-40 grayscale mb-4">
           <Gamepad2 className="w-4 h-4" />
-          <span className="text-[10px] font-black tracking-tighter uppercase">STYLISH GAME NAME</span>
+          <span className="text-[10px] font-black tracking-tighter uppercase text-foreground">STYLISH GAME NAME</span>
         </div>
-        <p className="text-[8px] md:text-[9px] font-bold text-gray-400 uppercase tracking-[0.3em]">&copy; {new Date().getFullYear()} MISSION CRITICAL IDENTITY. ALL RIGHTS RESERVED.</p>
+        <p className="text-[8px] md:text-[9px] font-bold text-muted-foreground uppercase tracking-[0.3em]">&copy; {new Date().getFullYear()} MISSION CRITICAL IDENTITY. ALL RIGHTS RESERVED.</p>
       </footer>
     </div>
   );
