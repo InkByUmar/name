@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
@@ -10,15 +11,12 @@ import {
   Sword,
   Gamepad2,
   Menu,
-  Sparkles,
-  CheckCircle2,
   Zap,
-  Star,
-  ChevronRight,
-  HelpCircle,
+  Sparkles,
   Info,
-  ExternalLink,
-  MessageSquare
+  HelpCircle,
+  CheckCircle2,
+  Layers
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -38,12 +36,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+type ActiveTab = 'left' | 'right' | 'fonts';
+
 export default function Home() {
   const [inputText, setInputText] = useState("ProGamer");
   const [selectedLeft, setSelectedLeft] = useState("");
   const [selectedRight, setSelectedRight] = useState("");
   const [selectedStyleId, setSelectedStyleId] = useState("bold");
-  const [activeTab, setActiveTab] = useState<StyleCategory>("all");
+  const [styleCategory, setStyleCategory] = useState<StyleCategory>("all");
+  const [activeFilter, setActiveFilter] = useState<ActiveTab>('fonts');
   const [favorites, setFavorites] = useState<string[]>([]);
   const { toast } = useToast();
 
@@ -63,17 +64,16 @@ export default function Home() {
 
   const filteredStyles = useMemo(() => {
     return STYLE_OPTIONS.filter(style => 
-      activeTab === 'all' || style.category.includes(activeTab)
+      styleCategory === 'all' || style.category.includes(styleCategory)
     );
-  }, [activeTab]);
+  }, [styleCategory]);
 
   const handleCopy = (text: string) => {
     if (!text) return;
     navigator.clipboard.writeText(text);
-    
     toast({
       title: "Copied to Clipboard",
-      description: `"${text}" is ready to use.`
+      description: `"${text}" is ready for battle.`
     });
   };
 
@@ -110,7 +110,6 @@ export default function Home() {
           <a href="#" className="text-[11px] font-bold uppercase tracking-widest text-[#25D366]">Home</a>
           <a href="#how-to-use" className="text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-colors">How to Use</a>
           <a href="#about-us" className="text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-colors">About Us</a>
-          <a href="#faq" className="text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-colors">FAQ</a>
         </div>
         
         <Button variant="ghost" size="icon" className="md:hidden">
@@ -119,12 +118,12 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <header className="pt-12 pb-8 px-4 text-center max-w-4xl mx-auto space-y-4">
+      <header className="pt-12 pb-6 px-4 text-center max-w-4xl mx-auto space-y-4">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#25D366]/10 text-[#25D366] text-[10px] font-bold uppercase tracking-widest mb-2">
-          <Zap className="w-3 h-3" /> Premium Unicode Generator
+          <Zap className="w-3 h-3" /> 100% Stable Unicode Engine
         </div>
-        <h1 className="text-3xl font-black text-gray-900 tracking-tight leading-tight uppercase">
-          Forge Your <span className="text-[#25D366]">Identity</span>
+        <h1 className="text-2xl font-black text-gray-900 tracking-tight leading-tight uppercase">
+          Create Your <span className="text-[#25D366]">Gamer Identity</span>
         </h1>
         
         <div className="relative max-w-md mx-auto mt-6">
@@ -141,15 +140,18 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Category Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mt-8">
+        {/* Category Tabs (Font Filtering) */}
+        <div className="flex flex-wrap justify-center gap-2 mt-6">
           {(['all', 'pubg', 'freefire', 'cod', 'roblox', 'minecraft'] as StyleCategory[]).map((cat) => (
             <Button
               key={cat}
-              onClick={() => setActiveTab(cat)}
-              variant={activeTab === cat ? "default" : "outline"}
-              className={`h-8 px-6 text-[10px] font-bold uppercase tracking-widest rounded-full transition-all ${
-                activeTab === cat 
+              onClick={() => {
+                setStyleCategory(cat);
+                setActiveFilter('fonts');
+              }}
+              variant={styleCategory === cat ? "default" : "outline"}
+              className={`h-8 px-5 text-[10px] font-bold uppercase tracking-widest rounded-full transition-all ${
+                styleCategory === cat 
                   ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
                   : 'bg-white border-gray-100 text-gray-400 hover:text-[#25D366] hover:border-[#25D366]/30'
               }`}
@@ -158,20 +160,57 @@ export default function Home() {
             </Button>
           ))}
         </div>
+
+        {/* Visibility Filter Buttons */}
+        <div className="flex justify-center gap-3 mt-8 pb-4 border-b border-gray-50">
+          <Button
+            onClick={() => setActiveFilter('left')}
+            variant={activeFilter === 'left' ? "default" : "outline"}
+            className={`h-11 px-6 text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all ${
+              activeFilter === 'left' 
+                ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
+                : 'bg-white border-gray-100 text-gray-500 hover:text-[#25D366] hover:border-[#25D366]/30'
+            }`}
+          >
+            <Shield className="w-4 h-4 mr-2" /> Left Symbol
+          </Button>
+          <Button
+            onClick={() => setActiveFilter('right')}
+            variant={activeFilter === 'right' ? "default" : "outline"}
+            className={`h-11 px-6 text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all ${
+              activeFilter === 'right' 
+                ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
+                : 'bg-white border-gray-100 text-gray-500 hover:text-[#25D366] hover:border-[#25D366]/30'
+            }`}
+          >
+            <Sword className="w-4 h-4 mr-2" /> Right Symbol
+          </Button>
+          <Button
+            onClick={() => setActiveFilter('fonts')}
+            variant={activeFilter === 'fonts' ? "default" : "outline"}
+            className={`h-11 px-6 text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all ${
+              activeFilter === 'fonts' 
+                ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
+                : 'bg-white border-gray-100 text-gray-500 hover:text-[#25D366] hover:border-[#25D366]/30'
+            }`}
+          >
+            <Type className="w-4 h-4 mr-2" /> Font Styles
+          </Button>
+        </div>
       </header>
 
       {/* Main Content Area */}
-      <main className="max-w-6xl mx-auto px-4 pb-48">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <main className="max-w-5xl mx-auto px-4 pb-48">
+        <div className="space-y-6">
           
-          {/* Section 1: Left Symbol */}
-          <div className="lg:col-span-6">
-            <div className="bg-white border border-gray-100 p-6 rounded-3xl shadow-sm space-y-4">
+          {/* Section 1: Left Symbol (Visible only if filter matches) */}
+          {activeFilter === 'left' && (
+            <div className="bg-white border border-gray-100 p-6 rounded-3xl shadow-sm space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
               <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
-                <Shield className="w-3.5 h-3.5 text-[#25D366]" /> 01. Left Flank
+                <Shield className="w-3.5 h-3.5 text-[#25D366]" /> 01. Left Symbol Injection
               </h3>
-              <ScrollArea className="h-[140px]">
-                <div className="grid grid-cols-5 gap-2 pr-2">
+              <ScrollArea className="h-[200px]">
+                <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 pr-2">
                   <Button 
                     variant="ghost" 
                     onClick={() => setSelectedLeft("")}
@@ -192,16 +231,16 @@ export default function Home() {
                 </div>
               </ScrollArea>
             </div>
-          </div>
+          )}
 
-          {/* Section 2: Right Symbol */}
-          <div className="lg:col-span-6">
-            <div className="bg-white border border-gray-100 p-6 rounded-3xl shadow-sm space-y-4">
+          {/* Section 2: Right Symbol (Visible only if filter matches) */}
+          {activeFilter === 'right' && (
+            <div className="bg-white border border-gray-100 p-6 rounded-3xl shadow-sm space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
               <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
-                <Sword className="w-3.5 h-3.5 text-[#25D366]" /> 02. Right Flank
+                <Sword className="w-3.5 h-3.5 text-[#25D366]" /> 02. Right Symbol Injection
               </h3>
-              <ScrollArea className="h-[140px]">
-                <div className="grid grid-cols-5 gap-2 pr-2">
+              <ScrollArea className="h-[200px]">
+                <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 pr-2">
                   <Button 
                     variant="ghost" 
                     onClick={() => setSelectedRight("")}
@@ -222,20 +261,20 @@ export default function Home() {
                 </div>
               </ScrollArea>
             </div>
-          </div>
+          )}
 
-          {/* Section 3: Font Styles */}
-          <div className="lg:col-span-12">
-            <div className="bg-white border border-gray-100 p-6 rounded-3xl shadow-sm space-y-4">
+          {/* Section 3: Font Styles (Visible only if filter matches) */}
+          {activeFilter === 'fonts' && (
+            <div className="bg-white border border-gray-100 p-6 rounded-3xl shadow-sm space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
               <div className="flex justify-between items-center">
                 <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
-                  <Type className="w-3.5 h-3.5 text-[#25D366]" /> 03. Neural Font Forge
+                  <Type className="w-3.5 h-3.5 text-[#25D366]" /> 03. Tactical Font Forge
                 </h3>
-                <Badge variant="secondary" className="bg-[#25D366]/10 text-[#25D366] font-bold text-[9px] uppercase px-3">{filteredStyles.length} Variations</Badge>
+                <Badge variant="secondary" className="bg-[#25D366]/10 text-[#25D366] font-bold text-[9px] uppercase px-3">{filteredStyles.length} Styles Loaded</Badge>
               </div>
               
-              <ScrollArea className="h-[400px] pr-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <ScrollArea className="h-[450px] pr-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {filteredStyles.map((style) => {
                     const transformed = style.transform(inputText || "Name");
                     const isActive = selectedStyleId === style.id;
@@ -244,10 +283,10 @@ export default function Home() {
                       <div 
                         key={style.id}
                         onClick={() => setSelectedStyleId(style.id)}
-                        className={`group cursor-pointer p-4 rounded-2xl border transition-all flex flex-col gap-2 ${
+                        className={`group cursor-pointer p-5 rounded-2xl border transition-all flex flex-col gap-2 ${
                           isActive 
                             ? 'border-[#25D366] bg-[#25D366]/5 shadow-sm' 
-                            : 'border-gray-100 bg-white hover:border-[#25D366]/30 hover:shadow-md'
+                            : 'border-gray-50 bg-white hover:border-[#25D366]/30 hover:shadow-md'
                         }`}
                       >
                         <div className="flex justify-between items-center">
@@ -259,9 +298,9 @@ export default function Home() {
                               e.stopPropagation();
                               handleCopy(transformed);
                             }}
-                            className="h-7 w-7 rounded-lg hover:bg-[#25D366] hover:text-white"
+                            className="h-8 w-8 rounded-lg hover:bg-[#25D366] hover:text-white"
                           >
-                            <Copy className="w-3.5 h-3.5" />
+                            <Copy className="w-4 h-4" />
                           </Button>
                         </div>
                         <div className="text-sm font-bold truncate text-gray-800">
@@ -273,23 +312,26 @@ export default function Home() {
                 </div>
               </ScrollArea>
             </div>
-          </div>
+          )}
         </div>
 
         {/* SEO CONTENT */}
-        <div className="mt-20 space-y-20">
-          <section id="how-to-use" className="max-w-4xl mx-auto space-y-10">
+        <div className="mt-24 space-y-24 border-t border-gray-50 pt-16">
+          <section id="how-to-use" className="max-w-4xl mx-auto space-y-12">
             <div className="text-center space-y-4">
-              <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tight">How to Forge Your <span className="text-[#25D366]">Identity</span></h2>
+              <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tight">How to Forge Your <span className="text-[#25D366]">Legacy</span></h2>
+              <p className="text-gray-500 text-sm max-w-xl mx-auto">Follow these 3 simple steps to create a high-compatibility nickname for any mobile game.</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
-                { title: "Input Name", text: "Type your desired nickname in the central forge input." },
-                { title: "Select Patterns", text: "Inject tactical prefixes and suffixes from the symbol arsenal." },
-                { title: "Export Identity", text: "Choose a neural font transformation and copy your final name." }
+                { title: "Input Basic Name", text: "Type your regular nickname into the central forge input at the top of the page.", icon: <Type className="w-5 h-5" /> },
+                { title: "Customize Layout", text: "Use the filter buttons to toggle between Left Symbols, Right Symbols, and Font Styles.", icon: <Layers className="w-5 h-5" /> },
+                { title: "Deploy Identity", text: "Check the Live Preview dock at the bottom and copy your finalized gaming tag.", icon: <CheckCircle2 className="w-5 h-5" /> }
               ].map((step, i) => (
-                <div key={i} className="p-6 bg-gray-50 rounded-2xl border border-gray-100 space-y-2">
-                  <div className="text-2xl font-black text-[#25D366]/20">0{i+1}</div>
+                <div key={i} className="p-8 bg-gray-50 rounded-[2rem] border border-gray-100 space-y-4 hover:shadow-xl hover:shadow-gray-200/40 transition-all">
+                  <div className="h-10 w-10 bg-white rounded-xl shadow-sm flex items-center justify-center text-[#25D366]">
+                    {step.icon}
+                  </div>
                   <h4 className="font-bold text-gray-900">{step.title}</h4>
                   <p className="text-xs text-gray-500 leading-relaxed">{step.text}</p>
                 </div>
@@ -297,37 +339,50 @@ export default function Home() {
             </div>
           </section>
 
-          <section id="about-us" className="bg-[#25D366]/5 rounded-[2.5rem] p-10 md:p-16">
+          <section id="about-us" className="bg-[#25D366]/5 rounded-[3rem] p-12 md:p-20 border border-[#25D366]/10">
             <div className="max-w-3xl mx-auto text-center space-y-6">
-              <h2 className="text-2xl font-black text-gray-900 uppercase">The #1 Unicode Forge</h2>
+              <h2 className="text-2xl font-black text-gray-900 uppercase">The Global Unicode Forge</h2>
               <p className="text-gray-600 text-sm leading-relaxed">
-                Stylish Game Name is the world's most stable generator for PUBG, Free Fire, and BGMI. We manually audit every Unicode block to ensure your name renders perfectly across all devices without question marks.
+                Stylish Game Name is the world's most stable generator for PUBG, Free Fire, BGMI, and Roblox. Unlike other generators that use erratic math symbols, we manually audit every character map to ensure your name renders perfectly across all devices. Our mission is to provide the gaming community with professional-grade identity tools that are 100% free and easy to use.
               </p>
             </div>
           </section>
 
-          <section id="faq" className="max-w-3xl mx-auto space-y-8">
-            <h2 className="text-2xl font-black text-gray-900 uppercase text-center">Intel <span className="text-[#25D366]">Report</span></h2>
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="item-1">
-                <AccordionTrigger className="text-sm font-bold">Why no question marks?</AccordionTrigger>
-                <AccordionContent className="text-xs text-gray-500">We use 'Safe-Zone' Unicode characters that are natively supported by modern mobile gaming engines.</AccordionContent>
+          <section id="faq" className="max-w-3xl mx-auto space-y-10">
+            <div className="text-center space-y-2">
+              <h2 className="text-2xl font-black text-gray-900 uppercase">Tactical <span className="text-[#25D366]">Intel</span></h2>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Frequently Asked Questions</p>
+            </div>
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              <AccordionItem value="item-1" className="border border-gray-100 rounded-2xl px-6 bg-white">
+                <AccordionTrigger className="text-sm font-bold hover:no-underline py-5 text-left">Why are there no question marks in my name?</AccordionTrigger>
+                <AccordionContent className="text-xs text-gray-500 leading-relaxed pb-5">
+                  We use "Safe-Zone" Unicode characters. Standard fancy text generators often use characters from obscure math blocks that modern gaming engines don't support. We manually bridge these gaps using Letterlike Symbols that are natively supported by Android and iOS.
+                </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-2">
-                <AccordionTrigger className="text-sm font-bold">Is this tool free?</AccordionTrigger>
-                <AccordionContent className="text-xs text-gray-500">Always. Stylish Game Name is 100% free and requires no registration for unlimited use.</AccordionContent>
+              <AccordionItem value="item-2" className="border border-gray-100 rounded-2xl px-6 bg-white">
+                <AccordionTrigger className="text-sm font-bold hover:no-underline py-5 text-left">Does this work for BGMI and Free Fire?</AccordionTrigger>
+                <AccordionContent className="text-xs text-gray-500 leading-relaxed pb-5">
+                  Yes! All symbols (ツ, 亗, 々) and font styles (Bold, Script, Italic) are tested specifically for compatibility with high-end mobile titles including BGMI, Free Fire MAX, COD Mobile, and Roblox.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-3" className="border border-gray-100 rounded-2xl px-6 bg-white">
+                <AccordionTrigger className="text-sm font-bold hover:no-underline py-5 text-left">Is this tool free to use?</AccordionTrigger>
+                <AccordionContent className="text-xs text-gray-500 leading-relaxed pb-5">
+                  Stylish Game Name is 100% free for the gaming community. We do not require registration, email signups, or downloads.
+                </AccordionContent>
               </AccordionItem>
             </Accordion>
           </section>
         </div>
       </main>
 
-      {/* COMPACT LIVE PREVIEW DOCK */}
-      <div className="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-gray-100 p-3 z-50 shadow-2xl">
-        <div className="max-w-3xl mx-auto flex items-center gap-4">
+      {/* COMPACT LIVE PREVIEW DOCK (Smaller and cleaner) */}
+      <div className="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-gray-100 p-4 z-50 shadow-2xl">
+        <div className="max-w-2xl mx-auto flex items-center gap-3">
           <div className="flex-1">
-            <div className="bg-gray-50 border border-gray-100 px-4 py-2 rounded-xl flex items-center justify-center min-h-[44px] shadow-inner overflow-hidden">
-              <span className="text-sm md:text-base font-bold text-gray-900 tracking-normal text-center break-all">
+            <div className="bg-gray-50 border border-gray-100 px-4 py-2.5 rounded-xl flex items-center justify-center min-h-[42px] shadow-inner overflow-hidden">
+              <span className="text-sm font-bold text-gray-900 tracking-normal text-center break-all">
                 {livePreviewText}
               </span>
             </div>
@@ -352,12 +407,12 @@ export default function Home() {
         </div>
       </div>
 
-      <footer className="py-16 bg-gray-50 border-t border-gray-100 text-center space-y-4">
+      <footer className="py-20 bg-gray-50 border-t border-gray-100 text-center space-y-4">
         <div className="flex items-center gap-2 justify-center opacity-40 grayscale">
           <Gamepad2 className="w-4 h-4" />
           <span className="text-[10px] font-black tracking-tighter">STYLISH GAME NAME</span>
         </div>
-        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-[0.3em]">&copy; {new Date().getFullYear()} ALL RIGHTS RESERVED.</p>
+        <p className="text-[9px] font-bold text-gray-400 uppercase tracking-[0.3em]">&copy; {new Date().getFullYear()} MISSION CRITICAL IDENTITY. ALL RIGHTS RESERVED.</p>
       </footer>
     </div>
   );
