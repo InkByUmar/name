@@ -112,8 +112,6 @@ export default function Home() {
     setSelectedLeft(randomLeft);
     setSelectedRight(randomRight);
     setSelectedStyleId(randomStyle.id);
-    
-    // Toast notification removed for a cleaner, silent experience
   };
 
   const NavLinks = ({ mobile = false }: { mobile?: boolean }) => (
@@ -203,7 +201,7 @@ export default function Home() {
               placeholder="Type your nickname here..."
               className="h-10 md:h-12 text-sm md:text-base border-none focus-visible:ring-0 px-3 md:px-4 font-bold text-gray-800"
             />
-            <Button onClick={generateRandomText} variant="outline" size="icon" className="h-10 w-10 md:h-12 md:w-12 rounded-xl border-gray-100 text-gray-400 hover:text-[#25D366] hover:border-[#25D366]/30 shrink-0">
+            <Button onClick={generateRandomText} variant="outline" size="icon" className="h-10 w-10 md:h-12 md:w-12 rounded-xl border-gray-100 text-gray-400 hover:bg-[#25D366] hover:text-white hover:border-transparent shrink-0 transition-all">
               <RotateCcw className="w-5 h-5" />
             </Button>
           </div>
@@ -242,7 +240,7 @@ export default function Home() {
             className={`h-11 px-4 text-[10px] md:text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all w-full ${
               activeFilter === 'left' 
                 ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
-                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent font-bold'
+                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent'
             }`}
           >
             <Shield className="w-4 h-4 mr-2" /> Left Symbol
@@ -253,7 +251,7 @@ export default function Home() {
             className={`h-11 px-4 text-[10px] md:text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all w-full ${
               activeFilter === 'right' 
                 ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
-                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent font-bold'
+                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent'
             }`}
           >
             <Sword className="w-4 h-4 mr-2" /> Right Symbol
@@ -264,7 +262,7 @@ export default function Home() {
             className={`h-11 px-4 text-[10px] md:text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all w-full ${
               activeFilter === 'fonts' 
                 ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
-                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent font-bold'
+                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent'
             }`}
           >
             <Type className="w-4 h-4 mr-2" /> Font Styles
@@ -305,7 +303,11 @@ export default function Home() {
                   <Button 
                     variant="ghost" 
                     onClick={() => setSelectedLeft("")}
-                    className={`h-12 rounded-xl border text-[9px] md:text-[10px] uppercase font-bold transition-all ${selectedLeft === "" ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 text-gray-400 hover:bg-[#25D366] hover:text-white hover:border-transparent'}`}
+                    className={`h-12 rounded-xl border text-[9px] md:text-[10px] uppercase font-bold transition-all ${
+                      selectedLeft === "" 
+                        ? 'bg-[#25D366] border-none text-white shadow-md' 
+                        : 'border-gray-50 bg-gray-50 text-gray-400 hover:bg-[#25D366] hover:text-white hover:border-transparent'
+                    }`}
                   >
                     None
                   </Button>
@@ -314,7 +316,11 @@ export default function Home() {
                       key={i} 
                       variant="ghost" 
                       onClick={() => setSelectedLeft(sym)}
-                      className={`h-12 text-lg md:text-xl rounded-xl transition-all border ${selectedLeft === sym ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 text-gray-600 hover:bg-[#25D366] hover:text-white hover:border-transparent'}`}
+                      className={`h-12 text-lg md:text-xl rounded-xl transition-all border ${
+                        selectedLeft === sym 
+                          ? 'bg-[#25D366] border-none text-white shadow-md' 
+                          : 'border-gray-50 bg-gray-50 text-gray-600 hover:bg-[#25D366] hover:text-white hover:border-transparent'
+                      }`}
                     >
                       {sym}
                     </Button>
@@ -338,7 +344,11 @@ export default function Home() {
                   <Button 
                     variant="ghost" 
                     onClick={() => setSelectedRight("")}
-                    className={`h-12 rounded-xl border text-[9px] md:text-[10px] uppercase font-bold transition-all ${selectedRight === "" ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 text-gray-400 hover:bg-[#25D366] hover:text-white hover:border-transparent'}`}
+                    className={`h-12 rounded-xl border text-[9px] md:text-[10px] uppercase font-bold transition-all ${
+                      selectedRight === "" 
+                        ? 'bg-[#25D366] border-none text-white shadow-md' 
+                        : 'border-gray-50 bg-gray-50 text-gray-400 hover:bg-[#25D366] hover:text-white hover:border-transparent'
+                    }`}
                   >
                     None
                   </Button>
@@ -347,7 +357,11 @@ export default function Home() {
                       key={i} 
                       variant="ghost" 
                       onClick={() => setSelectedRight(sym)}
-                      className={`h-12 text-lg md:text-xl rounded-xl transition-all border ${selectedRight === sym ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 text-gray-600 hover:bg-[#25D366] hover:text-white hover:border-transparent'}`}
+                      className={`h-12 text-lg md:text-xl rounded-xl transition-all border ${
+                        selectedRight === sym 
+                          ? 'bg-[#25D366] border-none text-white shadow-md' 
+                          : 'border-gray-50 bg-gray-50 text-gray-600 hover:bg-[#25D366] hover:text-white hover:border-transparent'
+                      }`}
                     >
                       {sym}
                     </Button>
@@ -373,12 +387,12 @@ export default function Home() {
                     onClick={() => setSelectedStyleId("none")}
                     className={`group cursor-pointer p-4 md:p-5 rounded-2xl border transition-all flex flex-col gap-2 ${
                       selectedStyleId === "none" 
-                        ? 'border-[#25D366] bg-[#25D366]/5 shadow-sm' 
+                        ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
                         : 'border-gray-50 bg-white hover:border-[#25D366] hover:text-white hover:bg-[#25D366] hover:shadow-md'
                     }`}
                   >
                     <div className="flex justify-between items-center">
-                      <span className="text-[8px] font-black uppercase text-gray-400 tracking-wider group-hover:text-white transition-colors">Normal Text</span>
+                      <span className={`text-[8px] font-black uppercase tracking-wider transition-colors ${selectedStyleId === "none" ? 'text-white/80' : 'text-gray-400 group-hover:text-white/80'}`}>Normal Text</span>
                       <Button 
                         variant="ghost" 
                         size="icon" 
@@ -386,12 +400,12 @@ export default function Home() {
                           e.stopPropagation();
                           handleCopy(inputText || "Name");
                         }}
-                        className="h-7 w-7 md:h-8 md:w-8 rounded-lg group-hover:bg-white/20 group-hover:text-white"
+                        className={`h-7 w-7 md:h-8 md:w-8 rounded-lg transition-all ${selectedStyleId === "none" ? 'bg-white/20 text-white' : 'hover:bg-[#25D366] hover:text-white'}`}
                       >
                         <Copy className="w-3.5 h-3.5 md:w-4 md:h-4" />
                       </Button>
                     </div>
-                    <div className="text-xs md:text-sm font-bold truncate group-hover:text-white">
+                    <div className={`text-xs md:text-sm font-bold truncate transition-colors ${selectedStyleId === "none" ? 'text-white' : 'group-hover:text-white'}`}>
                       {inputText || "Name"}
                     </div>
                   </div>
@@ -406,12 +420,12 @@ export default function Home() {
                         onClick={() => setSelectedStyleId(style.id)}
                         className={`group cursor-pointer p-4 md:p-5 rounded-2xl border transition-all flex flex-col gap-2 ${
                           isActive 
-                            ? 'border-[#25D366] bg-[#25D366]/5 shadow-sm' 
+                            ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
                             : 'border-gray-50 bg-white hover:border-[#25D366] hover:text-white hover:bg-[#25D366] hover:shadow-md'
                         }`}
                       >
                         <div className="flex justify-between items-center">
-                          <span className="text-[8px] font-black uppercase text-gray-400 tracking-wider group-hover:text-white transition-colors">{style.name}</span>
+                          <span className={`text-[8px] font-black uppercase tracking-wider transition-colors ${isActive ? 'text-white/80' : 'text-gray-400 group-hover:text-white/80'}`}>{style.name}</span>
                           <Button 
                             variant="ghost" 
                             size="icon" 
@@ -419,12 +433,12 @@ export default function Home() {
                               e.stopPropagation();
                               handleCopy(transformed);
                             }}
-                            className="h-7 w-7 md:h-8 md:w-8 rounded-lg group-hover:bg-white/20 group-hover:text-white"
+                            className={`h-7 w-7 md:h-8 md:w-8 rounded-lg transition-all ${isActive ? 'bg-white/20 text-white' : 'hover:bg-[#25D366] hover:text-white'}`}
                           >
                             <Copy className="w-3.5 h-3.5 md:w-4 md:h-4" />
                           </Button>
                         </div>
-                        <div className="text-xs md:text-sm font-bold truncate group-hover:text-white">
+                        <div className={`text-xs md:text-sm font-bold truncate transition-colors ${isActive ? 'text-white' : 'group-hover:text-white'}`}>
                           {transformed}
                         </div>
                       </div>
@@ -577,7 +591,7 @@ export default function Home() {
             </Button>
             <Button 
               onClick={() => handleCopy(livePreviewText)}
-              className="h-9 md:h-11 px-4 md:px-6 bg-[#25D366] hover:bg-[#25D366]/90 text-white font-black text-[9px] md:text-[10px] uppercase tracking-widest rounded-xl shadow-lg shadow-[#25D366]/10 flex items-center gap-2"
+              className="h-9 md:h-11 px-4 md:px-6 bg-[#25D366] hover:bg-[#25D366]/90 text-white font-black text-[9px] md:text-[10px] uppercase tracking-widest rounded-xl shadow-lg shadow-[#25D366]/10 flex items-center gap-2 transition-all active:scale-[0.98]"
             >
               <Copy className="w-3.5 h-3.5 md:w-4 md:h-4" /> <span className="hidden sm:inline">Copy Result</span>
             </Button>
@@ -591,9 +605,9 @@ export default function Home() {
           <span className="text-[10px] font-black tracking-tighter uppercase">STYLISH GAME NAME</span>
         </div>
         <div className="flex flex-wrap justify-center gap-6 mb-6">
-           <a href="#" className="text-[10px] font-bold text-gray-400 hover:text-[#25D366] uppercase">Privacy Policy</a>
-           <a href="#" className="text-[10px] font-bold text-gray-400 hover:text-[#25D366] uppercase">Terms of Service</a>
-           <a href="#about-us" className="text-[10px] font-bold text-gray-400 hover:text-[#25D366] uppercase">Contact Us</a>
+           <a href="#" className="text-[10px] font-bold text-gray-400 hover:text-[#25D366] transition-colors uppercase">Privacy Policy</a>
+           <a href="#" className="text-[10px] font-bold text-gray-400 hover:text-[#25D366] transition-colors uppercase">Terms of Service</a>
+           <a href="#about-us" className="text-[10px] font-bold text-gray-400 hover:text-[#25D366] transition-colors uppercase">Contact Us</a>
         </div>
         <p className="text-[8px] md:text-[9px] font-bold text-gray-400 uppercase tracking-[0.2em] md:tracking-[0.3em]">&copy; {new Date().getFullYear()} MISSION CRITICAL IDENTITY. ALL RIGHTS RESERVED.</p>
       </footer>
