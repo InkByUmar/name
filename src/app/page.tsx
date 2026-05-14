@@ -469,7 +469,7 @@ export default function Home() {
           <section id="seo-info" className="max-w-4xl mx-auto space-y-8 md:space-y-12">
             <div className="p-8 md:p-12 bg-gray-50 rounded-[2rem] border border-gray-100 space-y-6">
               <div className="flex items-center gap-3 text-[#25D366]">
-                <Target className="w-6 h-6" />
+                <Search className="w-6 h-6" />
                 <h2 className="text-xl md:text-2xl font-black text-gray-900 uppercase">Search Engine <span className="text-[#25D366]">Visibility Guide</span></h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
