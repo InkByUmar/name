@@ -1,10 +1,11 @@
 import type {Metadata} from 'next';
 import './globals.css';
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Stylish Glyph - Fancy Text Generator for PUBG, Free Fire & BGMI',
-  description: 'Create unique and stylish gamer tags with our fancy text generator. AI-powered alias suggestions for PUBG, Free Fire, BGMI, COD, and Roblox.',
-  keywords: 'fancy text, gamer tags, stylish names, PUBG names, Free Fire nicknames, BGMI font, COD mobile names, Roblox symbols',
+  title: 'Stylish Game Name - Fancy Text Generator for PUBG, Free Fire & BGMI',
+  description: 'Generate unique and stylish gamer tags with our premium fancy text engine. Custom symbols for PUBG, Free Fire, BGMI, COD, and Roblox. 100% Unicode compatibility.',
+  keywords: 'fancy text, gamer tags, stylish names, PUBG names, Free Fire nicknames, BGMI font, COD mobile names, Roblox symbols, Minecraft names',
 };
 
 export default function RootLayout({
@@ -21,6 +22,7 @@ export default function RootLayout({
       </head>
       <body className="font-body bg-background text-foreground antialiased selection:bg-primary selection:text-primary-foreground">
         {children}
+        <Toaster />
       </body>
     </html>
   );
