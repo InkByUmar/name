@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
@@ -55,6 +56,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 type ActiveTab = 'left' | 'right' | 'fonts';
 type SymbolPosition = 'both' | 'left' | 'right' | 'middle';
@@ -90,6 +98,10 @@ const TRENDING_NAMES = [
   { label: "Echo Pulse", text: "Pulse", left: "📡", right: "📡", styleId: "monospace" },
   { label: "Sub Zero", text: "Zero", left: "∅", right: "∅", styleId: "smallCaps" },
   { label: "The Elite", text: "Elite", left: "💎", right: "💎", styleId: "boldScript" },
+  { label: "Vortex Pro", text: "Vortex", left: "🌪️", right: "🌪️", styleId: "boldItalic" },
+  { label: "Cipher X", text: "Cipher", left: "📟", right: "📟", styleId: "monospace" },
+  { label: "Nova Star", text: "Nova", left: "✨", right: "✨", styleId: "boldScript" },
+  { label: "Rage Mode", text: "Rage", left: "💢", right: "💢", styleId: "boldFraktur" },
 ];
 
 const CATEGORY_NAMES: Record<StyleCategory, string[]> = {
@@ -116,11 +128,9 @@ export default function Home() {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Favorites sync
     const savedFavs = localStorage.getItem("stylish-glyph-favorites");
     if (savedFavs) setFavorites(JSON.parse(savedFavs));
     
-    // Theme initialization: Default to light unless "dark" is explicitly saved
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
       setIsDarkMode(true);
@@ -129,6 +139,21 @@ export default function Home() {
       setIsDarkMode(false);
       document.documentElement.classList.remove('dark');
     }
+  }, []);
+
+  // Daily trending names shuffle bonus
+  const dailyTrendingNames = useMemo(() => {
+    const seed = new Date().toISOString().slice(0, 10);
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) {
+      hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const shuffled = [...TRENDING_NAMES];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.abs((hash + i) % (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
   }, []);
 
   const toggleTheme = () => {
@@ -409,28 +434,33 @@ export default function Home() {
           </div>
         </div>
 
-        <section id="trending" className="mt-8 pt-4">
-          <div className="flex items-center justify-center gap-2 mb-4">
+        <section id="trending" className="mt-8 pt-4 overflow-hidden">
+          <div className="flex items-center justify-center gap-2 mb-6">
             <Flame className="w-4 h-4 text-[#25D366] fill-[#25D366]/20" />
-            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Hot Trending Loadouts</h3>
+            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Hot Trending Names This Week</h3>
           </div>
-          <ScrollArea className="w-full whitespace-nowrap pb-4">
-            <div className="flex gap-3 px-4 pb-2">
-              {TRENDING_NAMES.map((item, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => applyTrending(item)}
-                  className="flex flex-col items-center gap-1.5 p-4 bg-card border border-border rounded-2xl hover:border-[#25D366] hover:shadow-lg hover:shadow-[#25D366]/5 transition-all group shrink-0 min-w-[140px]"
-                >
-                  <span className="text-[9px] font-bold uppercase text-muted-foreground group-hover:text-[#25D366] transition-colors">{item.label}</span>
-                  <span className="text-sm font-black text-foreground">
-                    {item.left}{STYLE_OPTIONS.find(s => s.id === item.styleId)?.transform(item.text)}{item.right}
-                  </span>
-                </button>
+          
+          <Carousel opts={{ align: "start", loop: true }} className="w-full relative group">
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {dailyTrendingNames.map((item, idx) => (
+                <CarouselItem key={idx} className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
+                  <button
+                    onClick={() => applyTrending(item)}
+                    className="flex flex-col items-center justify-center w-full gap-1.5 p-4 bg-card border border-border rounded-2xl hover:border-[#25D366] hover:shadow-lg hover:shadow-[#25D366]/10 transition-all group/item shrink-0 h-24"
+                  >
+                    <span className="text-[8px] font-bold uppercase text-muted-foreground group-hover/item:text-[#25D366] transition-colors line-clamp-1">{item.label}</span>
+                    <span className="text-xs md:text-sm font-black text-foreground line-clamp-1">
+                      {item.left}{STYLE_OPTIONS.find(s => s.id === item.styleId)?.transform(item.text)}{item.right}
+                    </span>
+                  </button>
+                </CarouselItem>
               ))}
+            </CarouselContent>
+            <div className="hidden group-hover:flex">
+              <CarouselPrevious className="absolute -left-4 bg-background/80 border-border" />
+              <CarouselNext className="absolute -right-4 bg-background/80 border-border" />
             </div>
-            <ScrollBar orientation="horizontal" className="h-1.5" />
-          </ScrollArea>
+          </Carousel>
         </section>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3 mt-8 pb-2 max-w-2xl mx-auto">
