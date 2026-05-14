@@ -27,7 +27,8 @@ import {
   Sun,
   Moon,
   MessageCircle,
-  Wand2
+  Wand2,
+  Flame
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -40,7 +41,7 @@ import {
   RIGHT_SYMBOLS
 } from "@/lib/fancy-text-utils";
 import { useToast } from "@/hooks/use-toast";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import {
   Accordion,
   AccordionContent,
@@ -65,6 +66,30 @@ const TRENDING_NAMES = [
   { label: "Shadow Killer", text: "Shadow", left: "꧁", right: "꧂", styleId: "bold" },
   { label: "Pro Sniper", text: "Sniper", left: "🎯", right: "🎯", styleId: "monospace" },
   { label: "Deadly Viper", text: "Viper", left: "🐍", right: "🐍", styleId: "fraktur" },
+  { label: "Shadow Ninja", text: "Ninja", left: "🥷", right: "🥷", styleId: "italicSans" },
+  { label: "Mythic Legend", text: "Legend", left: "✯", right: "✯", styleId: "double" },
+  { label: "Alpha Strike", text: "Alpha", left: "Δ", right: "Δ", styleId: "boldSans" },
+  { label: "Omega Void", text: "Void", left: "Ω", right: "Ω", styleId: "aesthetic" },
+  { label: "Fire Dragon", text: "Dragon", left: "🐉", right: "🐉", styleId: "script" },
+  { label: "Cold Killer", text: "Killer", left: "⚔️", right: "⚔️", styleId: "smallCaps" },
+  { label: "Grim Reaper", text: "Reaper", left: "💀", right: "💀", styleId: "boldFraktur" },
+  { label: "Sky Phoenix", text: "Phoenix", left: "🔥", right: "🔥", styleId: "italic" },
+  { label: "Iron Titan", text: "Titan", left: "🛡️", right: "🛡️", styleId: "bold" },
+  { label: "Dark Ace", text: "Ace", left: "♠️", right: "♠️", styleId: "monospace" },
+  { label: "Wild Joker", text: "Joker", left: "🃏", right: "🃏", styleId: "script" },
+  { label: "Head Hunter", text: "Hunter", left: "🏹", right: "🏹", styleId: "boldSans" },
+  { label: "Night Demon", text: "Demon", left: "😈", right: "😈", styleId: "boldItalic" },
+  { label: "Light Angel", text: "Angel", left: "😇", right: "😇", styleId: "boldScript" },
+  { label: "Silent Rogue", text: "Rogue", left: "🎭", right: "🎭", styleId: "sans" },
+  { label: "Electric Storm", text: "Storm", left: "⚡", right: "⚡", styleId: "italicSans" },
+  { label: "Ice Frost", text: "Frost", left: "❄️", right: "❄️", styleId: "double" },
+  { label: "Sun Blaze", text: "Blaze", left: "🔥", right: "🔥", styleId: "aesthetic" },
+  { label: "Snake Venom", text: "Venom", left: "🕸️", right: "🕸️", styleId: "fraktur" },
+  { label: "Dark Raven", text: "Raven", left: "🐦", right: "🐦", styleId: "boldSans" },
+  { label: "Speed Nitro", text: "Nitro", left: "🚀", right: "🚀", styleId: "bold" },
+  { label: "Echo Pulse", text: "Pulse", left: "📡", right: "📡", styleId: "monospace" },
+  { label: "Sub Zero", text: "Zero", left: "∅", right: "∅", styleId: "smallCaps" },
+  { label: "The Elite", text: "Elite", left: "💎", right: "💎", styleId: "boldScript" },
 ];
 
 const CATEGORY_NAMES: Record<StyleCategory, string[]> = {
@@ -193,10 +218,6 @@ export default function Home() {
     setSelectedRight(trending.right);
     setSelectedStyleId(trending.styleId);
     setSymbolPosition('both');
-    toast({
-      title: "Trending Loadout Applied",
-      description: `Loaded "${trending.label}" configuration.`
-    });
   };
 
   const shareToWhatsApp = () => {
@@ -267,11 +288,6 @@ export default function Home() {
     const randomName = names[Math.floor(Math.random() * names.length)];
     setInputText(randomName);
     setStyleCategory(cat);
-    
-    toast({
-      title: "Category Surprise Applied",
-      description: `Loaded a popular name for ${cat.toUpperCase()}.`
-    });
   };
 
   const autoForgeIdentity = () => {
@@ -386,24 +402,25 @@ export default function Home() {
 
         <section id="trending" className="mt-8 pt-4">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <TrendingUp className="w-4 h-4 text-[#25D366]" />
-            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Elite Trending Loadouts</h3>
+            <Flame className="w-4 h-4 text-[#25D366] fill-[#25D366]/20" />
+            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Hot Trending Loadouts</h3>
           </div>
           <ScrollArea className="w-full whitespace-nowrap pb-4">
-            <div className="flex gap-3 px-4">
+            <div className="flex gap-3 px-4 pb-2">
               {TRENDING_NAMES.map((item, idx) => (
                 <button
                   key={idx}
                   onClick={() => applyTrending(item)}
-                  className="flex flex-col items-center gap-1 p-3 bg-muted/20 border border-border rounded-2xl hover:border-[#25D366] hover:bg-[#25D366]/5 transition-all group shrink-0"
+                  className="flex flex-col items-center gap-1.5 p-4 bg-card border border-border rounded-2xl hover:border-[#25D366] hover:shadow-lg hover:shadow-[#25D366]/5 transition-all group shrink-0 min-w-[140px]"
                 >
-                  <span className="text-[9px] font-bold uppercase text-muted-foreground group-hover:text-[#25D366]">{item.label}</span>
-                  <span className="text-xs font-black text-foreground">
-                    {item.left} {STYLE_OPTIONS.find(s => s.id === item.styleId)?.transform(item.text)} {item.right}
+                  <span className="text-[9px] font-bold uppercase text-muted-foreground group-hover:text-[#25D366] transition-colors">{item.label}</span>
+                  <span className="text-sm font-black text-foreground">
+                    {item.left}{STYLE_OPTIONS.find(s => s.id === item.styleId)?.transform(item.text)}{item.right}
                   </span>
                 </button>
               ))}
             </div>
+            <ScrollBar orientation="horizontal" className="h-1.5" />
           </ScrollArea>
         </section>
 
