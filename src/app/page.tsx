@@ -92,7 +92,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#FDFDFD]">
-      {/* Top Navigation */}
+      {/* Top Navigation Bar */}
       <nav className="sticky top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 h-16 px-4 md:px-8 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="bg-[#25D366] p-1.5 rounded-lg shadow-sm">
@@ -162,7 +162,7 @@ export default function Home() {
 
       <main className="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-6 pb-48">
         
-        {/* Step 1: Prefix */}
+        {/* Step 1: Left Symbol */}
         <div className="lg:col-span-3 space-y-4">
           <div className="bg-white border border-gray-100 p-5 rounded-3xl shadow-sm space-y-4">
             <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
@@ -212,7 +212,7 @@ export default function Home() {
                     <div 
                       key={style.id}
                       onClick={() => setSelectedStyleId(style.id)}
-                      className={`cursor-pointer p-4 rounded-2xl border transition-all flex flex-col gap-1 ${
+                      className={`group cursor-pointer p-4 rounded-2xl border transition-all flex flex-col gap-2 ${
                         isActive 
                           ? 'border-[#25D366] bg-[#25D366]/5 shadow-inner' 
                           : 'border-gray-50 bg-gray-50 hover:border-[#25D366]/20 hover:bg-white'
@@ -220,7 +220,19 @@ export default function Home() {
                     >
                       <div className="flex justify-between items-center">
                         <span className="text-[8px] font-black uppercase text-gray-400 tracking-wider">{style.name}</span>
-                        {isActive && <CheckCircle2 className="w-3 h-3 text-[#25D366]" />}
+                        <div className="flex gap-1">
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleCopy(transformed);
+                            }}
+                            className="h-6 w-6 rounded-md hover:bg-[#25D366] hover:text-white"
+                          >
+                            <Copy className="w-3 h-3" />
+                          </Button>
+                        </div>
                       </div>
                       <div className="text-base font-bold truncate text-gray-800">
                         {transformed}
@@ -233,7 +245,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Step 3: Suffix */}
+        {/* Step 3: Suffix Selection */}
         <div className="lg:col-span-3 space-y-4">
           <div className="bg-white border border-gray-100 p-5 rounded-3xl shadow-sm space-y-4">
             <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
@@ -271,7 +283,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-6">
           <div className="flex-1 w-full text-center md:text-left">
             <div className="text-[9px] font-black text-[#25D366] uppercase tracking-[0.25em] mb-3 flex items-center justify-center md:justify-start gap-2">
-              <Sparkles className="w-3.5 h-3.5" /> Neural Link Live Preview
+              <Sparkles className="w-3.5 h-3.5" /> Final Gaming Identity Preview
             </div>
             <div className="bg-gray-50 border border-gray-100 p-6 rounded-[2rem] flex items-center justify-center min-h-[80px] shadow-inner overflow-hidden">
               <span className="text-xl md:text-2xl font-black text-gray-900 tracking-normal text-center break-all">
