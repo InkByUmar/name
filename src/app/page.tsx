@@ -334,35 +334,7 @@ export default function Home() {
               
               <ScrollArea className="h-[400px] md:h-[500px] pr-2 md:pr-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-                  {/* Dedicated None Button for Fonts */}
-                  <div 
-                    onClick={() => setSelectedStyleId("none")}
-                    className={`group cursor-pointer p-4 md:p-5 rounded-2xl border transition-all flex flex-col gap-2 ${
-                      selectedStyleId === "none" 
-                        ? 'border-[#25D366] bg-[#25D366]/5 shadow-sm' 
-                        : 'border-gray-50 bg-white hover:border-[#25D366]/30 hover:shadow-md'
-                    }`}
-                  >
-                    <div className="flex justify-between items-center">
-                      <span className="text-[8px] font-black uppercase text-gray-400 tracking-wider">None</span>
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleCopy(inputText || "Name");
-                        }}
-                        className="h-7 w-7 md:h-8 md:w-8 rounded-lg hover:bg-[#25D366] hover:text-white"
-                      >
-                        <Copy className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                      </Button>
-                    </div>
-                    <div className="text-xs md:text-sm font-bold truncate text-gray-800">
-                      Normal: {inputText || "Name"}
-                    </div>
-                  </div>
-
-                  {filteredStyles.filter(s => s.id !== "none").map((style) => {
+                  {filteredStyles.map((style) => {
                     const transformed = style.transform(inputText || "Name");
                     const isActive = selectedStyleId === style.id;
                     
