@@ -30,7 +30,6 @@ import {
   RIGHT_SYMBOLS
 } from "@/lib/fancy-text-utils";
 import { useToast } from "@/hooks/use-toast";
-import { IdentityStorage } from "@/components/IdentityStorage";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Accordion,
@@ -72,12 +71,6 @@ export default function Home() {
     if (!text) return;
     navigator.clipboard.writeText(text);
     
-    const history = JSON.parse(localStorage.getItem("stylish-glyph-history") || "[]");
-    const newHistory = [text, ...history.filter((h: string) => h !== text)].slice(0, 50);
-    localStorage.setItem("stylish-glyph-history", JSON.stringify(newHistory));
-    
-    window.dispatchEvent(new Event("storage-update"));
-
     toast({
       title: "Copied to Clipboard",
       description: `"${text}" is ready to use.`
@@ -91,7 +84,6 @@ export default function Home() {
     
     setFavorites(newFavs);
     localStorage.setItem("stylish-glyph-favorites", JSON.stringify(newFavs));
-    window.dispatchEvent(new Event("storage-update"));
   };
 
   const generateRandom = () => {
