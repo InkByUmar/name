@@ -105,7 +105,6 @@ export default function Home() {
   };
 
   const autoForgeIdentity = () => {
-    // Pick random components
     const randomLeft = LEFT_SYMBOLS[Math.floor(Math.random() * LEFT_SYMBOLS.length)];
     const randomRight = RIGHT_SYMBOLS[Math.floor(Math.random() * RIGHT_SYMBOLS.length)];
     const randomStyle = STYLE_OPTIONS[Math.floor(Math.random() * STYLE_OPTIONS.length)];
@@ -239,7 +238,7 @@ export default function Home() {
         </div>
 
         {/* Visibility Filter Buttons */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3 mt-6 pb-4 max-w-2xl mx-auto border-b border-gray-50">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3 mt-6 pb-2 max-w-2xl mx-auto">
           <Button
             onClick={() => setActiveFilter('left')}
             variant={activeFilter === 'left' ? "default" : "outline"}
@@ -273,6 +272,21 @@ export default function Home() {
           >
             <Type className="w-4 h-4 mr-2" /> Font Styles
           </Button>
+        </div>
+
+        {/* PROMINENT AUTO GENERATOR BUTTON */}
+        <div className="flex flex-col items-center justify-center pt-2 pb-6 px-4">
+          <Button
+            onClick={autoForgeIdentity}
+            className="h-12 md:h-14 px-8 md:px-12 bg-[#25D366] hover:bg-[#25D366]/90 text-white font-black text-[10px] md:text-xs uppercase tracking-[0.2em] rounded-2xl shadow-xl shadow-[#25D366]/20 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center gap-4 group"
+          >
+            <Dices className="w-5 h-5 transition-transform group-hover:rotate-12" />
+            Auto Forge Identity
+            <Sparkles className="w-4 h-4 text-white/60" />
+          </Button>
+          <div className="mt-3 text-[9px] text-gray-400 font-bold uppercase tracking-widest animate-pulse">
+            Surprise Me with Elite Combo
+          </div>
         </div>
       </header>
 
@@ -363,11 +377,11 @@ export default function Home() {
                     className={`group cursor-pointer p-4 md:p-5 rounded-2xl border transition-all flex flex-col gap-2 ${
                       selectedStyleId === "none" 
                         ? 'border-[#25D366] bg-[#25D366]/5 shadow-sm' 
-                        : 'border-gray-50 bg-white hover:border-[#25D366]/40 hover:shadow-md'
+                        : 'border-gray-50 bg-white hover:border-[#25D366] hover:text-white hover:bg-[#25D366] hover:shadow-md'
                     }`}
                   >
                     <div className="flex justify-between items-center">
-                      <span className="text-[8px] font-black uppercase text-gray-400 tracking-wider group-hover:text-[#25D366] transition-colors">Normal Text</span>
+                      <span className="text-[8px] font-black uppercase text-gray-400 tracking-wider group-hover:text-white transition-colors">Normal Text</span>
                       <Button 
                         variant="ghost" 
                         size="icon" 
@@ -375,12 +389,12 @@ export default function Home() {
                           e.stopPropagation();
                           handleCopy(inputText || "Name");
                         }}
-                        className="h-7 w-7 md:h-8 md:w-8 rounded-lg hover:bg-[#25D366] hover:text-white"
+                        className="h-7 w-7 md:h-8 md:w-8 rounded-lg group-hover:bg-white/20 group-hover:text-white"
                       >
                         <Copy className="w-3.5 h-3.5 md:w-4 md:h-4" />
                       </Button>
                     </div>
-                    <div className="text-xs md:text-sm font-bold truncate text-gray-800">
+                    <div className="text-xs md:text-sm font-bold truncate group-hover:text-white">
                       {inputText || "Name"}
                     </div>
                   </div>
@@ -396,11 +410,11 @@ export default function Home() {
                         className={`group cursor-pointer p-4 md:p-5 rounded-2xl border transition-all flex flex-col gap-2 ${
                           isActive 
                             ? 'border-[#25D366] bg-[#25D366]/5 shadow-sm' 
-                            : 'border-gray-50 bg-white hover:border-[#25D366]/40 hover:shadow-md'
+                            : 'border-gray-50 bg-white hover:border-[#25D366] hover:text-white hover:bg-[#25D366] hover:shadow-md'
                         }`}
                       >
                         <div className="flex justify-between items-center">
-                          <span className="text-[8px] font-black uppercase text-gray-400 tracking-wider group-hover:text-[#25D366] transition-colors">{style.name}</span>
+                          <span className="text-[8px] font-black uppercase text-gray-400 tracking-wider group-hover:text-white transition-colors">{style.name}</span>
                           <Button 
                             variant="ghost" 
                             size="icon" 
@@ -408,12 +422,12 @@ export default function Home() {
                               e.stopPropagation();
                               handleCopy(transformed);
                             }}
-                            className="h-7 w-7 md:h-8 md:w-8 rounded-lg hover:bg-[#25D366] hover:text-white"
+                            className="h-7 w-7 md:h-8 md:w-8 rounded-lg group-hover:bg-white/20 group-hover:text-white"
                           >
                             <Copy className="w-3.5 h-3.5 md:w-4 md:h-4" />
                           </Button>
                         </div>
-                        <div className="text-xs md:text-sm font-bold truncate text-gray-800">
+                        <div className="text-xs md:text-sm font-bold truncate group-hover:text-white">
                           {transformed}
                         </div>
                       </div>
@@ -423,23 +437,6 @@ export default function Home() {
               </ScrollArea>
             </div>
           )}
-        </div>
-
-        {/* Auto Generator Feature */}
-        <div className="flex flex-col items-center justify-center mt-12 mb-6 space-y-4 px-4">
-          <div className="w-full max-w-lg h-px bg-gradient-to-r from-transparent via-gray-100 to-transparent" />
-          <div className="text-center space-y-2">
-            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">Tactical Randomizer</h4>
-            <p className="text-[9px] text-gray-400 font-medium">Click to instantly discover a random elite gaming identity.</p>
-          </div>
-          <Button
-            onClick={autoForgeIdentity}
-            className="h-14 md:h-16 px-8 md:px-12 bg-[#25D366] hover:bg-[#25D366]/90 text-white font-black text-xs md:text-sm uppercase tracking-[0.2em] rounded-2xl shadow-xl shadow-[#25D366]/20 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center gap-4 group"
-          >
-            <Dices className="w-5 h-5 md:w-6 md:h-6 transition-transform group-hover:rotate-12" />
-            Auto Forge Identity
-            <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-white/60" />
-          </Button>
         </div>
 
         {/* SEO CONTENT SECTION */}
