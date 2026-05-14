@@ -528,11 +528,11 @@ export default function Home() {
         <div className="flex flex-col items-center justify-center py-4 px-4 space-y-8">
           <Button
             onClick={autoForgeIdentity}
-            className="h-14 md:h-16 px-6 md:px-16 bg-gradient-to-r from-[#25D366] to-[#128C7E] hover:from-[#25D366]/90 hover:to-[#128C7E]/90 text-white font-black text-[11px] md:text-sm uppercase tracking-[0.25em] rounded-2xl shadow-2xl shadow-[#25D366]/40 transition-all hover:scale-[1.05] active:scale-[0.98] flex items-center gap-3 md:gap-5 group border-none"
+            className="h-12 md:h-14 px-8 md:px-12 bg-gradient-to-r from-[#25D366] to-[#128C7E] hover:from-[#25D366]/90 hover:to-[#128C7E]/90 text-white font-black text-[10px] md:text-xs uppercase tracking-[0.2em] rounded-2xl shadow-2xl shadow-[#25D366]/40 transition-all hover:scale-[1.05] active:scale-[0.98] flex items-center gap-2 md:gap-4 group border-none"
           >
-            <Dices className="w-6 h-6 transition-transform group-hover:rotate-45" />
+            <Dices className="w-5 h-5 transition-transform group-hover:rotate-45" />
             🎲 Auto Forge Identity
-            <Sparkles className="w-5 h-5 text-white/70 animate-pulse hidden sm:inline" />
+            <Sparkles className="w-4 h-4 text-white/70 animate-pulse hidden sm:inline" />
           </Button>
 
           <div className="flex flex-col items-center gap-4 w-full">
@@ -958,33 +958,33 @@ export default function Home() {
               variant="outline"
               size="icon"
               onClick={() => toggleFavorite(livePreviewText)}
-              className={`h-11 w-11 md:h-14 md:w-14 rounded-xl md:rounded-2xl transition-all hover:scale-110 active:scale-90 ${favorites.includes(livePreviewText) ? 'text-[#25D366] fill-[#25D366]/10 border-[#25D366]/40 shadow-lg shadow-[#25D366]/10' : 'text-muted-foreground hover:bg-[#25D366] hover:text-white hover:border-transparent'}`}
+              className={`h-10 w-10 md:h-12 md:w-12 rounded-xl transition-all hover:scale-110 active:scale-90 ${favorites.includes(livePreviewText) ? 'text-[#25D366] fill-[#25D366]/10 border-[#25D366]/40 shadow-lg shadow-[#25D366]/10' : 'text-muted-foreground hover:bg-[#25D366] hover:text-white hover:border-transparent'}`}
             >
-              <Heart className={`w-5 h-5 md:w-6 md:h-6 ${favorites.includes(livePreviewText) ? 'fill-current' : ''}`} />
+              <Heart className={`w-5 h-5 ${favorites.includes(livePreviewText) ? 'fill-current' : ''}`} />
             </Button>
             <Button 
               variant="outline"
               size="icon"
               onClick={shareToWhatsApp}
-              className="h-11 w-11 md:h-14 md:w-14 rounded-xl md:rounded-2xl text-muted-foreground hover:bg-[#25D366] hover:text-white border-border hover:border-transparent transition-all hover:scale-110 active:scale-90"
+              className="h-10 w-10 md:h-12 md:w-12 rounded-xl text-muted-foreground hover:bg-[#25D366] hover:text-white border-border hover:border-transparent transition-all hover:scale-110 active:scale-90"
               title="Share to WhatsApp"
             >
-              <MessageCircle className="w-5 h-5 md:w-6 md:h-6" />
+              <MessageCircle className="w-5 h-5" />
             </Button>
             <Button 
               variant="outline"
               size="icon"
               onClick={downloadAsImage}
-              className="h-11 w-11 md:h-14 md:w-14 rounded-xl md:rounded-2xl text-muted-foreground hover:bg-[#25D366] hover:text-white border-border hover:border-transparent transition-all hover:scale-110 active:scale-90"
+              className="h-10 w-10 md:h-12 md:w-12 rounded-xl text-muted-foreground hover:bg-[#25D366] hover:text-white border-border hover:border-transparent transition-all hover:scale-110 active:scale-90"
               title="Download PNG"
             >
-              <Download className="w-5 h-5 md:w-6 md:h-6" />
+              <Download className="w-5 h-5" />
             </Button>
             <Button 
               onClick={() => handleCopy(livePreviewText)}
-              className="h-11 md:h-14 px-6 md:px-8 bg-[#25D366] hover:bg-[#25D366]/90 text-white font-black text-[9px] md:text-[11px] uppercase tracking-widest rounded-xl md:rounded-2xl shadow-xl shadow-[#25D366]/20 flex items-center gap-2 md:gap-3 transition-all active:scale-[0.98] flex-1 md:flex-none border-none hover:scale-[1.05]"
+              className="h-10 md:h-12 px-4 md:px-6 bg-[#25D366] hover:bg-[#25D366]/90 text-white font-black text-[9px] md:text-[11px] uppercase tracking-widest rounded-xl transition-all active:scale-[0.98] border-none hover:scale-[1.05] flex items-center gap-2"
             >
-              <Copy className="w-4 h-4 md:w-5 md:h-5" /> <span>Deploy Result</span>
+              <Copy className="w-4 h-4" /> <span>COPY</span>
             </Button>
           </div>
         </div>
