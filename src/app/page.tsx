@@ -112,11 +112,8 @@ export default function Home() {
     setSelectedLeft(randomLeft);
     setSelectedRight(randomRight);
     setSelectedStyleId(randomStyle.id);
-
-    toast({
-      title: "Identity Forged",
-      description: "A unique random combination has been deployed."
-    });
+    
+    // Toast notification removed for a cleaner, silent experience
   };
 
   const NavLinks = ({ mobile = false }: { mobile?: boolean }) => (
@@ -245,7 +242,7 @@ export default function Home() {
             className={`h-11 px-4 text-[10px] md:text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all w-full ${
               activeFilter === 'left' 
                 ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
-                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent'
+                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent font-bold'
             }`}
           >
             <Shield className="w-4 h-4 mr-2" /> Left Symbol
@@ -256,7 +253,7 @@ export default function Home() {
             className={`h-11 px-4 text-[10px] md:text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all w-full ${
               activeFilter === 'right' 
                 ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
-                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent'
+                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent font-bold'
             }`}
           >
             <Sword className="w-4 h-4 mr-2" /> Right Symbol
@@ -267,7 +264,7 @@ export default function Home() {
             className={`h-11 px-4 text-[10px] md:text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all w-full ${
               activeFilter === 'fonts' 
                 ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
-                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent'
+                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent font-bold'
             }`}
           >
             <Type className="w-4 h-4 mr-2" /> Font Styles
