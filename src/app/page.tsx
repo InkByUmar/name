@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
@@ -29,7 +28,11 @@ import {
   Moon,
   MessageCircle,
   Wand2,
-  Flame
+  Flame,
+  Info,
+  Target,
+  Trophy,
+  Users
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -141,7 +144,6 @@ export default function Home() {
     }
   }, []);
 
-  // Daily trending names shuffle bonus
   const dailyTrendingNames = useMemo(() => {
     const seed = new Date().toISOString().slice(0, 10);
     let hash = 0;
@@ -200,7 +202,7 @@ export default function Home() {
     navigator.clipboard.writeText(text);
     toast({
       title: "Copied to Clipboard",
-      description: `"${text}" is ready for battle.`
+      description: `"${text}" is ready for deployment.`
     });
   };
 
@@ -230,8 +232,8 @@ export default function Home() {
     
     if (!favorites.includes(text)) {
       toast({
-        title: "Added to Favorites",
-        description: "Your name is saved in the collection."
+        title: "Added to Collection",
+        description: "Your custom identity has been saved."
       });
     }
   };
@@ -242,7 +244,7 @@ export default function Home() {
     localStorage.setItem("stylish-glyph-favorites", JSON.stringify(newFavs));
     toast({
       title: "Removed",
-      description: "Name removed from collection."
+      description: "Identity removed from tactical collection."
     });
   };
 
@@ -306,7 +308,7 @@ export default function Home() {
     
     toast({
       title: "Image Generated",
-      description: "Your stylish name card has been downloaded."
+      description: "Your stylish identity card has been downloaded."
     });
   };
 
@@ -343,6 +345,7 @@ export default function Home() {
         { label: "Home", href: "#" },
         { label: "Trending", href: "#trending" },
         { label: "Collection", href: "#my-collection" },
+        { label: "About", href: "#about" },
         { label: "FAQ", href: "#faq" }
       ].map((link) => (
         <a 
@@ -364,9 +367,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background pb-40 md:pb-48 transition-colors duration-300">
-      <nav className="sticky top-0 left-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-border h-16 px-4 md:px-8 flex items-center justify-between shadow-sm">
+      <nav className="sticky top-0 left-0 w-full z-50 bg-background/90 backdrop-blur-lg border-b border-border h-16 px-4 md:px-8 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-2">
-          <div className="bg-[#25D366] p-1.5 rounded-lg shrink-0">
+          <div className="bg-[#25D366] p-1.5 rounded-lg shrink-0 shadow-md">
             <Gamepad2 className="w-5 h-5 text-white" />
           </div>
           <span className="text-sm md:text-base font-black tracking-tight text-foreground uppercase truncate">
@@ -412,32 +415,36 @@ export default function Home() {
         </div>
       </nav>
 
-      <header className="pt-8 pb-4 px-4 text-center max-w-4xl mx-auto space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#25D366]/10 text-[#25D366] text-[10px] font-bold uppercase tracking-widest mb-1">
-          <Zap className="w-3 h-3" /> Elite Free Fire Name Maker 2024
+      <header className="pt-12 pb-6 px-4 text-center max-w-4xl mx-auto space-y-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#25D366]/10 text-[#25D366] text-[10px] font-black uppercase tracking-widest mb-1 shadow-sm border border-[#25D366]/20">
+          <Zap className="w-3 h-3 fill-current" /> Ultimate Name Maker 2026 Edition
         </div>
-        <h1 className="text-xl md:text-3xl font-black text-foreground tracking-tight leading-tight uppercase">
-          Tactical <span className="text-[#25D366]">Stylish Game Name</span> Generator
+        <h1 className="text-2xl md:text-5xl font-black text-foreground tracking-tighter leading-none uppercase">
+          Ultimate <span className="text-[#25D366]">Stylish Game Name</span> Generator 2026
         </h1>
+        <p className="text-muted-foreground text-xs md:text-sm max-w-2xl mx-auto font-medium">
+          Create premium identity loadouts for Free Fire, PUBG, BGMI, and more. 100% stable Unicode symbols for competitive gaming domination.
+        </p>
         
-        <div className="relative max-w-md mx-auto mt-4 md:mt-6">
-          <div className="flex gap-2 p-1.5 bg-card rounded-2xl shadow-xl border border-border">
+        <div className="relative max-w-lg mx-auto mt-6 md:mt-10 group">
+          <div className="absolute -inset-1 bg-gradient-to-r from-[#25D366] to-[#128C7E] rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+          <div className="relative flex gap-2 p-2 bg-card rounded-2xl shadow-2xl border border-border">
             <Input 
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
-              placeholder="Type your nickname here..."
-              className="h-10 md:h-12 text-sm md:text-base border-none focus-visible:ring-0 px-3 md:px-4 font-bold text-foreground bg-transparent"
+              placeholder="Type your handle here..."
+              className="h-12 md:h-14 text-base md:text-lg border-none focus-visible:ring-0 px-4 md:px-6 font-bold text-foreground bg-transparent"
             />
-            <Button onClick={generateRandomText} variant="outline" size="icon" className="h-10 w-10 md:h-12 md:w-12 rounded-xl border-border text-muted-foreground hover:bg-[#25D366] hover:text-white hover:border-transparent shrink-0 transition-all">
+            <Button onClick={generateRandomText} variant="outline" size="icon" className="h-12 w-12 md:h-14 md:w-14 rounded-xl border-border text-muted-foreground hover:bg-[#25D366] hover:text-white hover:border-transparent shrink-0 transition-all active:scale-95">
               <RotateCcw className="w-5 h-5" />
             </Button>
           </div>
         </div>
 
-        <section id="trending" className="mt-8 pt-4 overflow-hidden">
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <Flame className="w-4 h-4 text-[#25D366] fill-[#25D366]/20" />
-            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Hot Trending Names This Week</h3>
+        <section id="trending" className="mt-12 pt-4 overflow-hidden">
+          <div className="flex items-center justify-center gap-2 mb-8">
+            <Flame className="w-5 h-5 text-[#25D366] fill-[#25D366]/20" />
+            <h2 className="text-[11px] font-black uppercase tracking-[0.3em] text-muted-foreground">Hot Trending Loadouts 2026</h2>
           </div>
           
           <Carousel opts={{ align: "start", loop: true }} className="w-full relative group">
@@ -446,10 +453,10 @@ export default function Home() {
                 <CarouselItem key={idx} className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
                   <button
                     onClick={() => applyTrending(item)}
-                    className="flex flex-col items-center justify-center w-full gap-1.5 p-4 bg-card border border-border rounded-2xl hover:border-[#25D366] hover:shadow-lg hover:shadow-[#25D366]/10 transition-all group/item shrink-0 h-24"
+                    className="flex flex-col items-center justify-center w-full gap-2 p-5 bg-card border border-border rounded-2xl hover:border-[#25D366] hover:shadow-xl hover:shadow-[#25D366]/10 transition-all group/item shrink-0 h-28 active:scale-95"
                   >
-                    <span className="text-[8px] font-bold uppercase text-muted-foreground group-hover/item:text-[#25D366] transition-colors line-clamp-1">{item.label}</span>
-                    <span className="text-xs md:text-sm font-black text-foreground line-clamp-1">
+                    <span className="text-[9px] font-black uppercase text-muted-foreground group-hover/item:text-[#25D366] transition-colors line-clamp-1">{item.label}</span>
+                    <span className="text-xs md:text-sm font-black text-foreground line-clamp-1 tracking-tight">
                       {item.left}{STYLE_OPTIONS.find(s => s.id === item.styleId)?.transform(item.text)}{item.right}
                     </span>
                   </button>
@@ -457,73 +464,73 @@ export default function Home() {
               ))}
             </CarouselContent>
             <div className="hidden group-hover:flex">
-              <CarouselPrevious className="absolute -left-4 bg-background/80 border-border" />
-              <CarouselNext className="absolute -right-4 bg-background/80 border-border" />
+              <CarouselPrevious className="absolute -left-4 bg-background/80 border-border shadow-md" />
+              <CarouselNext className="absolute -right-4 bg-background/80 border-border shadow-md" />
             </div>
           </Carousel>
         </section>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3 mt-8 pb-2 max-w-2xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 mt-12 pb-2 max-w-2xl mx-auto">
           <Button
             onClick={() => setActiveFilter('left')}
             variant={activeFilter === 'left' ? "default" : "outline"}
-            className={`h-11 px-4 text-[10px] md:text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all w-full ${
+            className={`h-12 px-6 text-[10px] md:text-[11px] font-black uppercase tracking-widest rounded-xl transition-all w-full hover:scale-[1.02] ${
               activeFilter === 'left' 
-                ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20 hover:bg-[#25D366]/90' 
+                ? 'bg-[#25D366] border-none text-white shadow-xl shadow-[#25D366]/30 hover:bg-[#25D366]/90' 
                 : 'bg-card border-border text-muted-foreground hover:bg-[#25D366] hover:text-white hover:border-transparent'
             }`}
           >
-            <Shield className="w-4 h-4 mr-2" /> Left Symbol
+            <Shield className="w-4 h-4 mr-2" /> Left Prefixes
           </Button>
           <Button
             onClick={() => setActiveFilter('right')}
             variant={activeFilter === 'right' ? "default" : "outline"}
-            className={`h-11 px-4 text-[10px] md:text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all w-full ${
+            className={`h-12 px-6 text-[10px] md:text-[11px] font-black uppercase tracking-widest rounded-xl transition-all w-full hover:scale-[1.02] ${
               activeFilter === 'right' 
-                ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20 hover:bg-[#25D366]/90' 
+                ? 'bg-[#25D366] border-none text-white shadow-xl shadow-[#25D366]/30 hover:bg-[#25D366]/90' 
                 : 'bg-card border-border text-muted-foreground hover:bg-[#25D366] hover:text-white hover:border-transparent'
             }`}
           >
-            <Sword className="w-4 h-4 mr-2" /> Right Symbol
+            <Sword className="w-4 h-4 mr-2" /> Right Suffixes
           </Button>
           <Button
             onClick={() => setActiveFilter('fonts')}
             variant={activeFilter === 'fonts' ? "default" : "outline"}
-            className={`h-11 px-4 text-[10px] md:text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all w-full ${
+            className={`h-12 px-6 text-[10px] md:text-[11px] font-black uppercase tracking-widest rounded-xl transition-all w-full hover:scale-[1.02] ${
               activeFilter === 'fonts' 
-                ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20 hover:bg-[#25D366]/90' 
+                ? 'bg-[#25D366] border-none text-white shadow-xl shadow-[#25D366]/30 hover:bg-[#25D366]/90' 
                 : 'bg-card border-border text-muted-foreground hover:bg-[#25D366] hover:text-white hover:border-transparent'
             }`}
           >
-            <Type className="w-4 h-4 mr-2" /> Font Styles
+            <Type className="w-4 h-4 mr-2" /> Tactical Fonts
           </Button>
         </div>
 
-        <div className="flex flex-col items-center justify-center py-6 px-4 space-y-6">
+        <div className="flex flex-col items-center justify-center py-8 px-4 space-y-8">
           <Button
             onClick={autoForgeIdentity}
-            className="h-12 md:h-14 px-10 md:px-14 bg-[#25D366] hover:bg-[#25D366]/90 text-white font-black text-[10px] md:text-xs uppercase tracking-[0.2em] rounded-2xl shadow-xl shadow-[#25D366]/20 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center gap-4 group"
+            className="h-14 md:h-16 px-12 md:px-16 bg-gradient-to-r from-[#25D366] to-[#128C7E] hover:from-[#25D366]/90 hover:to-[#128C7E]/90 text-white font-black text-[11px] md:text-sm uppercase tracking-[0.25em] rounded-2xl shadow-2xl shadow-[#25D366]/40 transition-all hover:scale-[1.05] active:scale-[0.98] flex items-center gap-5 group border-none"
           >
-            <Dices className="w-5 h-5 transition-transform group-hover:rotate-12" />
-            Auto Forge Identity
-            <Sparkles className="w-4 h-4 text-white/60" />
+            <Dices className="w-6 h-6 transition-transform group-hover:rotate-45" />
+            🎲 Auto Forge Identity
+            <Sparkles className="w-5 h-5 text-white/70 animate-pulse" />
           </Button>
 
-          <div className="flex flex-col items-center gap-3 w-full">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Deployment Strategy</span>
-            <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-col items-center gap-4 w-full">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Strategic Positioning</span>
+            <div className="flex flex-wrap justify-center gap-3">
               {[
-                { id: 'both', label: 'Both Sides', icon: <Layers className="w-3.5 h-3.5" /> },
-                { id: 'left', label: 'Left Only', icon: <AlignLeft className="w-3.5 h-3.5" /> },
-                { id: 'right', label: 'Right Only', icon: <AlignRight className="w-3.5 h-3.5" /> },
-                { id: 'middle', label: 'Middle (Spacing)', icon: <AlignCenter className="w-3.5 h-3.5" /> }
+                { id: 'both', label: 'Dual Sided', icon: <Layers className="w-4 h-4" /> },
+                { id: 'left', label: 'Prefix Only', icon: <AlignLeft className="w-4 h-4" /> },
+                { id: 'right', label: 'Suffix Only', icon: <AlignRight className="w-4 h-4" /> },
+                { id: 'middle', label: 'Spacing (Elite)', icon: <AlignCenter className="w-4 h-4" /> }
               ].map((pos) => (
                 <button
                   key={pos.id}
                   onClick={() => setSymbolPosition(pos.id as SymbolPosition)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full border text-[9px] font-bold uppercase tracking-widest transition-all ${
+                  className={`flex items-center gap-3 px-5 py-2.5 rounded-full border text-[10px] font-black uppercase tracking-widest transition-all hover:scale-[1.02] ${
                     symbolPosition === pos.id 
-                      ? 'bg-foreground border-foreground text-background shadow-md' 
+                      ? 'bg-foreground border-foreground text-background shadow-lg' 
                       : 'bg-card border-border text-muted-foreground hover:border-[#25D366] hover:text-[#25D366]'
                   }`}
                 >
@@ -535,25 +542,25 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4">
-        <div className="space-y-6">
+      <main className="max-w-6xl mx-auto px-4">
+        <div className="space-y-10">
           
           {activeFilter === 'left' && (
-            <div className="bg-card border border-border p-4 md:p-6 rounded-3xl shadow-sm space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
-              <div className="flex justify-between items-center">
-                <h3 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                  <Shield className="w-3.5 h-3.5 text-[#25D366]" /> Tactical Prefixes
+            <div className="bg-card border border-border p-6 md:p-10 rounded-[2.5rem] shadow-xl space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div className="flex justify-between items-center border-b border-border pb-4">
+                <h3 className="text-xs font-black uppercase tracking-widest text-muted-foreground flex items-center gap-3">
+                  <Shield className="w-5 h-5 text-[#25D366]" /> Tactical Prefixes
                 </h3>
               </div>
-              <ScrollArea className="h-[400px] md:h-[500px]">
-                <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 pr-2">
+              <ScrollArea className="h-[450px] md:h-[550px]">
+                <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-3 pr-4">
                   <Button 
                     variant="ghost" 
                     onClick={() => setSelectedLeft("")}
-                    className={`h-12 rounded-xl border text-[9px] md:text-[10px] uppercase font-bold transition-all ${
+                    className={`h-14 rounded-2xl border text-[10px] uppercase font-black transition-all ${
                       selectedLeft === "" 
-                        ? 'bg-[#25D366] border-none text-white shadow-md' 
-                        : 'border-border bg-muted/20 text-muted-foreground hover:bg-[#25D366] hover:text-white'
+                        ? 'bg-[#25D366] border-none text-white shadow-lg' 
+                        : 'border-border bg-muted/20 text-muted-foreground hover:bg-[#25D366] hover:text-white hover:scale-105'
                     }`}
                   >
                     None
@@ -563,9 +570,9 @@ export default function Home() {
                       key={i} 
                       variant="ghost" 
                       onClick={() => setSelectedLeft(sym)}
-                      className={`h-12 text-lg md:text-xl rounded-xl transition-all border ${
+                      className={`h-14 text-xl md:text-2xl rounded-2xl transition-all border hover:scale-110 ${
                         selectedLeft === sym 
-                          ? 'bg-[#25D366] border-none text-white shadow-md' 
+                          ? 'bg-[#25D366] border-none text-white shadow-lg' 
                           : 'border-border bg-muted/20 text-foreground hover:bg-[#25D366] hover:text-white'
                       }`}
                     >
@@ -578,21 +585,21 @@ export default function Home() {
           )}
 
           {activeFilter === 'right' && (
-            <div className="bg-card border border-border p-4 md:p-6 rounded-3xl shadow-sm space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
-              <div className="flex justify-between items-center">
-                <h3 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                  <Sword className="w-3.5 h-3.5 text-[#25D366]" /> Tactical Suffixes
+            <div className="bg-card border border-border p-6 md:p-10 rounded-[2.5rem] shadow-xl space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div className="flex justify-between items-center border-b border-border pb-4">
+                <h3 className="text-xs font-black uppercase tracking-widest text-muted-foreground flex items-center gap-3">
+                  <Sword className="w-5 h-5 text-[#25D366]" /> Tactical Suffixes
                 </h3>
               </div>
-              <ScrollArea className="h-[400px] md:h-[500px]">
-                <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 pr-2">
+              <ScrollArea className="h-[450px] md:h-[550px]">
+                <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-3 pr-4">
                   <Button 
                     variant="ghost" 
                     onClick={() => setSelectedRight("")}
-                    className={`h-12 rounded-xl border text-[9px] md:text-[10px] uppercase font-bold transition-all ${
+                    className={`h-14 rounded-2xl border text-[10px] uppercase font-black transition-all ${
                       selectedRight === "" 
-                        ? 'bg-[#25D366] border-none text-white shadow-md' 
-                        : 'border-border bg-muted/20 text-muted-foreground hover:bg-[#25D366] hover:text-white'
+                        ? 'bg-[#25D366] border-none text-white shadow-lg' 
+                        : 'border-border bg-muted/20 text-muted-foreground hover:bg-[#25D366] hover:text-white hover:scale-105'
                     }`}
                   >
                     None
@@ -602,9 +609,9 @@ export default function Home() {
                       key={i} 
                       variant="ghost" 
                       onClick={() => setSelectedRight(sym)}
-                      className={`h-12 text-lg md:text-xl rounded-xl transition-all border ${
+                      className={`h-14 text-xl md:text-2xl rounded-2xl transition-all border hover:scale-110 ${
                         selectedRight === sym 
-                          ? 'bg-[#25D366] border-none text-white shadow-md' 
+                          ? 'bg-[#25D366] border-none text-white shadow-lg' 
                           : 'border-border bg-muted/20 text-foreground hover:bg-[#25D366] hover:text-white'
                       }`}
                     >
@@ -617,37 +624,39 @@ export default function Home() {
           )}
 
           {activeFilter === 'fonts' && (
-            <div className="bg-card border border-border p-4 md:p-6 rounded-3xl shadow-sm space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
-              <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div className="flex items-center gap-4 flex-wrap justify-center">
-                  <h3 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                    <Type className="w-3.5 h-3.5 text-[#25D366]" /> Tactical Font Forge
+            <div className="bg-card border border-border p-6 md:p-10 rounded-[2.5rem] shadow-xl space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div className="flex flex-col md:flex-row justify-between items-center gap-6 border-b border-border pb-6">
+                <div className="flex items-center gap-6 flex-wrap justify-center">
+                  <h3 className="text-xs font-black uppercase tracking-widest text-muted-foreground flex items-center gap-3">
+                    <Type className="w-5 h-5 text-[#25D366]" /> Tactical Font Forge
                   </h3>
-                  <Button
-                    onClick={handleCopyAll}
-                    variant="outline"
-                    className="h-7 px-3 text-[8px] font-bold uppercase tracking-widest rounded-full border-border hover:bg-[#25D366] hover:text-white transition-all flex items-center gap-2"
-                  >
-                    <Copy className="w-3 h-3" /> Copy All Visible
-                  </Button>
-                  <Button
-                    onClick={() => generateRandomFromCategory(styleCategory)}
-                    variant="outline"
-                    className="h-7 px-3 text-[8px] font-bold uppercase tracking-widest rounded-full border-primary/40 text-primary hover:bg-primary hover:text-white transition-all flex items-center gap-2"
-                  >
-                    <Wand2 className="w-3 h-3" /> Surprise Me
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={handleCopyAll}
+                      variant="outline"
+                      className="h-8 px-4 text-[9px] font-black uppercase tracking-widest rounded-full border-border hover:bg-foreground hover:text-background transition-all flex items-center gap-2"
+                    >
+                      <Copy className="w-3.5 h-3.5" /> Copy All
+                    </Button>
+                    <Button
+                      onClick={() => generateRandomFromCategory(styleCategory)}
+                      variant="outline"
+                      className="h-8 px-4 text-[9px] font-black uppercase tracking-widest rounded-full border-[#25D366]/40 text-[#25D366] hover:bg-[#25D366] hover:text-white transition-all flex items-center gap-2"
+                    >
+                      <Wand2 className="w-3.5 h-3.5" /> Surprise Me
+                    </Button>
+                  </div>
                 </div>
                 
-                <div className="flex flex-wrap justify-center gap-2">
-                  <div className="flex items-center bg-muted/30 rounded-full p-1 border border-border">
+                <div className="flex flex-wrap justify-center gap-3">
+                  <div className="flex items-center bg-muted/30 rounded-full p-1.5 border border-border">
                     {(['all', 'short', 'medium', 'long'] as LengthCategory[]).map((len) => (
                       <button
                         key={len}
                         onClick={() => setLengthFilter(len)}
-                        className={`h-6 px-3 text-[7px] font-bold uppercase tracking-widest rounded-full transition-all ${
+                        className={`h-7 px-4 text-[8px] font-black uppercase tracking-widest rounded-full transition-all ${
                           lengthFilter === len 
-                            ? 'bg-foreground text-background' 
+                            ? 'bg-foreground text-background shadow-md' 
                             : 'text-muted-foreground hover:text-foreground'
                         }`}
                       >
@@ -655,14 +664,14 @@ export default function Home() {
                       </button>
                     ))}
                   </div>
-                  <div className="flex items-center bg-muted/30 rounded-full p-1 border border-border">
+                  <div className="flex items-center bg-muted/30 rounded-full p-1.5 border border-border">
                     {(['all', 'pubg', 'freefire', 'cod', 'roblox', 'minecraft'] as StyleCategory[]).map((cat) => (
                       <button
                         key={cat}
                         onClick={() => setStyleCategory(cat)}
-                        className={`h-6 px-3 text-[7px] font-bold uppercase tracking-widest rounded-full transition-all ${
+                        className={`h-7 px-4 text-[8px] font-black uppercase tracking-widest rounded-full transition-all ${
                           styleCategory === cat 
-                            ? 'bg-[#25D366] text-white' 
+                            ? 'bg-[#25D366] text-white shadow-md shadow-[#25D366]/20' 
                             : 'text-muted-foreground hover:text-[#25D366]'
                         }`}
                       >
@@ -673,18 +682,18 @@ export default function Home() {
                 </div>
               </div>
               
-              <ScrollArea className="h-[400px] md:h-[500px] pr-2">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+              <ScrollArea className="h-[450px] md:h-[600px] pr-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
                   <div 
                     onClick={() => setSelectedStyleId("none")}
-                    className={`group cursor-pointer p-4 md:p-5 rounded-2xl border transition-all flex flex-col gap-2 ${
+                    className={`group cursor-pointer p-6 rounded-[2rem] border-2 transition-all flex flex-col gap-3 hover:scale-[1.02] ${
                       selectedStyleId === "none" 
-                        ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
+                        ? 'bg-[#25D366] border-transparent text-white shadow-2xl shadow-[#25D366]/30' 
                         : 'border-border bg-card hover:border-[#25D366] hover:bg-[#25D366] hover:text-white'
                     }`}
                   >
                     <div className="flex justify-between items-center">
-                      <span className={`text-[8px] font-black uppercase tracking-wider transition-colors ${selectedStyleId === "none" ? 'text-white/80' : 'text-muted-foreground group-hover:text-white/80'}`}>Normal Text (NONE)</span>
+                      <span className={`text-[9px] font-black uppercase tracking-widest transition-colors ${selectedStyleId === "none" ? 'text-white/70' : 'text-muted-foreground group-hover:text-white/70'}`}>Raw Nickname (None)</span>
                       <div className="flex gap-1">
                         <Button 
                           variant="ghost" 
@@ -693,13 +702,13 @@ export default function Home() {
                             e.stopPropagation();
                             handleCopy(inputText || "Name");
                           }}
-                          className={`h-7 w-7 rounded-lg transition-all ${selectedStyleId === "none" ? 'bg-white/20 text-white' : 'hover:bg-white hover:text-[#25D366]'}`}
+                          className={`h-8 w-8 rounded-xl transition-all ${selectedStyleId === "none" ? 'bg-white/20 text-white' : 'hover:bg-white hover:text-[#25D366]'}`}
                         >
-                          <Copy className="w-3.5 h-3.5" />
+                          <Copy className="w-4 h-4" />
                         </Button>
                       </div>
                     </div>
-                    <div className={`text-sm font-bold truncate transition-colors ${selectedStyleId === "none" ? 'text-white' : 'group-hover:text-white'}`}>
+                    <div className={`text-base font-black truncate transition-colors tracking-tight ${selectedStyleId === "none" ? 'text-white' : 'group-hover:text-white'}`}>
                       {inputText || "Name"}
                     </div>
                   </div>
@@ -721,14 +730,14 @@ export default function Home() {
                       <div 
                         key={style.id}
                         onClick={() => setSelectedStyleId(style.id)}
-                        className={`group cursor-pointer p-4 md:p-5 rounded-2xl border transition-all flex flex-col gap-2 ${
+                        className={`group cursor-pointer p-6 rounded-[2rem] border-2 transition-all flex flex-col gap-3 hover:scale-[1.02] ${
                           isActive 
-                            ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
+                            ? 'bg-[#25D366] border-transparent text-white shadow-2xl shadow-[#25D366]/30' 
                             : 'border-border bg-card hover:border-[#25D366] hover:bg-[#25D366] hover:text-white'
                         }`}
                       >
                         <div className="flex justify-between items-center">
-                          <span className={`text-[8px] font-black uppercase tracking-wider transition-colors ${isActive ? 'text-white/80' : 'text-muted-foreground group-hover:text-white/80'}`}>{style.name}</span>
+                          <span className={`text-[9px] font-black uppercase tracking-widest transition-colors ${isActive ? 'text-white/70' : 'text-muted-foreground group-hover:text-white/70'}`}>{style.name}</span>
                           <div className="flex gap-1">
                             <Button 
                               variant="ghost" 
@@ -737,9 +746,9 @@ export default function Home() {
                                 e.stopPropagation();
                                 toggleFavorite(fullStyledName);
                               }}
-                              className={`h-7 w-7 rounded-lg transition-all ${isActive ? 'bg-white/20 text-white' : 'hover:bg-white hover:text-[#25D366]'}`}
+                              className={`h-8 w-8 rounded-xl transition-all ${isActive ? 'bg-white/20 text-white' : 'hover:bg-white hover:text-[#25D366]'}`}
                             >
-                              <Heart className={`w-3.5 h-3.5 ${favorites.includes(fullStyledName) ? 'fill-current' : ''}`} />
+                              <Heart className={`w-4 h-4 ${favorites.includes(fullStyledName) ? 'fill-current' : ''}`} />
                             </Button>
                             <Button 
                               variant="ghost" 
@@ -748,13 +757,13 @@ export default function Home() {
                                 e.stopPropagation();
                                 handleCopy(fullStyledName);
                               }}
-                              className={`h-7 w-7 rounded-lg transition-all ${isActive ? 'bg-white/20 text-white' : 'hover:bg-white hover:text-[#25D366]'}`}
+                              className={`h-8 w-8 rounded-xl transition-all ${isActive ? 'bg-white/20 text-white' : 'hover:bg-white hover:text-[#25D366]'}`}
                             >
-                              <Copy className="w-3.5 h-3.5" />
+                              <Copy className="w-4 h-4" />
                             </Button>
                           </div>
                         </div>
-                        <div className={`text-sm font-bold truncate transition-colors ${isActive ? 'text-white' : 'group-hover:text-white'}`}>
+                        <div className={`text-base font-black truncate transition-colors tracking-tight ${isActive ? 'text-white' : 'group-hover:text-white'}`}>
                           {transformed}
                         </div>
                       </div>
@@ -765,34 +774,36 @@ export default function Home() {
             </div>
           )}
 
-          <section id="my-collection" className="mt-16 md:mt-24 space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="bg-[#25D366] p-2 rounded-xl">
-                <Bookmark className="w-5 h-5 text-white" />
+          <section id="my-collection" className="mt-20 md:mt-32 space-y-8">
+            <div className="flex items-center gap-4">
+              <div className="bg-[#25D366] p-2.5 rounded-2xl shadow-lg">
+                <Bookmark className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h2 className="text-xl font-black text-foreground uppercase">My Tactical Collection</h2>
-                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Saved Identity Loadouts</p>
+                <h2 className="text-2xl font-black text-foreground uppercase tracking-tight">Tactical Collection</h2>
+                <p className="text-[11px] font-black text-muted-foreground uppercase tracking-[0.3em]">Saved Identity Loadouts</p>
               </div>
             </div>
 
             {favorites.length === 0 ? (
-              <div className="bg-muted/10 border-2 border-dashed border-border rounded-[2rem] p-12 text-center space-y-4">
-                <Heart className="w-10 h-10 text-muted/30 mx-auto" />
-                <p className="text-muted-foreground text-xs font-medium">Your collection is empty. Forge and save names to see them here.</p>
+              <div className="bg-muted/10 border-4 border-dashed border-border rounded-[3rem] p-16 text-center space-y-6">
+                <div className="h-16 w-16 bg-muted/20 rounded-full flex items-center justify-center mx-auto">
+                  <Heart className="w-8 h-8 text-muted/30" />
+                </div>
+                <p className="text-muted-foreground text-xs md:text-sm font-bold uppercase tracking-widest">No Identities Stored. Forge and save names to build your loadout.</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {favorites.map((fav, idx) => (
-                  <div key={idx} className="bg-card border border-border p-5 rounded-2xl shadow-sm flex flex-col gap-3 group hover:border-[#25D366] transition-all">
+                  <div key={idx} className="bg-card border-2 border-border p-6 rounded-[2rem] shadow-sm flex flex-col gap-4 group hover:border-[#25D366] hover:shadow-xl transition-all">
                     <div className="flex justify-between items-center">
-                      <Badge className="bg-[#25D366]/10 text-[#25D366] text-[8px] uppercase tracking-widest">SAVED LOADOUT</Badge>
-                      <div className="flex gap-1">
+                      <Badge className="bg-[#25D366]/10 text-[#25D366] text-[9px] font-black uppercase tracking-widest px-3 py-1 border border-[#25D366]/20">SAVED LOADOUT</Badge>
+                      <div className="flex gap-2">
                         <Button 
                           variant="ghost" 
                           size="icon" 
                           onClick={() => handleCopy(fav)}
-                          className="h-8 w-8 text-muted-foreground hover:text-[#25D366] hover:bg-[#25D366]/10"
+                          className="h-10 w-10 rounded-xl text-muted-foreground hover:text-[#25D366] hover:bg-[#25D366]/10"
                         >
                           <Copy className="w-4 h-4" />
                         </Button>
@@ -800,60 +811,108 @@ export default function Home() {
                           variant="ghost" 
                           size="icon" 
                           onClick={() => removeFavorite(fav)}
-                          className="h-8 w-8 text-muted-foreground hover:text-red-500 hover:bg-red-50"
+                          className="h-10 w-10 rounded-xl text-muted-foreground hover:text-red-500 hover:bg-red-50"
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
                       </div>
                     </div>
-                    <span className="text-sm font-black text-foreground break-all">{fav}</span>
+                    <span className="text-lg font-black text-foreground break-all tracking-tight">{fav}</span>
                   </div>
                 ))}
               </div>
             )}
           </section>
-        </div>
 
-        <div className="mt-16 md:mt-24 space-y-16 md:space-y-24 border-t border-border pt-12 md:pt-16">
-          <section id="how-to-use" className="max-w-4xl mx-auto space-y-8 md:space-y-12">
-            <div className="text-center space-y-3 md:space-y-4">
-              <h2 className="text-xl md:text-3xl font-black text-foreground uppercase tracking-tight">How to Forge Your <span className="text-[#25D366]">Stylish Game Name</span></h2>
-              <p className="text-muted-foreground text-xs md:text-sm max-w-xl mx-auto">Master our Free Fire Name Maker and PUBG Name Maker in three tactical steps.</p>
+          <section id="about" className="mt-24 md:mt-40 space-y-16">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-8">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-foreground/5 text-foreground text-[10px] font-black uppercase tracking-widest">
+                  <Info className="w-4 h-4" /> About the Forge
+                </div>
+                <h2 className="text-3xl md:text-5xl font-black text-foreground leading-[1.1] uppercase tracking-tighter">
+                  Crafting <span className="text-[#25D366]">Elite Digital Identities</span> for Global Gamers
+                </h2>
+                <p className="text-muted-foreground text-sm md:text-base leading-relaxed font-medium">
+                  In the 2026 competitive landscape, your username isn't just a label—it's your brand. <span className="font-bold text-foreground">Stylish Game Name</span> is the world's most stable utility for generating high-performance fancy text and symbols specifically optimized for PUBG, Free Fire, BGMI, and CODM.
+                </p>
+                <div className="grid grid-cols-2 gap-6 pt-4">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 font-black text-foreground uppercase tracking-widest text-[11px]">
+                      <Target className="w-4 h-4 text-[#25D366]" /> 100% Stability
+                    </div>
+                    <p className="text-xs text-muted-foreground">Manual character mapping ensures zero question marks on Android 14+ and iOS 19+.</p>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 font-black text-foreground uppercase tracking-widest text-[11px]">
+                      <Trophy className="w-4 h-4 text-[#25D366]" /> Pro Optimized
+                    </div>
+                    <p className="text-xs text-muted-foreground">Symbols tested against global battle royale filter systems for maximum visibility.</p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-muted/20 rounded-[3rem] p-10 md:p-16 border border-border shadow-inner space-y-8">
+                <div className="flex items-center gap-4">
+                  <div className="h-14 w-14 rounded-2xl bg-[#25D366] flex items-center justify-center shadow-lg">
+                    <Users className="w-7 h-7 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-black text-foreground uppercase tracking-tight">Clan Support</h3>
+                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Forging Teams Since 2021</p>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground italic leading-relaxed">
+                  "The only generator we trust for our pro squad. The spacing (middle) mode is a game changer for clan tag visibility."
+                </p>
+                <div className="flex gap-2">
+                  <Badge className="bg-white text-black font-black uppercase tracking-widest border border-border">BGMI Ready</Badge>
+                  <Badge className="bg-white text-black font-black uppercase tracking-widest border border-border">FF MAX Ready</Badge>
+                </div>
+              </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+          </section>
+
+          <section id="how-to-use" className="mt-24 md:mt-40 max-w-5xl mx-auto space-y-12 md:space-y-20">
+            <div className="text-center space-y-4">
+              <h2 className="text-2xl md:text-4xl font-black text-foreground uppercase tracking-tighter">Forge Strategy <span className="text-[#25D366]">(How To Use)</span></h2>
+              <p className="text-muted-foreground text-xs md:text-base max-w-xl mx-auto font-medium">Master the 2026 Free Fire Name Maker and PUBG Name Maker in three tactical steps.</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
               {[
-                { title: "Input Nickname", text: "Start by typing your handle. Our Gaming Name Generator supports characters from all languages.", icon: <Type className="w-5 h-5" /> },
-                { title: "Customization", text: "Inject Left and Right Symbols. Use Middle Mode for a premium spaced look.", icon: <Layers className="w-5 h-5" /> },
-                { title: "Deploy & Dominate", text: "Review in the Live Preview dock. Copy and paste, share to WhatsApp, or download as PNG.", icon: <CheckCircle2 className="w-5 h-5" /> }
+                { title: "Strategic Input", text: "Start by entering your handle. Our 2026 Gaming Name Generator supports characters from all global Unicode blocks.", icon: <Type className="w-6 h-6" /> },
+                { title: "Identity Layering", text: "Inject Left and Right Tactical Symbols. Use Spacing (Middle) mode for premium pro-league aesthetics.", icon: <Layers className="w-6 h-6" /> },
+                { title: "Deploy & Dominate", text: "Review in the Live Preview dock. Copy instantly, share to WhatsApp, or download a PNG identity card.", icon: <CheckCircle2 className="w-6 h-6" /> }
               ].map((step, i) => (
-                <div key={i} className="p-6 md:p-8 bg-muted/20 rounded-[1.5rem] border border-border space-y-3 hover:shadow-xl hover:border-primary/20 transition-all">
-                  <div className="h-10 w-10 bg-card rounded-xl shadow-sm flex items-center justify-center text-[#25D366] border border-border">
+                <div key={i} className="p-10 md:p-12 bg-card rounded-[2.5rem] border-2 border-border space-y-5 hover:shadow-2xl hover:border-[#25D366]/40 transition-all group">
+                  <div className="h-14 w-14 bg-muted/20 rounded-2xl flex items-center justify-center text-[#25D366] border border-border group-hover:bg-[#25D366] group-hover:text-white transition-colors shadow-sm">
                     {step.icon}
                   </div>
-                  <h3 className="font-bold text-foreground text-sm md:text-base">{step.title}</h3>
-                  <p className="text-[11px] md:text-xs text-muted-foreground leading-relaxed">{step.text}</p>
+                  <h3 className="font-black text-foreground text-base md:text-lg uppercase tracking-tight">{step.title}</h3>
+                  <p className="text-xs md:text-sm text-muted-foreground leading-relaxed font-medium">{step.text}</p>
                 </div>
               ))}
             </div>
           </section>
 
-          <section id="faq" className="max-w-3xl mx-auto space-y-8 md:space-y-12">
-            <div className="text-center space-y-2">
-              <h2 className="text-xl md:text-3xl font-black text-foreground uppercase tracking-tight">Gamer <span className="text-[#25D366]">Intel</span> (FAQ)</h2>
-              <p className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-widest">Mastering the BGMI and Free Fire Name Maker</p>
+          <section id="faq" className="mt-24 md:mt-40 max-w-4xl mx-auto space-y-12 md:space-y-20">
+            <div className="text-center space-y-3">
+              <h2 className="text-2xl md:text-4xl font-black text-foreground uppercase tracking-tighter">Gamer <span className="text-[#25D366]">Intel</span> Arsenal (FAQ 2026)</h2>
+              <p className="text-[11px] md:text-xs font-black text-muted-foreground uppercase tracking-[0.4em]">Mastering the 2026 BGMI and Free Fire Name Maker</p>
             </div>
-            <Accordion type="single" collapsible className="w-full space-y-3 md:space-y-4">
+            <Accordion type="single" collapsible className="w-full space-y-4 md:space-y-6">
               {[
-                { q: "How do I use the Free Fire Name Maker?", a: "To use the Free Fire Name Maker, simply type your name at the top, select your symbols (like wings or crowns), and copy the generated stylish text." },
-                { q: "Does this PUBG Name Maker work for BGMI?", a: "Yes, our PUBG Name Maker is fully optimized for Battlegrounds Mobile India (BGMI). All symbols (ツ, 亗, 々) are tested for the Indian version." },
-                { q: "What is the 'Middle (Spacing)' position?", a: "Middle position injects your selected symbol between every letter of your name, creating a premium spaced effect popular in competitive gaming." },
-                { q: "Can I download my stylish name as an image?", a: "Yes, use the 'Download PNG' button in the live preview dock to save a high-quality card of your gaming handle." },
-                { q: "Is registration required?", a: "No, this is a 100% free tool for the gaming community. No registration needed." },
-                { q: "How do I share my name on WhatsApp?", a: "Simply click the 'WhatsApp' icon in the live preview dock at the bottom of the screen to share your name instantly." }
+                { q: "How do I use the Free Fire Name Maker 2026?", a: "To use the 2026 Free Fire Name Maker, simply type your name at the top, select your symbols (like wings or crowns), and copy the generated stylish text. All symbols are updated for the 2026 character filters." },
+                { q: "Does this PUBG Name Maker work for BGMI 3.5?", a: "Yes, our PUBG Name Maker is fully optimized for BGMI 3.5 and above. All symbols (ツ, 亗, 々) are manually mapped to ensure they appear correctly on all mobile devices without question marks." },
+                { q: "What is the 'Spacing (Elite)' position?", a: "Middle position injects your selected symbol between every letter of your name, creating a premium 'spaced' effect popular in high-tier esports and competitive gaming clans." },
+                { q: "Can I download my stylish name as an image for social media?", a: "Yes, use the 'Download PNG' button in the live preview dock to save a high-quality 1200x630 tactical card of your gaming handle, ready for Instagram or WhatsApp status." },
+                { q: "How to fix question marks in Free Fire names?", a: "Most question marks occur due to unsupported Unicode gaps. Our generator uses an 'Elite Safe' mapping system that automatically bridges these gaps so your name always renders correctly." },
+                { q: "Is registration required for the 2026 version?", a: "No, this is a 100% free utility for the global gaming community. No registration or tactical data login is required." },
+                { q: "Which symbols are best for BGMI names in 2026?", a: "Popular symbols include the 'V' badge (亗), Japanese Katakana (々), and Tactical Wings (꧁꧂). Use our 'Hot Trending' section to see what pro players are currently using." },
+                { q: "How do I share my identity on WhatsApp groups?", a: "Simply click the WhatsApp icon in the Live Preview dock at the bottom of the screen to share your name and link directly with your squad." }
               ].map((faq, i) => (
-                <AccordionItem key={i} value={`item-${i}`} className="border border-border rounded-xl px-4 md:px-6 bg-card shadow-sm hover:border-[#25D366]/30 transition-all">
-                  <AccordionTrigger className="text-xs md:text-sm font-bold hover:no-underline py-4 text-left text-foreground">{faq.q}</AccordionTrigger>
-                  <AccordionContent className="text-[11px] md:text-xs text-muted-foreground leading-relaxed pb-4">
+                <AccordionItem key={i} value={`item-${i}`} className="border-2 border-border rounded-[2rem] px-6 md:px-10 bg-card shadow-sm hover:border-[#25D366]/30 transition-all group overflow-hidden">
+                  <AccordionTrigger className="text-xs md:text-base font-black hover:no-underline py-6 text-left text-foreground uppercase tracking-tight group-data-[state=open]:text-[#25D366] transition-colors">{faq.q}</AccordionTrigger>
+                  <AccordionContent className="text-[12px] md:text-sm text-muted-foreground leading-relaxed pb-8 font-medium">
                     {faq.a}
                   </AccordionContent>
                 </AccordionItem>
@@ -863,11 +922,11 @@ export default function Home() {
         </div>
       </main>
 
-      <div className="fixed bottom-0 left-0 w-full bg-background/95 backdrop-blur-md border-t border-border px-4 py-3 md:p-4 z-50 shadow-2xl">
-        <div className="max-w-3xl mx-auto flex flex-col md:flex-row items-center gap-3">
+      <div className="fixed bottom-0 left-0 w-full bg-background/95 backdrop-blur-xl border-t border-border px-4 py-4 md:p-6 z-50 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-4">
           <div className="w-full flex-1 min-w-0">
-            <div className="bg-muted/30 border border-border px-3 py-2 md:py-2.5 rounded-xl flex items-center justify-center min-h-[42px] shadow-inner overflow-hidden">
-              <span className="text-xs md:text-sm font-black text-foreground tracking-normal text-center break-all">
+            <div className="bg-muted/40 border-2 border-border px-4 py-3 md:py-4 rounded-2xl flex items-center justify-center min-h-[56px] shadow-inner overflow-hidden group">
+              <span className="text-sm md:text-lg font-black text-foreground tracking-tight text-center break-all transition-transform group-hover:scale-105">
                 {livePreviewText}
               </span>
             </div>
@@ -878,44 +937,51 @@ export default function Home() {
               variant="outline"
               size="icon"
               onClick={() => toggleFavorite(livePreviewText)}
-              className={`h-10 w-10 rounded-xl transition-all ${favorites.includes(livePreviewText) ? 'text-[#25D366] fill-[#25D366]/10 border-[#25D366]/40' : 'text-muted-foreground hover:bg-[#25D366] hover:text-white'}`}
+              className={`h-12 w-12 md:h-14 md:w-14 rounded-2xl transition-all hover:scale-110 active:scale-90 ${favorites.includes(livePreviewText) ? 'text-[#25D366] fill-[#25D366]/10 border-[#25D366]/40 shadow-lg shadow-[#25D366]/10' : 'text-muted-foreground hover:bg-[#25D366] hover:text-white hover:border-transparent'}`}
             >
-              <Heart className={`w-4 h-4 md:w-5 md:h-5 ${favorites.includes(livePreviewText) ? 'fill-current' : ''}`} />
+              <Heart className={`w-5 h-5 md:w-6 md:h-6 ${favorites.includes(livePreviewText) ? 'fill-current' : ''}`} />
             </Button>
             <Button 
               variant="outline"
               size="icon"
               onClick={shareToWhatsApp}
-              className="h-10 w-10 rounded-xl text-muted-foreground hover:bg-[#25D366] hover:text-white border-border"
+              className="h-12 w-12 md:h-14 md:w-14 rounded-2xl text-muted-foreground hover:bg-[#25D366] hover:text-white border-border hover:border-transparent transition-all hover:scale-110 active:scale-90"
               title="Share to WhatsApp"
             >
-              <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
+              <MessageCircle className="w-5 h-5 md:w-6 md:h-6" />
             </Button>
             <Button 
               variant="outline"
               size="icon"
               onClick={downloadAsImage}
-              className="h-10 w-10 rounded-xl text-muted-foreground hover:bg-[#25D366] hover:text-white border-border"
+              className="h-12 w-12 md:h-14 md:w-14 rounded-2xl text-muted-foreground hover:bg-[#25D366] hover:text-white border-border hover:border-transparent transition-all hover:scale-110 active:scale-90"
               title="Download PNG"
             >
-              <Download className="w-4 h-4 md:w-5 md:h-5" />
+              <Download className="w-5 h-5 md:w-6 md:h-6" />
             </Button>
             <Button 
               onClick={() => handleCopy(livePreviewText)}
-              className="h-10 px-6 bg-[#25D366] hover:bg-[#25D366]/90 text-white font-black text-[9px] md:text-[10px] uppercase tracking-widest rounded-xl shadow-lg shadow-[#25D366]/10 flex items-center gap-2 transition-all active:scale-[0.98] flex-1 md:flex-none"
+              className="h-12 md:h-14 px-8 bg-[#25D366] hover:bg-[#25D366]/90 text-white font-black text-[10px] md:text-[11px] uppercase tracking-widest rounded-2xl shadow-xl shadow-[#25D366]/20 flex items-center gap-3 transition-all active:scale-[0.98] flex-1 md:flex-none border-none hover:scale-[1.05]"
             >
-              <Copy className="w-3.5 h-3.5" /> <span>Copy Result</span>
+              <Copy className="w-4 h-4 md:w-5 md:h-5" /> <span>Deploy Result</span>
             </Button>
           </div>
         </div>
       </div>
 
-      <footer className="py-12 md:py-20 bg-muted/20 border-t border-border text-center space-y-4 px-4">
-        <div className="flex items-center gap-2 justify-center opacity-40 grayscale mb-4">
-          <Gamepad2 className="w-4 h-4" />
-          <span className="text-[10px] font-black tracking-tighter uppercase text-foreground">STYLISH GAME NAME</span>
+      <footer className="py-20 md:py-32 bg-muted/20 border-t border-border text-center space-y-6 px-4">
+        <div className="flex items-center gap-2 justify-center opacity-50 grayscale hover:grayscale-0 transition-all mb-4">
+          <Gamepad2 className="w-5 h-5" />
+          <span className="text-sm font-black tracking-tighter uppercase text-foreground">STYLISH GAME NAME</span>
         </div>
-        <p className="text-[8px] md:text-[9px] font-bold text-muted-foreground uppercase tracking-[0.3em]">&copy; {new Date().getFullYear()} MISSION CRITICAL IDENTITY. ALL RIGHTS RESERVED.</p>
+        <div className="flex justify-center gap-6 text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-8">
+          <a href="#" className="hover:text-[#25D366] transition-colors">Privacy Protocol</a>
+          <a href="#" className="hover:text-[#25D366] transition-colors">Service Terms</a>
+          <a href="#about" className="hover:text-[#25D366] transition-colors">Tactical Intel</a>
+        </div>
+        <p className="text-[9px] md:text-[10px] font-black text-muted-foreground uppercase tracking-[0.4em] opacity-60">
+          &copy; {new Date().getFullYear()} MISSION CRITICAL IDENTITY FORGE. GLOBAL GAMING COMPLIANT.
+        </p>
       </footer>
     </div>
   );

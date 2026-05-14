@@ -3,12 +3,12 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Stylish Game Name - Free Fire & PUBG Name Generator',
-  description: 'Generate the ultimate Stylish Game Name with our Free Fire Name Maker and PUBG Name Maker. Create fancy gaming names for BGMI, COD, and Roblox. 100% stable Unicode symbols.',
-  keywords: 'Stylish Game Name, Free Fire Name Maker, PUBG Name Maker, BGMI Name Generator, Fancy Gaming Name, Gaming Name Generator, Stylish Name for Free Fire, PUBG Stylish Name, Cool Gaming Names',
+  title: 'Stylish Game Name 2026 - Free Fire & PUBG Name Maker',
+  description: 'The ultimate Stylish Game Name Generator 2026. Create fancy gaming names with our Free Fire Name Maker and PUBG Name Maker. 100% stable for BGMI, COD, and Roblox.',
+  keywords: 'Stylish Game Name 2026, Free Fire Name Maker, PUBG Name Maker, BGMI Name Generator, Fancy Gaming Name, Gaming Name Generator 2026, Stylish Name for Free Fire, PUBG Stylish Name, Cool Gaming Names, BGMI Stylish Nickname',
   openGraph: {
-    title: 'Stylish Game Name - Ultimate Gaming Name Generator',
-    description: 'The world\'s most stable Fancy Gaming Name generator for Free Fire, PUBG, and BGMI.',
+    title: 'Stylish Game Name 2026 - Ultimate Gaming Name Generator',
+    description: 'The world\'s most stable Fancy Gaming Name generator for Free Fire, PUBG, and BGMI in 2026.',
     url: 'https://stylishgamename.com',
     siteName: 'Stylish Game Name',
     locale: 'en_US',
@@ -27,27 +27,27 @@ export default function RootLayout({
     "@graph": [
       {
         "@type": "HowTo",
-        "name": "How to Create a Stylish Game Name",
+        "name": "How to Create a Stylish Game Name 2026",
         "step": [
           {
             "@type": "HowToStep",
-            "text": "Enter your gaming nickname in the input field."
+            "text": "Enter your gaming nickname in the Tactical Input field."
           },
           {
             "@type": "HowToStep",
-            "text": "Choose a Left Symbol for your prefix."
+            "text": "Choose a Left Symbol for your identity prefix."
           },
           {
             "@type": "HowToStep",
-            "text": "Select a Right Symbol for your suffix."
+            "text": "Select a Right Symbol for your identity suffix."
           },
           {
             "@type": "HowToStep",
-            "text": "Choose a Font Style from the Tactical Font Forge."
+            "text": "Choose a Font Style from the Tactical Font Forge 2026."
           },
           {
             "@type": "HowToStep",
-            "text": "Copy your generated name from the Live Preview dock."
+            "text": "Copy your generated name from the Live Preview dock or download as PNG."
           }
         ]
       },
@@ -56,18 +56,18 @@ export default function RootLayout({
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "How to use this Free Fire Name Maker?",
+            "name": "How to use this Free Fire Name Maker 2026?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Simply enter your name, select your desired symbols and fonts, and click copy. It works perfectly for Free Fire and Free Fire MAX."
+              "text": "Simply enter your name, select your desired symbols and fonts, and click copy. It works perfectly for Free Fire and Free Fire MAX 2026 editions."
             }
           },
           {
             "@type": "Question",
-            "name": "Is this PUBG Name Maker compatible with BGMI?",
+            "name": "Is this PUBG Name Maker compatible with BGMI 3.5?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes, our generator uses high-stability Unicode characters specifically tested for BGMI and PUBG Mobile compatibility."
+              "text": "Yes, our generator uses high-stability Unicode characters specifically tested for BGMI 3.5 and PUBG Mobile compatibility."
             }
           }
         ]
