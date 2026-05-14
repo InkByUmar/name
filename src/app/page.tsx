@@ -114,7 +114,7 @@ export default function Home() {
           onClick={() => mobile && setIsSheetOpen(false)}
           className={
             mobile 
-              ? "flex items-center justify-between px-4 py-3 rounded-xl hover:bg-gray-50 text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-all"
+              ? "flex items-center justify-between px-4 py-3 rounded-xl hover:bg-[#25D366] hover:text-white text-[11px] font-bold uppercase tracking-widest text-gray-500 transition-all"
               : "text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-colors"
           }
         >
@@ -204,7 +204,7 @@ export default function Home() {
                   className={`h-8 px-4 text-[9px] md:text-[10px] font-bold uppercase tracking-widest rounded-full transition-all ${
                     styleCategory === cat 
                       ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
-                      : 'bg-white border-gray-100 text-gray-400 hover:text-[#25D366] hover:border-[#25D366]/30'
+                      : 'bg-white border-gray-100 text-gray-400 hover:bg-[#25D366] hover:text-white hover:border-transparent'
                   }`}
                 >
                   {cat}
@@ -222,7 +222,7 @@ export default function Home() {
             className={`h-11 px-4 text-[10px] md:text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all w-full ${
               activeFilter === 'left' 
                 ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
-                : 'bg-white border-gray-100 text-gray-500 hover:text-[#25D366] hover:border-[#25D366]/30'
+                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent'
             }`}
           >
             <Shield className="w-4 h-4 mr-2" /> Left Symbol
@@ -233,7 +233,7 @@ export default function Home() {
             className={`h-11 px-4 text-[10px] md:text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all w-full ${
               activeFilter === 'right' 
                 ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
-                : 'bg-white border-gray-100 text-gray-500 hover:text-[#25D366] hover:border-[#25D366]/30'
+                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent'
             }`}
           >
             <Sword className="w-4 h-4 mr-2" /> Right Symbol
@@ -244,7 +244,7 @@ export default function Home() {
             className={`h-11 px-4 text-[10px] md:text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all w-full ${
               activeFilter === 'fonts' 
                 ? 'bg-[#25D366] border-none text-white shadow-lg shadow-[#25D366]/20' 
-                : 'bg-white border-gray-100 text-gray-500 hover:text-[#25D366] hover:border-[#25D366]/30'
+                : 'bg-white border-gray-100 text-gray-500 hover:bg-[#25D366] hover:text-white hover:border-transparent'
             }`}
           >
             <Type className="w-4 h-4 mr-2" /> Font Styles
@@ -270,7 +270,7 @@ export default function Home() {
                   <Button 
                     variant="ghost" 
                     onClick={() => setSelectedLeft("")}
-                    className={`h-12 rounded-xl border text-[9px] md:text-[10px] uppercase font-bold ${selectedLeft === "" ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 hover:bg-white'}`}
+                    className={`h-12 rounded-xl border text-[9px] md:text-[10px] uppercase font-bold transition-all ${selectedLeft === "" ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 text-gray-400 hover:bg-[#25D366] hover:text-white hover:border-transparent'}`}
                   >
                     None
                   </Button>
@@ -279,7 +279,7 @@ export default function Home() {
                       key={i} 
                       variant="ghost" 
                       onClick={() => setSelectedLeft(sym)}
-                      className={`h-12 text-lg md:text-xl rounded-xl transition-all border ${selectedLeft === sym ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 hover:border-[#25D366]/20 hover:bg-white'}`}
+                      className={`h-12 text-lg md:text-xl rounded-xl transition-all border ${selectedLeft === sym ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 text-gray-600 hover:bg-[#25D366] hover:text-white hover:border-transparent'}`}
                     >
                       {sym}
                     </Button>
@@ -303,7 +303,7 @@ export default function Home() {
                   <Button 
                     variant="ghost" 
                     onClick={() => setSelectedRight("")}
-                    className={`h-12 rounded-xl border text-[9px] md:text-[10px] uppercase font-bold ${selectedRight === "" ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 hover:bg-white'}`}
+                    className={`h-12 rounded-xl border text-[9px] md:text-[10px] uppercase font-bold transition-all ${selectedRight === "" ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 text-gray-400 hover:bg-[#25D366] hover:text-white hover:border-transparent'}`}
                   >
                     None
                   </Button>
@@ -312,7 +312,7 @@ export default function Home() {
                       key={i} 
                       variant="ghost" 
                       onClick={() => setSelectedRight(sym)}
-                      className={`h-12 text-lg md:text-xl rounded-xl transition-all border ${selectedRight === sym ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 hover:border-[#25D366]/20 hover:bg-white'}`}
+                      className={`h-12 text-lg md:text-xl rounded-xl transition-all border ${selectedRight === sym ? 'border-[#25D366] bg-[#25D366]/5 text-[#25D366]' : 'border-gray-50 bg-gray-50 text-gray-600 hover:bg-[#25D366] hover:text-white hover:border-transparent'}`}
                     >
                       {sym}
                     </Button>
@@ -345,11 +345,11 @@ export default function Home() {
                         className={`group cursor-pointer p-4 md:p-5 rounded-2xl border transition-all flex flex-col gap-2 ${
                           isActive 
                             ? 'border-[#25D366] bg-[#25D366]/5 shadow-sm' 
-                            : 'border-gray-50 bg-white hover:border-[#25D366]/30 hover:shadow-md'
+                            : 'border-gray-50 bg-white hover:border-[#25D366]/40 hover:shadow-md'
                         }`}
                       >
                         <div className="flex justify-between items-center">
-                          <span className="text-[8px] font-black uppercase text-gray-400 tracking-wider">{style.name}</span>
+                          <span className="text-[8px] font-black uppercase text-gray-400 tracking-wider group-hover:text-[#25D366] transition-colors">{style.name}</span>
                           <Button 
                             variant="ghost" 
                             size="icon" 
@@ -475,7 +475,7 @@ export default function Home() {
               variant="outline"
               size="icon"
               onClick={() => toggleFavorite(livePreviewText)}
-              className={`h-9 w-9 md:h-11 md:w-11 rounded-xl transition-all ${favorites.includes(livePreviewText) ? 'text-[#25D366] fill-[#25D366]/10 border-[#25D366]/40' : 'text-gray-400'}`}
+              className={`h-9 w-9 md:h-11 md:w-11 rounded-xl transition-all ${favorites.includes(livePreviewText) ? 'text-[#25D366] fill-[#25D366]/10 border-[#25D366]/40' : 'text-gray-400 hover:bg-[#25D366]/10 hover:text-[#25D366]'}`}
             >
               <Heart className={`w-4 h-4 md:w-5 md:h-5 ${favorites.includes(livePreviewText) ? 'fill-current' : ''}`} />
             </Button>
