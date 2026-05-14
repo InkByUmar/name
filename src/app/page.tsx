@@ -65,7 +65,7 @@ const TRENDING_NAMES = [
   { label: "Royal King", text: "King", left: "♛", right: "♛", styleId: "boldScript" },
   { label: "Shadow Killer", text: "Shadow", left: "꧁", right: "꧂", styleId: "bold" },
   { label: "Pro Sniper", text: "Sniper", left: "🎯", right: "🎯", styleId: "monospace" },
-  { label: "Deadly Viper", text: "Viper", left: "🐍", right: "🐍", styleId: "fraktur" },
+  { label: "Deadly Viper", text: "Viper", left: " Fraktur", right: " Fraktur", styleId: "fraktur" },
   { label: "Shadow Ninja", text: "Ninja", left: "🥷", right: "🥷", styleId: "italicSans" },
   { label: "Mythic Legend", text: "Legend", left: "✯", right: "✯", styleId: "double" },
   { label: "Alpha Strike", text: "Alpha", left: "Δ", right: "Δ", styleId: "boldSans" },
@@ -116,21 +116,30 @@ export default function Home() {
   const { toast } = useToast();
 
   useEffect(() => {
+    // Favorites sync
     const savedFavs = localStorage.getItem("stylish-glyph-favorites");
     if (savedFavs) setFavorites(JSON.parse(savedFavs));
     
-    // Check system preference
-    const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setIsDarkMode(isDark);
-    if (isDark) document.documentElement.classList.add('dark');
+    // Theme initialization: Default to light unless "dark" is explicitly saved
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      setIsDarkMode(true);
+      document.documentElement.classList.add('dark');
+    } else {
+      setIsDarkMode(false);
+      document.documentElement.classList.remove('dark');
+    }
   }, []);
 
   const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    if (!isDarkMode) {
+    const newDarkMode = !isDarkMode;
+    setIsDarkMode(newDarkMode);
+    if (newDarkMode) {
       document.documentElement.classList.add('dark');
+      localStorage.setItem("theme", "dark");
     } else {
       document.documentElement.classList.remove('dark');
+      localStorage.setItem("theme", "light");
     }
   };
 
