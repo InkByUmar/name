@@ -12,7 +12,8 @@ import {
   Menu,
   Sparkles,
   CheckCircle2,
-  Zap
+  Zap,
+  Star
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -68,7 +69,7 @@ export default function Home() {
 
     toast({
       title: "Identity Copied",
-      description: `Successfully moved to clipboard.`
+      description: `Your custom name is ready to paste.`
     });
   };
 
@@ -123,7 +124,7 @@ export default function Home() {
           Craft Your <span className="text-[#25D366]">Gaming Identity</span>
         </h1>
         <p className="text-gray-500 text-sm font-medium max-w-lg mx-auto leading-relaxed">
-          Premium character generator optimized for PUBG, Free Fire, and BGMI. 100% stable Unicode symbols only.
+          Premium character generator optimized for PUBG, Free Fire, and BGMI. 100% stable Unicode font transformations.
         </p>
         
         <div className="relative max-w-md mx-auto mt-6">
@@ -165,7 +166,7 @@ export default function Home() {
         <div className="lg:col-span-3 space-y-4">
           <div className="bg-white border border-gray-100 p-5 rounded-3xl shadow-sm space-y-4">
             <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
-              <Shield className="w-3.5 h-3.5 text-[#25D366]" /> 01. Prefix
+              <Shield className="w-3.5 h-3.5 text-[#25D366]" /> 01. Left Symbol
             </h3>
             <ScrollArea className="h-[220px]">
               <div className="grid grid-cols-4 gap-2 pr-2">
@@ -191,12 +192,12 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Step 2: Neural Font */}
+        {/* Step 2: Font Styles */}
         <div className="lg:col-span-6 space-y-4">
           <div className="bg-white border border-gray-100 p-5 rounded-3xl shadow-sm space-y-4">
             <div className="flex justify-between items-center">
               <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
-                <Type className="w-3.5 h-3.5 text-[#25D366]" /> 02. Neural Font
+                <Type className="w-3.5 h-3.5 text-[#25D366]" /> 02. Font Transformation
               </h3>
               <Badge variant="secondary" className="bg-[#25D366]/10 text-[#25D366] font-bold text-[9px] uppercase">{filteredStyles.length} Styles</Badge>
             </div>
@@ -236,7 +237,7 @@ export default function Home() {
         <div className="lg:col-span-3 space-y-4">
           <div className="bg-white border border-gray-100 p-5 rounded-3xl shadow-sm space-y-4">
             <h3 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
-              <Sword className="w-3.5 h-3.5 text-[#25D366]" /> 03. Suffix
+              <Sword className="w-3.5 h-3.5 text-[#25D366]" /> 03. Right Symbol
             </h3>
             <ScrollArea className="h-[220px]">
               <div className="grid grid-cols-4 gap-2 pr-2">
@@ -265,41 +266,46 @@ export default function Home() {
         </div>
       </main>
 
-      {/* FIXED LIVE PREVIEW DOCK - ENHANCED */}
-      <div className="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-2xl border-t border-gray-100 p-6 md:p-10 z-50 shadow-[0_-25px_50px_rgba(0,0,0,0.06)]">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-8">
+      {/* FIXED LIVE PREVIEW DOCK */}
+      <div className="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-2xl border-t border-gray-100 p-6 md:p-8 z-50 shadow-[0_-25px_50px_rgba(0,0,0,0.06)]">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-6">
           <div className="flex-1 w-full text-center md:text-left">
-            <div className="text-[10px] font-black text-[#25D366] uppercase tracking-[0.25em] mb-4 flex items-center justify-center md:justify-start gap-2">
-              <Sparkles className="w-4 h-4" /> Neural Link Live Preview
+            <div className="text-[9px] font-black text-[#25D366] uppercase tracking-[0.25em] mb-3 flex items-center justify-center md:justify-start gap-2">
+              <Sparkles className="w-3.5 h-3.5" /> Neural Link Live Preview
             </div>
-            <div className="bg-gray-50 border-2 border-[#25D366]/20 p-8 rounded-[2.5rem] flex items-center justify-center min-h-[100px] shadow-inner overflow-hidden">
-              <span className="text-2xl md:text-3xl font-black text-gray-900 tracking-normal text-center break-all">
+            <div className="bg-gray-50 border border-gray-100 p-6 rounded-[2rem] flex items-center justify-center min-h-[80px] shadow-inner overflow-hidden">
+              <span className="text-xl md:text-2xl font-black text-gray-900 tracking-normal text-center break-all">
                 {livePreviewText}
               </span>
             </div>
           </div>
           
-          <div className="flex gap-4 w-full md:w-auto">
+          <div className="flex gap-3 w-full md:w-auto">
             <Button 
               variant="outline"
               size="lg"
               onClick={() => toggleFavorite(livePreviewText)}
-              className={`flex-1 md:flex-none h-20 w-20 rounded-3xl border-gray-200 transition-all active:scale-90 ${favorites.includes(livePreviewText) ? 'text-[#25D366] fill-[#25D366]/10 border-[#25D366]/40' : 'text-gray-400'}`}
+              className={`flex-1 md:flex-none h-16 w-16 rounded-2xl border-gray-200 transition-all active:scale-90 ${favorites.includes(livePreviewText) ? 'text-[#25D366] fill-[#25D366]/10 border-[#25D366]/40' : 'text-gray-400'}`}
             >
-              <Heart className={`w-8 h-8 ${favorites.includes(livePreviewText) ? 'fill-current' : ''}`} />
+              <Heart className={`w-6 h-6 ${favorites.includes(livePreviewText) ? 'fill-current' : ''}`} />
             </Button>
             <Button 
               size="lg"
               onClick={() => handleCopy(livePreviewText)}
-              className="flex-1 md:w-72 h-20 bg-[#25D366] hover:bg-[#25D366]/90 text-white font-black text-sm uppercase tracking-[0.2em] rounded-3xl shadow-2xl shadow-[#25D366]/30 flex items-center justify-center gap-4 transition-all active:scale-95"
+              className="flex-1 md:w-64 h-16 bg-[#25D366] hover:bg-[#25D366]/90 text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl shadow-xl shadow-[#25D366]/20 flex items-center justify-center gap-3 transition-all active:scale-95"
             >
-              <Copy className="w-6 h-6" /> Copy Identity
+              <Copy className="w-5 h-5" /> Copy Identity
             </Button>
           </div>
         </div>
       </div>
 
       <footer className="py-12 bg-white border-t border-gray-50 text-center">
+        <div className="flex items-center justify-center gap-2 mb-4 opacity-40">
+           <Star className="w-3 h-3 text-[#25D366] fill-[#25D366]" />
+           <Star className="w-3 h-3 text-[#25D366] fill-[#25D366]" />
+           <Star className="w-3 h-3 text-[#25D366] fill-[#25D366]" />
+        </div>
         <p className="text-[10px] font-black text-gray-300 uppercase tracking-[0.4em]">
           &copy; {new Date().getFullYear()} Stylish Glyph. Premium Unicode Forge.
         </p>
