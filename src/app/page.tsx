@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
@@ -15,7 +16,9 @@ import {
   Info,
   HelpCircle,
   CheckCircle2,
-  Layers
+  Layers,
+  Search,
+  ChevronRight
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -34,6 +37,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 type ActiveTab = 'left' | 'right' | 'fonts';
 
@@ -92,6 +102,16 @@ export default function Home() {
     setInputText(`${randomWord}${randomNum}`);
   };
 
+  const NavLinks = () => (
+    <>
+      <a href="#" className="text-[11px] font-bold uppercase tracking-widest text-[#25D366] hover:opacity-80 transition-opacity">Home</a>
+      <a href="#how-to-use" className="text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-colors">How to Use</a>
+      <a href="#about-us" className="text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-colors">About Us</a>
+      <a href="#faq" className="text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-colors">FAQ</a>
+      <a href="#seo-info" className="text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-colors">SEO</a>
+    </>
+  );
+
   return (
     <div className="min-h-screen bg-white">
       {/* Top Navigation Bar */}
@@ -106,14 +126,51 @@ export default function Home() {
         </div>
         
         <div className="hidden md:flex items-center gap-8">
-          <a href="#" className="text-[11px] font-bold uppercase tracking-widest text-[#25D366]">Home</a>
-          <a href="#how-to-use" className="text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-colors">How to Use</a>
-          <a href="#about-us" className="text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-colors">About Us</a>
+          <NavLinks />
         </div>
         
-        <Button variant="ghost" size="icon" className="md:hidden">
-          <Menu className="w-6 h-6" />
-        </Button>
+        <div className="md:hidden">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="w-6 h-6 text-gray-600" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[280px] bg-white border-l border-gray-100 p-0">
+              <SheetHeader className="p-6 border-b border-gray-50 bg-gray-50/50">
+                <SheetTitle className="flex items-center gap-2">
+                  <div className="bg-[#25D366] p-1.5 rounded-lg">
+                    <Gamepad2 className="w-5 h-5 text-white" />
+                  </div>
+                  <span className="text-sm font-black text-gray-900 uppercase">STYLISH MENU</span>
+                </SheetTitle>
+              </SheetHeader>
+              <div className="flex flex-col gap-1 p-4">
+                {[
+                  { label: "Home", href: "#" },
+                  { label: "How to Use", href: "#how-to-use" },
+                  { label: "About Us", href: "#about-us" },
+                  { label: "FAQ", href: "#faq" },
+                  { label: "SEO Optimization", href: "#seo-info" }
+                ].map((link) => (
+                  <a 
+                    key={link.label}
+                    href={link.href}
+                    className="flex items-center justify-between px-4 py-3 rounded-xl hover:bg-gray-50 text-[11px] font-bold uppercase tracking-widest text-gray-500 hover:text-[#25D366] transition-all"
+                  >
+                    {link.label}
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </a>
+                ))}
+              </div>
+              <div className="absolute bottom-8 left-0 w-full px-8">
+                <p className="text-[10px] text-gray-300 font-bold uppercase tracking-widest text-center leading-relaxed">
+                  Mission Critical Gaming Identity <br /> v2.4.0 Stable
+                </p>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </nav>
 
       {/* Hero Section */}
@@ -139,7 +196,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Category Tabs (Font Filtering) - Scrollable on mobile */}
+        {/* Category Tabs (Font Filtering) */}
         <div className="mt-6">
           <ScrollArea className="w-full whitespace-nowrap pb-2">
             <div className="flex justify-start md:justify-center gap-2 px-4">
@@ -164,7 +221,7 @@ export default function Home() {
           </ScrollArea>
         </div>
 
-        {/* Visibility Filter Buttons - Stackable on mobile */}
+        {/* Visibility Filter Buttons (Mobile Grid) */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3 mt-6 pb-4 max-w-2xl mx-auto border-b border-gray-50">
           <Button
             onClick={() => setActiveFilter('left')}
@@ -377,10 +434,33 @@ export default function Home() {
               </AccordionItem>
             </Accordion>
           </section>
+
+          <section id="seo-info" className="max-w-4xl mx-auto space-y-8 md:space-y-12">
+            <div className="p-8 md:p-12 bg-gray-50 rounded-[2rem] border border-gray-100 space-y-6">
+              <div className="flex items-center gap-3 text-[#25D366]">
+                <Search className="w-6 h-6" />
+                <h2 className="text-xl md:text-2xl font-black text-gray-900 uppercase">Search Engine <span className="text-[#25D366]">Optimization</span></h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-4">
+                  <h4 className="font-bold text-gray-900">Technical Accessibility</h4>
+                  <p className="text-[11px] md:text-xs text-gray-500 leading-relaxed">
+                    Our platform is built using semantic HTML5 structures which allow search engines like Google and Bing to properly index the "Fancy Text" styles. By using stable Unicode instead of images or non-standard characters, your gamer names are readable by accessibility tools and search algorithms alike.
+                  </p>
+                </div>
+                <div className="space-y-4">
+                  <h4 className="font-bold text-gray-900">Cross-Platform Stability</h4>
+                  <p className="text-[11px] md:text-xs text-gray-500 leading-relaxed">
+                    SEO isn't just for web; it's for identity. A stable gamer tag ensures that your brand remains consistent across YouTube, Twitch, and Discord. If a character breaks (showing a ?), you lose brand recognition. Our "Safe-Zone" symbols ensure 100% stability.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </main>
 
-      {/* COMPACT LIVE PREVIEW DOCK (Smaller, cleaner and responsive) */}
+      {/* COMPACT LIVE PREVIEW DOCK */}
       <div className="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-gray-100 px-4 py-3 md:p-4 z-50 shadow-2xl">
         <div className="max-w-2xl mx-auto flex items-center gap-2 md:gap-3">
           <div className="flex-1 min-w-0">
