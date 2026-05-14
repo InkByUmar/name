@@ -17,7 +17,9 @@ import {
   ChevronRight,
   Target,
   Trophy,
-  Users
+  Users,
+  Dices,
+  Sparkles
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -95,11 +97,27 @@ export default function Home() {
     localStorage.setItem("stylish-glyph-favorites", JSON.stringify(newFavs));
   };
 
-  const generateRandom = () => {
+  const generateRandomText = () => {
     const randomWords = ["Titan", "Ghost", "Nitro", "Bane", "Viper", "Omega", "Raven", "Zod", "Pulse", "Shadow", "Neon", "Void"];
     const randomWord = randomWords[Math.floor(Math.random() * randomWords.length)];
     const randomNum = Math.floor(Math.random() * 99);
     setInputText(`${randomWord}${randomNum}`);
+  };
+
+  const autoForgeIdentity = () => {
+    // Pick random components
+    const randomLeft = LEFT_SYMBOLS[Math.floor(Math.random() * LEFT_SYMBOLS.length)];
+    const randomRight = RIGHT_SYMBOLS[Math.floor(Math.random() * RIGHT_SYMBOLS.length)];
+    const randomStyle = STYLE_OPTIONS[Math.floor(Math.random() * STYLE_OPTIONS.length)];
+
+    setSelectedLeft(randomLeft);
+    setSelectedRight(randomRight);
+    setSelectedStyleId(randomStyle.id);
+
+    toast({
+      title: "Identity Forged",
+      description: "A unique random combination has been deployed."
+    });
   };
 
   const NavLinks = ({ mobile = false }: { mobile?: boolean }) => (
@@ -189,7 +207,7 @@ export default function Home() {
               placeholder="Type your nickname here..."
               className="h-10 md:h-12 text-sm md:text-base border-none focus-visible:ring-0 px-3 md:px-4 font-bold text-gray-800"
             />
-            <Button onClick={generateRandom} variant="outline" size="icon" className="h-10 w-10 md:h-12 md:w-12 rounded-xl border-gray-100 text-gray-400 hover:text-[#25D366] hover:border-[#25D366]/30 shrink-0">
+            <Button onClick={generateRandomText} variant="outline" size="icon" className="h-10 w-10 md:h-12 md:w-12 rounded-xl border-gray-100 text-gray-400 hover:text-[#25D366] hover:border-[#25D366]/30 shrink-0">
               <RotateCcw className="w-5 h-5" />
             </Button>
           </div>
@@ -340,7 +358,34 @@ export default function Home() {
               
               <ScrollArea className="h-[400px] md:h-[500px] pr-2 md:pr-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-                  {filteredStyles.map((style) => {
+                  <div 
+                    onClick={() => setSelectedStyleId("none")}
+                    className={`group cursor-pointer p-4 md:p-5 rounded-2xl border transition-all flex flex-col gap-2 ${
+                      selectedStyleId === "none" 
+                        ? 'border-[#25D366] bg-[#25D366]/5 shadow-sm' 
+                        : 'border-gray-50 bg-white hover:border-[#25D366]/40 hover:shadow-md'
+                    }`}
+                  >
+                    <div className="flex justify-between items-center">
+                      <span className="text-[8px] font-black uppercase text-gray-400 tracking-wider group-hover:text-[#25D366] transition-colors">Normal Text</span>
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCopy(inputText || "Name");
+                        }}
+                        className="h-7 w-7 md:h-8 md:w-8 rounded-lg hover:bg-[#25D366] hover:text-white"
+                      >
+                        <Copy className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                      </Button>
+                    </div>
+                    <div className="text-xs md:text-sm font-bold truncate text-gray-800">
+                      {inputText || "Name"}
+                    </div>
+                  </div>
+
+                  {filteredStyles.filter(s => s.id !== 'none').map((style) => {
                     const transformed = style.transform(inputText || "Name");
                     const isActive = selectedStyleId === style.id;
                     
@@ -378,6 +423,23 @@ export default function Home() {
               </ScrollArea>
             </div>
           )}
+        </div>
+
+        {/* Auto Generator Feature */}
+        <div className="flex flex-col items-center justify-center mt-12 mb-6 space-y-4 px-4">
+          <div className="w-full max-w-lg h-px bg-gradient-to-r from-transparent via-gray-100 to-transparent" />
+          <div className="text-center space-y-2">
+            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">Tactical Randomizer</h4>
+            <p className="text-[9px] text-gray-400 font-medium">Click to instantly discover a random elite gaming identity.</p>
+          </div>
+          <Button
+            onClick={autoForgeIdentity}
+            className="h-14 md:h-16 px-8 md:px-12 bg-[#25D366] hover:bg-[#25D366]/90 text-white font-black text-xs md:text-sm uppercase tracking-[0.2em] rounded-2xl shadow-xl shadow-[#25D366]/20 transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center gap-4 group"
+          >
+            <Dices className="w-5 h-5 md:w-6 md:h-6 transition-transform group-hover:rotate-12" />
+            Auto Forge Identity
+            <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-white/60" />
+          </Button>
         </div>
 
         {/* SEO CONTENT SECTION */}
