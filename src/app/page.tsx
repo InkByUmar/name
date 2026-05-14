@@ -261,7 +261,7 @@ export default function Home() {
   };
 
   const shareToWhatsApp = () => {
-    const text = encodeURIComponent(`Check out my cool new gaming name generated on StylishGameName.com: ${livePreviewText}`);
+    const text = encodeURIComponent(`Check out my cool new gaming name generated on StylishGameName.site: ${livePreviewText}`);
     window.open(`https://wa.me/?text=${text}`, '_blank');
   };
 
@@ -303,7 +303,7 @@ export default function Home() {
 
     ctx.font = "bold 20px 'Inter', sans-serif";
     ctx.fillStyle = "rgba(255,255,255,0.6)";
-    ctx.fillText("STYLISHGAMENAME.COM", 600, 580);
+    ctx.fillText("STYLISHGAMENAME.SITE", 600, 580);
 
     const link = document.createElement('a');
     link.download = `gaming-name-${Date.now()}.png`;

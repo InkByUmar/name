@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Stylish Game Name - Ultimate Gaming Name Generator',
     description: 'The world\'s most stable Fancy Gaming Name generator for Free Fire, PUBG, and BGMI.',
-    url: 'https://stylishgamename.com',
+    url: 'https://stylishgamename.site',
     siteName: 'Stylish Game Name',
     locale: 'en_US',
     type: 'website',
