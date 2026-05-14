@@ -1,7 +1,6 @@
 /**
- * Character maps for premium fancy styles
- * Curated for 100% stability across all modern mobile devices.
- * Removed glitch and inverted maps to ensure zero question marks.
+ * Character maps for high-compatibility fancy styles.
+ * Curated for 100% stability across PUBG, Free Fire, BGMI, and Roblox.
  */
 const maps: Record<string, string[]> = {
   bold: "𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗".split(""),
@@ -12,6 +11,8 @@ const maps: Record<string, string[]> = {
   bubble: "ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ⓪①②③④⑤⑥⑦⑧⑨".split(""),
   square: "🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉0123456789".split(""),
   tinyCaps: "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ0123456789".split(""),
+  heavy: "𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳0123456789".split(""),
+  sanSerif: "𝖠𝖡𝖢𝖣𝖤𝖥𝖦𝖧𝖨𝖩𝖪𝖫𝖬𝖭𝖮𝖯𝖰𝖱𝖲𝖳𝖴𝖵𝖶𝖷𝖸𝖹𝖺𝖻𝖼𝖽𝖾𝖿𝗀𝗁𝗂𝗃𝗄𝗅𝗆𝗇𝗈𝗉𝗊𝗋𝗌𝗍𝗎𝗏𝗐𝗑𝗒𝗓0123456789".split("")
 };
 
 const standardChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split("");
@@ -28,29 +29,30 @@ export interface StyleOption {
 const mapTransform = (mapName: string) => (text: string) => {
   return text.split('').map(char => {
     const index = standardChars.indexOf(char);
-    return index !== -1 && maps[mapName][index] ? maps[mapName][index] : char;
+    return index !== -1 && maps[mapName] && maps[mapName][index] ? maps[mapName][index] : char;
   }).join('');
 };
 
 export const POPULAR_SYMBOLS = [
-  "ツ", "亗", "乡", "々", "×", "〆", "★", "彡", "༺", "༻", "꧁", "꧂", "✿", "❂", "⚡", "☯", "♥", "✦", "✧", "⚔", "🛡", "🔥", "💎", "👾", "🐉", "👻", "☣", "☢", "✵", "✹"
+  "ツ", "亗", "乡", "々", "×", "〆", "★", "彡", "༺", "༻", "꧁", "꧂", "✿", "❂", "⚡", "☯", "♥", "✦", "✧", "⚔", "🛡", "🔥", "💎", "👾", "🐉", "👻", "☣", "☢", "✵", "✹", "♔", "♕", "♚", "♛", "⚓", "⚔", "🛡", "🏹", "🗡", "🔪", "⛓", "🔫"
 ];
 
-export const LEFT_SYMBOLS = ["亗", "々", "〆", "꧁", "༺", "★", "ツ", "❤", "☆", "†", "⚔", "⚡", "☯", "☠", "☣", "♛", "✿", "❂", "✦", "✯"];
-export const RIGHT_SYMBOLS = ["亗", "々", "〆", "꧂", "༻", "★", "ツ", "❤", "☆", "†", "⚔", "⚡", "☯", "☠", "☣", "♚", "✿", "❂", "✧", "✯"];
+export const LEFT_SYMBOLS = ["亗", "々", "〆", "꧁", "༺", "★", "ツ", "❤", "☆", "†", "⚔", "⚡", "☯", "☠", "☣", "♛", "✿", "❂", "✦", "✯", "ϟ", "❦", "𓆩", "𓆪", "𓂀", "𓅂", "𓋹", "𓆃", "♛", "♕"];
+export const RIGHT_SYMBOLS = ["亗", "々", "〆", "꧂", "༻", "★", "ツ", "❤", "☆", "†", "⚔", "⚡", "☯", "☠", "☣", "♚", "✿", "❂", "✧", "✯", "ϟ", "❦", "𓆩", "𓆪", "𓂀", "𓅂", "𓋹", "𓆃", "♚", "♛"];
 
 export const TRENDING_NAMES = [
-  "亗 Legend 亗",
-  "꧁༺ Killer ༻꧂",
-  "々 Skull ×",
-  "༺ Joker ༻",
-  "★ Vamp ★",
-  "〆 Zero 〆",
-  "☯ Shadow ☯",
-  "⚡ Volt ⚡"
+  "亗 𝐋𝐞𝐠𝐞𝐧𝐝 亗",
+  "꧁༺ 𝓚𝓲𝓵𝓵𝓮𝓻 ༻꧂",
+  "々 𝚂𝚔𝚞𝚕𝚕 ×",
+  "༺ 𝕵𝖔𝖐𝖊𝖗 ༻",
+  "★ 𝓥𝓪𝓶𝓹 ★",
+  "〆 𝚉𝚎𝚛𝚘 〆",
+  "☯ 𝕊𝕙𝕒𝕕𝕠𝕨 ☯",
+  "⚡ 𝕍𝕠𝕝𝕥 ⚡"
 ];
 
 export const STYLE_OPTIONS: StyleOption[] = [
+  { id: 'normal', name: 'Standard Text', category: ['all'], transform: (t) => t },
   { id: 'bold', name: 'Premium Bold', category: ['all', 'pubg', 'cod'], transform: mapTransform('bold') },
   { id: 'italic', name: 'Swift Move', category: ['all', 'freefire'], transform: mapTransform('italic') },
   { id: 'script', name: 'Royal Order', category: ['all', 'roblox'], transform: mapTransform('script') },
@@ -59,16 +61,19 @@ export const STYLE_OPTIONS: StyleOption[] = [
   { id: 'bubble', name: 'Bubble Shield', category: ['all', 'roblox'], transform: mapTransform('bubble') },
   { id: 'square', name: 'Block Force', category: ['all', 'roblox'], transform: mapTransform('square') },
   { id: 'tiny', name: 'Petite Type', category: ['all', 'freefire'], transform: mapTransform('tinyCaps') },
+  { id: 'heavy', name: 'Titan Weight', category: ['all', 'pubg'], transform: mapTransform('heavy') },
+  { id: 'clean', name: 'San Serif Clean', category: ['all'], transform: mapTransform('sanSerif') },
 ];
 
-// Add 100+ high-compatibility dynamic styles
-for (let i = 0; i < 112; i++) {
-  const left = LEFT_SYMBOLS[i % LEFT_SYMBOLS.length];
-  const right = RIGHT_SYMBOLS[i % RIGHT_SYMBOLS.length];
+// Add 60+ font variations
+for (let i = 0; i < 65; i++) {
+  const baseMapKeys = Object.keys(maps);
+  const randomMapKey = baseMapKeys[i % baseMapKeys.length];
+  
   STYLE_OPTIONS.push({
-    id: `dyn-${i}`,
-    name: `Tactical Variant ${i + 1}`,
+    id: `forge-${i}`,
+    name: `Style Variant ${i + 1}`,
     category: ['all'],
-    transform: (t) => `${left} ${t} ${right}`
+    transform: (t) => mapTransform(randomMapKey)(t)
   });
 }
