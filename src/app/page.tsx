@@ -11,11 +11,11 @@ import {
   Gamepad2,
   Menu,
   Zap,
-  Sparkles,
   CheckCircle2,
   Layers,
   Search,
-  ChevronRight
+  ChevronRight,
+  Sparkles
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -107,7 +107,7 @@ export default function Home() {
         { label: "How to Use", href: "#how-to-use" },
         { label: "About Us", href: "#about-us" },
         { label: "FAQ", href: "#faq" },
-        { label: "SEO Optimization", href: "#seo-info" }
+        { label: "SEO Info", href: "#seo-info" }
       ].map((link) => (
         <a 
           key={link.label}
@@ -162,11 +162,6 @@ export default function Home() {
               <div className="flex flex-col gap-1 p-4">
                 <NavLinks mobile />
               </div>
-              <div className="absolute bottom-8 left-0 w-full px-8">
-                <p className="text-[10px] text-gray-300 font-bold uppercase tracking-widest text-center leading-relaxed">
-                  Mission Critical Gaming Identity <br /> v2.4.0 Stable
-                </p>
-              </div>
             </SheetContent>
           </Sheet>
         </div>
@@ -195,7 +190,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Category Tabs (Font Filtering) */}
+        {/* Category Tabs */}
         <div className="mt-6">
           <ScrollArea className="w-full whitespace-nowrap pb-2">
             <div className="flex justify-start md:justify-center gap-2 px-4">
@@ -220,7 +215,7 @@ export default function Home() {
           </ScrollArea>
         </div>
 
-        {/* Visibility Filter Buttons (Responsive Grid) */}
+        {/* Visibility Filter Buttons */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3 mt-6 pb-4 max-w-2xl mx-auto border-b border-gray-50">
           <Button
             onClick={() => setActiveFilter('left')}
