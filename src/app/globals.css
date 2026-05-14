@@ -33,27 +33,12 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground antialiased;
-    background-image: radial-gradient(at 100% 0%, hsla(142, 70%, 49%, 0.03) 0px, transparent 50%),
-                      radial-gradient(at 0% 100%, hsla(142, 70%, 49%, 0.02) 0px, transparent 50%);
+    @apply bg-white text-foreground antialiased;
   }
 }
 
 .premium-card {
   @apply bg-white border border-gray-100 shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary/20;
-}
-
-.nav-link {
-  @apply relative text-[10px] uppercase tracking-widest font-extrabold text-muted-foreground transition-colors hover:text-primary py-2;
-}
-
-.nav-link::after {
-  content: '';
-  @apply absolute bottom-0 left-0 h-0.5 w-0 bg-primary transition-all duration-300;
-}
-
-.nav-link:hover::after {
-  @apply w-full;
 }
 
 ::-webkit-scrollbar {
@@ -70,5 +55,14 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #cbd5e1;
+  background: #25D366;
+}
+
+/* Custom shadow for white cards */
+.soft-shadow {
+  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.03);
+}
+
+.nav-link {
+  @apply text-gray-500 hover:text-[#25D366] transition-colors font-bold;
 }
